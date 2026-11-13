@@ -1,13 +1,13 @@
 name: Nobar release
 
-# Signed APK of the nobar fork, published to GitHub Releases on every push to `nobar`
-# (and `master`, once nobar is merged). Two releases per build:
+# Signed APK of the nobar fork, published to GitHub Releases on every push to `master`
+# Two releases per build:
 #   - nobar-v<N>: a versioned release to keep and share
 #   - pre-release: a moving tag the in-app updater watches (GithubReleases.APK_PRERELEASE);
 #     the app updates when that tag's commit differs from the one it was built from.
 on:
   push:
-    branches: [nobar, master]
+    branches: [master]
     paths-ignore:
       - '*.md'
       - 'docs/**'
@@ -45,9 +45,10 @@ jobs:
           KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
           KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS }}
         run: |
+          # No key, no release: a debug-signed APK couldn't be updated by the signed ones later.
           if [ -z "$KEYSTORE_B64" ]; then
-            echo "::warning::No KEYSTORE_B64 secret: this APK is signed with a DEBUG key and won't update over a release-signed one."
-            echo "SIGNING_NOTE= (debug-signed)" >> "$GITHUB_ENV"
+            echo "::warning::No KEYSTORE_B64/KEYSTORE_PASS secrets: building only, nothing is published."
+            echo "PUBLISH=false" >> "$GITHUB_ENV"
             exit 0
           fi
           mkdir -p "$RUNNER_TEMP/keystore"
@@ -60,11 +61,12 @@ jobs:
               echo "SIGNING_KEY_PASSWORD=$PASS"
               echo "SIGNING_STORE_PASSWORD=$PASS"
               echo "SIGNING_NOTE="
+              echo "PUBLISH=true"
             } >> "$GITHUB_ENV"
           else
-            echo "::warning::KEYSTORE_PASS does not open KEYSTORE_B64: this APK is signed with a DEBUG key. Re-set both secrets."
+            echo "::warning::KEYSTORE_PASS does not open KEYSTORE_B64: building only, nothing is published. Re-set both secrets."
             rm -rf "$RUNNER_TEMP/keystore"
-            echo "SIGNING_NOTE= (debug-signed)" >> "$GITHUB_ENV"
+            echo "PUBLISH=false" >> "$GITHUB_ENV"
           fi
 
       # Without the release key, build the debug variant (release would be unsigned).
@@ -96,6 +98,7 @@ jobs:
           } > release-body.md
 
       - uses: softprops/action-gh-release@v2
+        if: env.PUBLISH == 'true'
         with:
           tag_name: nobar-v${{ github.run_number }}
           target_commitish: ${{ github.sha }}
@@ -106,6 +109,7 @@ jobs:
 
       # Move the "pre-release" tag (and its release) to this commit for the in-app updater.
       - name: Update in-app update channel
+        if: env.PUBLISH == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
