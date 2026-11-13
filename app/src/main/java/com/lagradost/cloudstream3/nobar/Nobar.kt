@@ -83,6 +83,20 @@ object Nobar {
         }
     }
 
+    /** Leave, handing the host seat to [to] first (leave anyway if the ack is slow). */
+    fun leaveHandingOver(to: String) {
+        val s = session ?: return
+        var done = false
+        val go = Runnable {
+            if (!done) {
+                done = true
+                if (session === s) leave()
+            }
+        }
+        s.client.send(Intents.hostTransfer(to)) { main.post(go) }
+        main.postDelayed(go, 2000)
+    }
+
     fun leave() {
         val s = session ?: return
         session = null
@@ -112,6 +126,7 @@ object Nobar {
         "next" -> ctx.getString(R.string.nobar_act_next)
         "prev" -> ctx.getString(R.string.nobar_act_prev)
         "load" -> ctx.getString(R.string.nobar_act_load, r.media?.title ?: "?")
+        "host" -> ctx.getString(R.string.nobar_act_host)
         else -> r.action
     }
 
@@ -171,6 +186,8 @@ object Nobar {
         /** Pending asks from members without control; the host and co-hosts answer them. */
         val requests: List<ControlRequest> get() = view?.requests ?: emptyList()
         private val seenRequests = HashSet<String>()
+        /** Last host we saw, to announce a handover; null until the first snapshot. */
+        private var knownHost: String? = null
         val playerOpen get() = screen != null
 
         fun nameOf(id: String) = members.firstOrNull { it.clientId == id }?.name ?: id
@@ -191,6 +208,7 @@ object Nobar {
                 override fun onEvent(event: RoomEvent) {
                     if (event is RoomEvent.NowPlaying) onNowPlaying(event.current)
                     if (event is RoomEvent.RequestsChanged) onRequests(event.requests)
+                    if (event is RoomEvent.RosterChanged) onHostMaybeChanged()
                     changed()
                 }
 
@@ -216,6 +234,7 @@ object Nobar {
         }
 
         private fun onJoined() {
+            knownHost = hostId
             val s = screen
             if (s != null) startSync(s)
             else current?.let { openPlayer(it) }
@@ -307,11 +326,26 @@ object Nobar {
             )
         }
 
+        private fun onHostMaybeChanged() {
+            val h = hostId ?: return
+            val before = knownHost
+            knownHost = h
+            if (before == null || before == h) return
+            toast(
+                if (h == me) ctx.getString(R.string.nobar_you_are_host)
+                else ctx.getString(R.string.nobar_new_host, nameOf(h))
+            )
+        }
+
+        /** Requests this member may answer: a host request only the host can approve. */
+        val answerable: List<ControlRequest>
+            get() = if (!canControl) emptyList() else requests.filter { it.action != "host" || isHost }
+
         /** Tell whoever can answer about a new ask (they open the sheet to approve it). */
         private fun onRequests(list: List<ControlRequest>) {
             val fresh = list.filter { seenRequests.add(it.id) }
             if (!canControl) return
-            fresh.lastOrNull { it.from != me }?.let {
+            fresh.lastOrNull { it.from != me && (it.action != "host" || isHost) }?.let {
                 toast(ctx.getString(R.string.nobar_request_toast, it.name, actionLabel(ctx, it)))
             }
         }
@@ -330,6 +364,9 @@ object Nobar {
 
         fun setEveryone(on: Boolean) = client.send(Intents.settings(control = if (on) "everyone" else "host"))
         fun makeHost(clientId: String) = client.send(Intents.hostTransfer(clientId))
+
+        /** Online members other than us: who the host seat can go to. */
+        val others: List<Member> get() = members.filter { it.online && it.clientId != me }
 
         internal fun close() {
             closed = true

@@ -1,4 +1,4 @@
-// Vendored from syncroom@c2c0b20 (sdk/kotlin) by scripts/sync-syncroom.sh. Do not edit here.
+// Vendored from syncroom@6b4705e (sdk/kotlin) by scripts/sync-syncroom.sh. Do not edit here.
 package dev.syncroom
 
 import org.json.JSONArray
@@ -110,7 +110,7 @@ data class SyncPolicy(
     }
 }
 
-/** A member asking the host / a co-host to do something. [action]: play | pause | seek | next | prev | load. */
+/** A member asking the host / a co-host to do something. [action]: play | pause | seek | next | prev | load | host (host only). */
 data class ControlRequest(
     val id: String,
     val from: String,
@@ -282,6 +282,8 @@ object RequestActions {
     fun next() = JSONObject().put("type", "next")
     fun prev() = JSONObject().put("type", "prev")
     fun load(media: MediaRef) = JSONObject().put("type", "load").put("media", media.toJson())
+    /** Ask for the host seat; only the host can approve it. */
+    fun host() = JSONObject().put("type", "host")
 }
 
 // --- org.json helpers (JSON null → Kotlin null) ---

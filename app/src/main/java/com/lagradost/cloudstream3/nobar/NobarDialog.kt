@@ -104,9 +104,25 @@ object NobarDialog {
 
         binding.nobarAskPause.setOnClickListener { Nobar.session?.request(RequestActions.pause()) }
         binding.nobarAskPlay.setOnClickListener { Nobar.session?.request(RequestActions.play()) }
+        binding.nobarAskHost.setOnClickListener { Nobar.session?.request(RequestActions.host()) }
 
         binding.nobarLeave.setOnClickListener {
-            Nobar.leave()
+            val s = Nobar.session ?: return@setOnClickListener
+            val others = s.others
+            if (!s.isHost || others.isEmpty()) {
+                Nobar.leave()
+                return@setOnClickListener
+            }
+            // The host leaving: pick who gets the seat (or let the server pass it on).
+            val items = others.map { it.name } + activity.getString(R.string.nobar_leave_only)
+            AlertDialog.Builder(activity, R.style.AlertDialogCustom)
+                .setTitle(R.string.nobar_hand_over_title)
+                .setItems(items.toTypedArray()) { _, which ->
+                    val to = others.getOrNull(which)
+                    if (to != null) Nobar.leaveHandingOver(to.clientId) else Nobar.leave()
+                }
+                .setNegativeButton(R.string.sort_cancel, null)
+                .show()
         }
 
         binding.nobarEveryone.setOnCheckedChangeListener { button, checked ->
@@ -127,10 +143,13 @@ object NobarDialog {
             binding.nobarEveryone.isVisible = s.isHost
             binding.nobarEveryone.isChecked = s.everyone
 
-            binding.nobarAskRow.isVisible = s.status == Status.JOINED && !s.canControl
+            val joined = s.status == Status.JOINED
+            binding.nobarAskRow.isVisible = joined && !s.isHost
+            binding.nobarAskPause.isVisible = !s.canControl
+            binding.nobarAskPlay.isVisible = !s.canControl
 
             // Requests: whoever controls playback answers them.
-            val requests = if (s.canControl) s.requests else emptyList()
+            val requests = s.answerable
             binding.nobarRequestsTitle.isVisible = requests.isNotEmpty()
             binding.nobarRequestList.removeAllViews()
             for (r in requests) {

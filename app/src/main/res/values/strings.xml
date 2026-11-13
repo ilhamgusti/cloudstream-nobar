@@ -874,5 +874,11 @@
     <string name="nobar_act_next">go to the next one</string>
     <string name="nobar_act_prev">go back to the previous one</string>
     <string name="nobar_act_load">play %s</string>
+    <string name="nobar_ask_host">Ask to be host</string>
+    <string name="nobar_act_host">become host</string>
+    <string name="nobar_hand_over_title">Hand the host seat to…</string>
+    <string name="nobar_leave_only">Just leave (the room picks a new host)</string>
+    <string name="nobar_new_host">%s is the host now</string>
+    <string name="nobar_you_are_host">You\'re the host now</string>
     <string name="nobar_kicked">You were removed from the room</string>
 </resources>

@@ -820,5 +820,11 @@
     <string name="nobar_act_next">lanjut ke berikutnya</string>
     <string name="nobar_act_prev">kembali ke sebelumnya</string>
     <string name="nobar_act_load">putar %s</string>
+    <string name="nobar_ask_host">Minta jadi host</string>
+    <string name="nobar_act_host">jadi host</string>
+    <string name="nobar_hand_over_title">Oper host ke…</string>
+    <string name="nobar_leave_only">Keluar saja (host dipilih otomatis)</string>
+    <string name="nobar_new_host">%s sekarang host</string>
+    <string name="nobar_you_are_host">Kamu sekarang host</string>
     <string name="nobar_kicked">Kamu dikeluarkan dari room</string>
 </resources>

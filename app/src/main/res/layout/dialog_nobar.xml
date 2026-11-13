@@ -151,10 +151,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
 
-            <!-- Members without control ask instead -->
+            <!-- Members without control ask instead; anyone but the host can ask for the seat -->
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
             <LinearLayout
                 android:id="@+id/nobar_ask_row"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:orientation="horizontal"
@@ -172,7 +175,14 @@
                     style="@style/BlackButton"
                     android:layout_width="wrap_content"
                     android:text="@string/nobar_ask_play" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/nobar_ask_host"
+                    style="@style/BlackButton"
+                    android:layout_width="wrap_content"
+                    android:text="@string/nobar_ask_host" />
             </LinearLayout>
+            </HorizontalScrollView>
 
             <TextView
                 android:layout_width="match_parent"

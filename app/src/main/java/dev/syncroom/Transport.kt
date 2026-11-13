@@ -1,4 +1,4 @@
-// Vendored from syncroom@c2c0b20 (sdk/kotlin) by scripts/sync-syncroom.sh. Do not edit here.
+// Vendored from syncroom@6b4705e (sdk/kotlin) by scripts/sync-syncroom.sh. Do not edit here.
 package dev.syncroom
 
 import okhttp3.OkHttpClient
