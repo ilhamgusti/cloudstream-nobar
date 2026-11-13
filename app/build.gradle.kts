@@ -175,7 +175,8 @@ android {
         }
         create("prerelease") {
             dimension = "state"
-            applicationIdSuffix = ".prerelease"
+            // Fork: its own id, so it installs next to the official CloudStream (Beta).
+            applicationIdSuffix = ".nobar"
             if (signingConfigs.names.contains("prerelease")) {
                 signingConfig = signingConfigs.getByName("prerelease")
             } else {

@@ -1,0 +1,115 @@
+name: Nobar release
+
+# Signed APK of the nobar fork, published to GitHub Releases on every push to `nobar`
+# (and `master`, once nobar is merged). Two releases per build:
+#   - nobar-v<N>: a versioned release to keep and share
+#   - pre-release: a moving tag the in-app updater watches (GithubReleases.APK_PRERELEASE);
+#     the app updates when that tag's commit differs from the one it was built from.
+on:
+  push:
+    branches: [nobar, master]
+    paths-ignore:
+      - '*.md'
+      - 'docs/**'
+  workflow_dispatch:
+
+concurrency:
+  group: nobar-release
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 30 # release notes list recent commits
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: gradle/actions/setup-gradle@v5
+        with:
+          cache-encryption-key: ${{ secrets.GRADLE_ENCRYPTION_KEY }}
+
+      # Stable signing key → each new APK installs over the previous one (keeps history,
+      # extensions and settings). app/build.gradle.kts picks the first file in
+      # $RUNNER_TEMP/keystore when SIGNING_KEY_ALIAS is set.
+      - name: Decode keystore
+        env:
+          KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
+          KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS }}
+        run: |
+          if [ -z "$KEYSTORE_B64" ]; then
+            echo "::warning::No KEYSTORE_B64 secret: this APK is signed with a DEBUG key and won't update over a release-signed one."
+            echo "SIGNING_NOTE= (debug-signed)" >> "$GITHUB_ENV"
+            exit 0
+          fi
+          mkdir -p "$RUNNER_TEMP/keystore"
+          echo "$KEYSTORE_B64" | base64 -d > "$RUNNER_TEMP/keystore/nobar.jks"
+          PASS="$(printf %s "$KEYSTORE_PASS" | tr -d '\r\n')"
+          if keytool -list -keystore "$RUNNER_TEMP/keystore/nobar.jks" -storepass "$PASS" >/dev/null 2>&1; then
+            echo "::add-mask::$PASS"
+            {
+              echo "SIGNING_KEY_ALIAS=key0"
+              echo "SIGNING_KEY_PASSWORD=$PASS"
+              echo "SIGNING_STORE_PASSWORD=$PASS"
+              echo "SIGNING_NOTE="
+            } >> "$GITHUB_ENV"
+          else
+            echo "::warning::KEYSTORE_PASS does not open KEYSTORE_B64: this APK is signed with a DEBUG key. Re-set both secrets."
+            rm -rf "$RUNNER_TEMP/keystore"
+            echo "SIGNING_NOTE= (debug-signed)" >> "$GITHUB_ENV"
+          fi
+
+      # Without the release key, build the debug variant (release would be unsigned).
+      - name: Build APK
+        run: |
+          if [ -n "$SIGNING_KEY_ALIAS" ]; then
+            ./gradlew assemblePrereleaseRelease
+            echo "APK_DIR=app/build/outputs/apk/prerelease/release" >> "$GITHUB_ENV"
+          else
+            ./gradlew assemblePrereleaseDebug
+            echo "APK_DIR=app/build/outputs/apk/prerelease/debug" >> "$GITHUB_ENV"
+          fi
+
+      - name: Collect APK and notes
+        run: |
+          n=${{ github.run_number }}
+          apk=$(ls "$APK_DIR"/*.apk | head -1)
+          cp "$apk" "cloudstream-nobar-$n.apk"
+          echo "APK=cloudstream-nobar-$n.apk" >> "$GITHUB_ENV"
+          {
+            echo "CloudStream Nobar build $n${SIGNING_NOTE} · \`${GITHUB_SHA::7}\`"
+            echo
+            echo "Install **cloudstream-nobar-$n.apk**. It installs next to the official CloudStream"
+            echo "(package \`com.lagradost.cloudstream3.nobar\`), and new builds install over the old one."
+            echo "Everyone in a room needs the same extension installed."
+            echo
+            echo "### Changes"
+            git log -15 --no-merges --format='- %s' -- . ':!.github'
+          } > release-body.md
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          tag_name: nobar-v${{ github.run_number }}
+          target_commitish: ${{ github.sha }}
+          name: CloudStream Nobar ${{ github.run_number }}${{ env.SIGNING_NOTE }}
+          prerelease: true
+          body_path: release-body.md
+          files: ${{ env.APK }}
+
+      # Move the "pre-release" tag (and its release) to this commit for the in-app updater.
+      - name: Update in-app update channel
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release delete pre-release --cleanup-tag --yes 2>/dev/null || true
+          git push origin ":refs/tags/pre-release" 2>/dev/null || true
+          gh release create pre-release "$APK" --target "$GITHUB_SHA" --prerelease \
+            --title "Pre-release (in-app updates)" --notes-file release-body.md

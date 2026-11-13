@@ -38,10 +38,11 @@ import java.io.IOException
 import java.io.InputStreamReader
 
 object InAppUpdater {
-    private const val GITHUB_USER_NAME = "recloudstream"
-    private const val GITHUB_REPO = "cloudstream"
+    // Fork: updates come from the nobar fork's own releases (.github/workflows/nobar-release.yml).
+    private const val GITHUB_USER_NAME = "ilhamgusti"
+    private const val GITHUB_REPO = "cloudstream-nobar"
 
-    private const val PRERELEASE_PACKAGE_NAME = "com.lagradost.cloudstream3.prerelease"
+    private const val PRERELEASE_PACKAGE_NAME = "com.lagradost.cloudstream3.nobar"
     private const val LOG_TAG = "InAppUpdater"
 
     @Serializable
@@ -159,7 +160,8 @@ object InAppUpdater {
             app.get(releaseUrl, headers = headers).text
         ).toList()
 
-        val found = response.lastOrNull { rel ->
+        // Fork: there are also versioned (pre)releases, so take the moving "pre-release" one.
+        val found = response.firstOrNull { it.tagName == "pre-release" } ?: response.lastOrNull { rel ->
             rel.prerelease || rel.tagName == "pre-release"
         }
 

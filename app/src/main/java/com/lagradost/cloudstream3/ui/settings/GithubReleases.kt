@@ -42,8 +42,9 @@ object GithubReleases : GithubRepository {
         @JsonProperty("object") @SerialName("object") val githubObject: GithubObject,
     )
 
-    const val APK_USERNAME = "recloudstream"
-    const val APK_REPOSITORY = "cloudstream"
+    // Fork: updates come from the nobar fork's own releases (.github/workflows/nobar-release.yml).
+    const val APK_USERNAME = "ilhamgusti"
+    const val APK_REPOSITORY = "cloudstream-nobar"
     const val APK_PRERELEASE = "pre-release"
     const val APK_CONTENT_TYPE = "application/vnd.android.package-archive"
 
