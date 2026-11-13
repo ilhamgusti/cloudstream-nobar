@@ -131,6 +131,11 @@ import com.lagradost.cloudstream3.utils.setText
 import com.lagradost.cloudstream3.utils.txt
 import com.lagradost.cloudstream3.utils.videoskip.VideoSkipStamp
 import com.lagradost.safefile.SafeFile
+import com.lagradost.cloudstream3.nobar.Nobar
+import com.lagradost.cloudstream3.nobar.NobarAdapter
+import com.lagradost.cloudstream3.nobar.NobarDialog
+import com.lagradost.cloudstream3.nobar.NobarMedia
+import dev.syncroom.MediaRef
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -187,6 +192,48 @@ class GeneratorPlayer : FullScreenPlayer() {
 
     private var isPlayerActive: AtomicBoolean = AtomicBoolean(false)
     private var isNextEpisode: Boolean = false // this is used to reset the watch time
+
+    private var nobarUnsubscribe: (() -> Unit)? = null
+
+    /** This player as the nobar (watch together) room sees it. */
+    private val nobarScreen = object : Nobar.Screen {
+        override val adapter = NobarAdapter(
+            currentId = { (currentMeta as? ResultEpisode)?.let(NobarMedia::idOf) },
+            open = this@GeneratorPlayer::openFromRoom,
+        )
+
+        override fun nowShowing(): Pair<MediaRef, Double>? {
+            val episode = currentMeta as? ResultEpisode ?: return null
+            val duration = player.getDuration()?.takeIf { it > 0 }?.div(1000.0)
+            val media = NobarMedia.from(episode, duration) ?: return null
+            return media to ((player.getPosition() ?: 0L) / 1000.0)
+        }
+    }
+
+    /** The room moved to [media]: play it here. False if this device can't. */
+    private fun openFromRoom(media: MediaRef): Boolean {
+        val episode = NobarMedia.episodeOf(media) ?: run {
+            showToast(R.string.nobar_unsupported, Toast.LENGTH_SHORT)
+            return false
+        }
+        if (getApiFromNameNull(episode.apiName) == null) {
+            showToast(txt(R.string.nobar_missing_ext, episode.apiName), Toast.LENGTH_LONG)
+            return false
+        }
+        // Same title: switch within its episode list, so next/prev and the list keep working.
+        val index = (viewModel.generator as? RepoLinkGenerator)?.videos
+            ?.indexOfFirst { it.apiName == episode.apiName && it.data == episode.data } ?: -1
+        isNextEpisode = true
+        releasePlayer()
+        playerBinding?.playerEpisodeOverlay?.isGone = true
+        if (index >= 0) {
+            viewModel.loadThisEpisode(index)
+        } else {
+            viewModel.attachGenerator(RepoLinkGenerator(listOf(episode)), 0)
+            viewModel.loadLinks()
+        }
+        return true
+    }
 
     private var preferredAutoSelectSubtitles: String? = null // null means do nothing, "" means none
     private val allMeta: List<ResultEpisode>?
@@ -439,6 +486,7 @@ class GeneratorPlayer : FullScreenPlayer() {
 
     override fun playerUpdated(player: Any?) {
         super.playerUpdated(player)
+        nobarScreen.adapter.attach(player as? ExoPlayer)
 
         // Cancel the notification when released
         if (player == null) {
@@ -1676,6 +1724,7 @@ class GeneratorPlayer : FullScreenPlayer() {
     }
 
     override fun nextEpisode() {
+        if (Nobar.blocksLocalSwitch()) return
         if (viewModel.hasNextEpisode() == true) {
             isNextEpisode = true
             releasePlayer()
@@ -1684,6 +1733,7 @@ class GeneratorPlayer : FullScreenPlayer() {
     }
 
     override fun prevEpisode() {
+        if (Nobar.blocksLocalSwitch()) return
         if (viewModel.hasPrevEpisode() == true) {
             isNextEpisode = true
             releasePlayer()
@@ -1714,6 +1764,10 @@ class GeneratorPlayer : FullScreenPlayer() {
     }
 
     override fun onDestroy() {
+        nobarUnsubscribe?.invoke()
+        nobarUnsubscribe = null
+        Nobar.detach(nobarScreen)
+        nobarScreen.adapter.attach(null)
         ResultFragment.updateUI()
         currentVerifyLink?.cancel()
         super.onDestroy()
@@ -2144,7 +2198,7 @@ class GeneratorPlayer : FullScreenPlayer() {
                 playerEpisodeList.adapter = EpisodeAdapter(
                     false,
                     { episodeClick ->
-                        if (episodeClick.action == ACTION_CLICK_DEFAULT) {
+                        if (episodeClick.action == ACTION_CLICK_DEFAULT && !Nobar.blocksLocalSwitch()) {
                             isNextEpisode = false
                             releasePlayer()
                             playerEpisodeOverlay.isGone = true
@@ -2297,6 +2351,27 @@ class GeneratorPlayer : FullScreenPlayer() {
             loadLink(selectedLink, true)
         }
 
+        // Watch together: follow (or lead) the room while this player is open.
+        Nobar.attach(nobarScreen)
+        playerBinding?.playerNobarBtt?.setOnClickListener {
+            val act = activity ?: return@setOnClickListener
+            val wasPlaying = player.getIsPlaying()
+            // Solo: pause while the sheet is open. In a room, pausing would pause everyone.
+            if (Nobar.session == null) player.handleEvent(CSPlayerEvent.Pause, PlayerEventSource.UI)
+            NobarDialog.show(act, fromPlayer = true) {
+                activity?.hideSystemUI()
+                if (wasPlaying && Nobar.session == null) {
+                    player.handleEvent(CSPlayerEvent.Play, PlayerEventSource.UI)
+                }
+            }
+        }
+        // A room started from the sheet adopts this player (only a free room: never steal it
+        // from another player screen).
+        nobarUnsubscribe?.invoke()
+        nobarUnsubscribe = Nobar.addListener {
+            if (Nobar.session?.playerOpen == false) Nobar.attach(nobarScreen)
+        }
+
         binding.overlayLoadingSkipButton.setOnClickListener {
             // Mark as "success" early
             viewModel.modifyState {
@@ -2341,6 +2416,8 @@ class GeneratorPlayer : FullScreenPlayer() {
             when (loading) {
                 is Resource.Loading -> {
                     releasePlayer()
+                    // Picked another episode here: the room follows if we lead it.
+                    Nobar.onLocalMedia(nobarScreen)
                 }
 
                 is Resource.Success -> {

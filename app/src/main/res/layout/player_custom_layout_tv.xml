@@ -1130,11 +1130,21 @@
                             android:id="@+id/player_compressor_btt"
                             style="@style/VideoButtonTV"
                             android:nextFocusLeft="@id/player_tracks_btt"
+                            android:nextFocusRight="@id/player_nobar_btt"
+                            android:nextFocusUp="@id/player_pause_play"
+                            android:nextFocusDown="@id/player_nobar_btt"
+                            android:text="@string/compressor"
+                            app:icon="@drawable/ic_compressor_24" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/player_nobar_btt"
+                            style="@style/VideoButtonTV"
+                            android:nextFocusLeft="@id/player_compressor_btt"
                             android:nextFocusRight="@id/player_skip_op"
                             android:nextFocusUp="@id/player_pause_play"
                             android:nextFocusDown="@id/player_skip_op"
-                            android:text="@string/compressor"
-                            app:icon="@drawable/ic_compressor_24" />
+                            android:text="@string/nobar_short"
+                            app:icon="@drawable/ic_baseline_people_24" />
                     </LinearLayout>
                 </HorizontalScrollView>
             </LinearLayout>

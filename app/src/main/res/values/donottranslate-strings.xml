@@ -161,4 +161,5 @@
         <item quantity="one">@string/episode</item>
         <item quantity="other">@string/episodes</item>
     </plurals>
+    <string name="nobar_short" translatable="false">Nobar</string>
 </resources>

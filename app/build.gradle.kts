@@ -134,6 +134,12 @@ android {
             "MAL_KEY",
             "\"" + (System.getenv("MAL_KEY") ?: localProperties["mal.key"]) + "\""
         )
+        // Watch together (syncroom) server; users can override it in the nobar sheet.
+        buildConfigField(
+            "String",
+            "NOBAR_SERVER",
+            "\"" + (System.getenv("NOBAR_SERVER") ?: localProperties["nobar.server"] ?: "https://syncroom.invitee.app") + "\""
+        )
         buildConfigField(
             "String",
             "ANILIST_KEY",

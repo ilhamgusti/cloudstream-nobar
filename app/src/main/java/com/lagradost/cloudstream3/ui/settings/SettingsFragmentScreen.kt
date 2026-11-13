@@ -72,6 +72,7 @@ import com.lagradost.cloudstream3.BuildConfig
 import com.lagradost.cloudstream3.CommonActivity.activity
 import com.lagradost.cloudstream3.CommonActivity.showToast
 import com.lagradost.cloudstream3.R
+import com.lagradost.cloudstream3.nobar.NobarDialog
 import com.lagradost.cloudstream3.mvvm.logError
 import com.lagradost.cloudstream3.utils.DataStoreHelper
 import com.lagradost.cloudstream3.utils.DataStoreHelper.profileImages
@@ -288,6 +289,7 @@ object SettingsFragmentScreen : Screen {
                             screens.forEach { settingsTab ->
                                 SettingsTab(settingsTab)
                             }
+                            NobarTab()
                             BuildStamp()
                         }
                     })
@@ -442,6 +444,18 @@ object SettingsFragmentScreen : Screen {
             onPreferenceClick = {
                 SearchableSettings.highlightKey = null
                 activity?.navigate(settingsTab.navigation)
+            })
+    }
+
+    /** Watch together: join a room by code without opening a video first. */
+    @Composable
+    fun NobarTab() {
+        TextPreferenceWidget(
+            title = stringResource(R.string.nobar),
+            icon = painterResource(R.drawable.ic_baseline_people_24),
+            subtitle = stringResource(R.string.nobar_settings_subtitle),
+            onPreferenceClick = {
+                activity?.let { NobarDialog.show(it) }
             })
     }
 

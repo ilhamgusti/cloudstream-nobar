@@ -85,6 +85,7 @@ import com.lagradost.cloudstream3.mvvm.logError
 import com.lagradost.cloudstream3.mvvm.safe
 import com.lagradost.cloudstream3.mvvm.observe
 import com.lagradost.cloudstream3.mvvm.observeNullable
+import com.lagradost.cloudstream3.nobar.NobarDialog
 import com.lagradost.cloudstream3.network.initClient
 import com.lagradost.cloudstream3.plugins.PluginManager
 import com.lagradost.cloudstream3.plugins.PluginManager.___DO_NOT_CALL_FROM_A_PLUGIN_loadAllOnlinePlugins
@@ -397,6 +398,8 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
                             showToast("Invalid Uri", Toast.LENGTH_SHORT)
                             return false
                         }
+                    } else if (safeURI(str)?.scheme == NobarDialog.SCHEME) {
+                        return NobarDialog.handleLink(this, str)
                     } else if (!isWebview) {
                         if (str.startsWith(DOWNLOAD_NAVIGATE_TO)) {
                             this.navigate(R.id.navigation_downloads)

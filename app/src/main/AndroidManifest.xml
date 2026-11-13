@@ -208,6 +208,15 @@
 
                 <data android:scheme="csshare" />
             </intent-filter>
+            <!-- Watch together invites: cloudstreamnobar://ROOMCODE?server=https%3A%2F%2F… -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="cloudstreamnobar" />
+            </intent-filter>
             <!-- Allow searching with intents: cloudstreamsearch://Your%20Name -->
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
