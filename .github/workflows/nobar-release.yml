@@ -44,6 +44,7 @@ jobs:
         env:
           KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
           KEYSTORE_PASS: ${{ secrets.KEYSTORE_PASS }}
+          KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
         run: |
           # No key, no release: a debug-signed APK couldn't be updated by the signed ones later.
           if [ -z "$KEYSTORE_B64" ]; then
@@ -57,7 +58,7 @@ jobs:
           if keytool -list -keystore "$RUNNER_TEMP/keystore/nobar.jks" -storepass "$PASS" >/dev/null 2>&1; then
             echo "::add-mask::$PASS"
             {
-              echo "SIGNING_KEY_ALIAS=key0"
+              echo "SIGNING_KEY_ALIAS=${KEYSTORE_ALIAS:-key0}"
               echo "SIGNING_KEY_PASSWORD=$PASS"
               echo "SIGNING_STORE_PASSWORD=$PASS"
               echo "SIGNING_NOTE="
