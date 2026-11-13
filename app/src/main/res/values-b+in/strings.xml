@@ -803,5 +803,22 @@
     <string name="nobar_err_not_found">Room %s tidak ada. Cek lagi kodenya</string>
     <string name="nobar_err_generic">Tidak bisa masuk room (%s)</string>
     <string name="nobar_settings_subtitle">Gabung room pakai kode, atau lihat room yang sedang diikuti</string>
+    <string name="nobar_tag_cohost">co-host</string>
+    <string name="nobar_make_cohost">Jadikan co-host</string>
+    <string name="nobar_remove_cohost">Cabut co-host</string>
+    <string name="nobar_requests">Permintaan</string>
+    <string name="nobar_approve">Setuju</string>
+    <string name="nobar_decline">Tolak</string>
+    <string name="nobar_ask_pause">Minta pause</string>
+    <string name="nobar_ask_play">Minta lanjut</string>
+    <string name="nobar_request_sent">Permintaan dikirim ke host</string>
+    <string name="nobar_request_failed">Permintaan gagal (%s)</string>
+    <string name="nobar_request_toast">%1$s minta %2$s</string>
+    <string name="nobar_act_pause">pause</string>
+    <string name="nobar_act_play">lanjut putar</string>
+    <string name="nobar_act_seek">loncat ke %s</string>
+    <string name="nobar_act_next">lanjut ke berikutnya</string>
+    <string name="nobar_act_prev">kembali ke sebelumnya</string>
+    <string name="nobar_act_load">putar %s</string>
     <string name="nobar_kicked">Kamu dikeluarkan dari room</string>
 </resources>

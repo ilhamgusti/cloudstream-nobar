@@ -14,6 +14,7 @@ import com.lagradost.cloudstream3.ui.player.GeneratorPlayer
 import com.lagradost.cloudstream3.ui.player.RepoLinkGenerator
 import com.lagradost.cloudstream3.utils.UIHelper.navigate
 import dev.syncroom.CallbackScheduler
+import dev.syncroom.ControlRequest
 import dev.syncroom.Intents
 import dev.syncroom.MediaRef
 import dev.syncroom.Member
@@ -24,6 +25,7 @@ import dev.syncroom.RoomView
 import dev.syncroom.Status
 import dev.syncroom.SyncController
 import dev.syncroom.SyncStatus
+import org.json.JSONObject
 
 /**
  * Nobar (watch together) over a syncroom server.
@@ -102,6 +104,25 @@ object Nobar {
         return true
     }
 
+    /** "pause", "jump to 12:34", "play Dune · S1:E2"… for a request. */
+    fun actionLabel(ctx: Context, r: ControlRequest): String = when (r.action) {
+        "pause" -> ctx.getString(R.string.nobar_act_pause)
+        "play" -> ctx.getString(R.string.nobar_act_play)
+        "seek" -> ctx.getString(R.string.nobar_act_seek, formatTime(r.position ?: 0.0))
+        "next" -> ctx.getString(R.string.nobar_act_next)
+        "prev" -> ctx.getString(R.string.nobar_act_prev)
+        "load" -> ctx.getString(R.string.nobar_act_load, r.media?.title ?: "?")
+        else -> r.action
+    }
+
+    private fun formatTime(sec: Double): String {
+        val t = sec.toLong().coerceAtLeast(0)
+        val h = t / 3600
+        val m = (t % 3600) / 60
+        val s = t % 60
+        return if (h > 0) "%d:%02d:%02d".format(h, m, s) else "%d:%02d".format(m, s)
+    }
+
     private fun toast(text: String) {
         CommonActivity.showToast(CommonActivity.activity, text, Toast.LENGTH_SHORT)
     }
@@ -146,6 +167,10 @@ object Nobar {
         val everyone get() = view?.settings?.control == "everyone"
         val canControl get() = isHost || everyone || view?.isCohost(me) == true
         val current: MediaRef? get() = view?.current
+        val cohosts: List<String> get() = view?.roster?.cohosts ?: emptyList()
+        /** Pending asks from members without control; the host and co-hosts answer them. */
+        val requests: List<ControlRequest> get() = view?.requests ?: emptyList()
+        private val seenRequests = HashSet<String>()
         val playerOpen get() = screen != null
 
         fun nameOf(id: String) = members.firstOrNull { it.clientId == id }?.name ?: id
@@ -165,6 +190,7 @@ object Nobar {
 
                 override fun onEvent(event: RoomEvent) {
                     if (event is RoomEvent.NowPlaying) onNowPlaying(event.current)
+                    if (event is RoomEvent.RequestsChanged) onRequests(event.requests)
                     changed()
                 }
 
@@ -280,6 +306,27 @@ object Nobar {
                 GeneratorPlayer.newInstance(RepoLinkGenerator(listOf(ep)), 0)
             )
         }
+
+        /** Tell whoever can answer about a new ask (they open the sheet to approve it). */
+        private fun onRequests(list: List<ControlRequest>) {
+            val fresh = list.filter { seenRequests.add(it.id) }
+            if (!canControl) return
+            fresh.lastOrNull { it.from != me }?.let {
+                toast(ctx.getString(R.string.nobar_request_toast, it.name, actionLabel(ctx, it)))
+            }
+        }
+
+        /** Ask the host / a co-host for [action] (see [dev.syncroom.RequestActions]). */
+        fun request(action: JSONObject) = client.request(action) { ack ->
+            toast(
+                if (ack.ok) ctx.getString(R.string.nobar_request_sent)
+                else ctx.getString(R.string.nobar_request_failed, ack.reason ?: "?")
+            )
+        }
+
+        fun resolve(id: String, approve: Boolean) = client.send(Intents.resolveRequest(id, approve))
+        fun setCohost(clientId: String, on: Boolean) =
+            client.send(Intents.role(clientId, if (on) "cohost" else "member"))
 
         fun setEveryone(on: Boolean) = client.send(Intents.settings(control = if (on) "everyone" else "host"))
         fun makeHost(clientId: String) = client.send(Intents.hostTransfer(clientId))

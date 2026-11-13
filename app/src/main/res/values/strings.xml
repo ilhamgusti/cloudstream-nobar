@@ -857,5 +857,22 @@
     <string name="nobar_err_not_found">Room %s doesn\'t exist. Check the code</string>
     <string name="nobar_err_generic">Couldn\'t join the room (%s)</string>
     <string name="nobar_settings_subtitle">Join a room by code, or see the room you\'re in</string>
+    <string name="nobar_tag_cohost">co-host</string>
+    <string name="nobar_make_cohost">Make co-host</string>
+    <string name="nobar_remove_cohost">Remove co-host</string>
+    <string name="nobar_requests">Requests</string>
+    <string name="nobar_approve">Approve</string>
+    <string name="nobar_decline">Decline</string>
+    <string name="nobar_ask_pause">Ask to pause</string>
+    <string name="nobar_ask_play">Ask to resume</string>
+    <string name="nobar_request_sent">Request sent to the host</string>
+    <string name="nobar_request_failed">Request failed (%s)</string>
+    <string name="nobar_request_toast">%1$s asks to %2$s</string>
+    <string name="nobar_act_pause">pause</string>
+    <string name="nobar_act_play">resume</string>
+    <string name="nobar_act_seek">jump to %s</string>
+    <string name="nobar_act_next">go to the next one</string>
+    <string name="nobar_act_prev">go back to the previous one</string>
+    <string name="nobar_act_load">play %s</string>
     <string name="nobar_kicked">You were removed from the room</string>
 </resources>

@@ -133,6 +133,47 @@
                 android:textSize="14sp"
                 tools:text="Now playing: Dune · S1:E2" />
 
+            <!-- Asks from members without control: the host and co-hosts answer -->
+            <TextView
+                android:id="@+id/nobar_requests_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:text="@string/nobar_requests"
+                android:textColor="?attr/grayTextColor"
+                android:textSize="13sp"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/nobar_request_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
+
+            <!-- Members without control ask instead -->
+            <LinearLayout
+                android:id="@+id/nobar_ask_row"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                tools:visibility="visible">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/nobar_ask_pause"
+                    style="@style/BlackButton"
+                    android:layout_width="wrap_content"
+                    android:text="@string/nobar_ask_pause" />
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/nobar_ask_play"
+                    style="@style/BlackButton"
+                    android:layout_width="wrap_content"
+                    android:text="@string/nobar_ask_play" />
+            </LinearLayout>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

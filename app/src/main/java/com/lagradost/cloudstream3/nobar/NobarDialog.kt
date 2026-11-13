@@ -11,13 +11,16 @@ import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.inputmethod.EditorInfo
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
+import com.google.android.material.button.MaterialButton
 import com.lagradost.cloudstream3.CommonActivity.showToast
 import com.lagradost.cloudstream3.R
 import com.lagradost.cloudstream3.databinding.DialogNobarBinding
+import dev.syncroom.RequestActions
 import dev.syncroom.Status
 import dev.syncroom.SyncStatus
 
@@ -99,6 +102,9 @@ object NobarDialog {
             activity.startActivity(Intent.createChooser(send, activity.getString(R.string.nobar_share)))
         }
 
+        binding.nobarAskPause.setOnClickListener { Nobar.session?.request(RequestActions.pause()) }
+        binding.nobarAskPlay.setOnClickListener { Nobar.session?.request(RequestActions.play()) }
+
         binding.nobarLeave.setOnClickListener {
             Nobar.leave()
         }
@@ -121,28 +127,68 @@ object NobarDialog {
             binding.nobarEveryone.isVisible = s.isHost
             binding.nobarEveryone.isChecked = s.everyone
 
+            binding.nobarAskRow.isVisible = s.status == Status.JOINED && !s.canControl
+
+            // Requests: whoever controls playback answers them.
+            val requests = if (s.canControl) s.requests else emptyList()
+            binding.nobarRequestsTitle.isVisible = requests.isNotEmpty()
+            binding.nobarRequestList.removeAllViews()
+            for (r in requests) {
+                val row = LinearLayout(activity).apply {
+                    orientation = LinearLayout.HORIZONTAL
+                    gravity = android.view.Gravity.CENTER_VERTICAL
+                }
+                row.addView(TextView(activity).apply {
+                    text = activity.getString(R.string.nobar_request_toast, r.name, Nobar.actionLabel(activity, r))
+                    setTextColor(binding.nobarRoomCode.currentTextColor)
+                    textSize = 14f
+                }, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
+                for ((label, approve) in listOf(R.string.nobar_decline to false, R.string.nobar_approve to true)) {
+                    row.addView(MaterialButton(activity, null, android.R.attr.borderlessButtonStyle).apply {
+                        setText(label)
+                        setOnClickListener { s.resolve(r.id, approve) }
+                    })
+                }
+                binding.nobarRequestList.addView(row)
+            }
+
             val list = binding.nobarMemberList
             list.removeAllViews()
             for (m in s.members.filter { it.online }) {
+                val isCohost = m.clientId in s.cohosts
                 val tags = listOfNotNull(
                     activity.getString(R.string.nobar_tag_host).takeIf { m.clientId == s.hostId },
+                    activity.getString(R.string.nobar_tag_cohost).takeIf { isCohost && m.clientId != s.hostId },
                     activity.getString(R.string.nobar_tag_you).takeIf { m.clientId == s.me },
                     activity.getString(R.string.nobar_tag_buffering).takeIf { m.buffering },
                 )
                 val row = TextView(activity).apply {
                     text = if (tags.isEmpty()) m.name else "${m.name}  ·  ${tags.joinToString(", ")}"
-                    setTextColor(binding.nobarStatus.currentTextColor)
+                    setTextColor(binding.nobarRoomCode.currentTextColor)
                     textSize = 15f
-                    setPadding(0, 8, 0, 8)
+                    setPadding(0, 12, 0, 12)
                 }
+                // Host tools: co-host on/off, hand over the host seat.
                 if (s.isHost && m.clientId != s.me) {
                     row.isFocusable = true
                     row.setBackgroundResource(android.R.drawable.list_selector_background)
                     row.setOnClickListener {
+                        val items = arrayOf(
+                            activity.getString(if (isCohost) R.string.nobar_remove_cohost else R.string.nobar_make_cohost),
+                            activity.getString(R.string.nobar_make_host),
+                        )
                         AlertDialog.Builder(activity, R.style.AlertDialogCustom)
-                            .setMessage(activity.getString(R.string.nobar_make_host_confirm, m.name))
-                            .setPositiveButton(R.string.nobar_make_host) { _, _ -> s.makeHost(m.clientId) }
-                            .setNegativeButton(R.string.sort_cancel, null)
+                            .setTitle(m.name)
+                            .setItems(items) { _, which ->
+                                when (which) {
+                                    0 -> s.setCohost(m.clientId, !isCohost)
+                                    1 -> AlertDialog.Builder(activity, R.style.AlertDialogCustom)
+                                        .setMessage(activity.getString(R.string.nobar_make_host_confirm, m.name))
+                                        .setPositiveButton(R.string.nobar_make_host) { _, _ -> s.makeHost(m.clientId) }
+                                        .setNegativeButton(R.string.sort_cancel, null)
+                                        .show()
+                                }
+                            }
                             .show()
                     }
                 }
