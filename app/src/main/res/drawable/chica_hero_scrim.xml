@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Bottom scrim under the hero's title and buttons, in the page's own plum. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:angle="90"
+        android:centerY="0.45"
+        android:endColor="#001C1721"
+        android:centerColor="#991C1721"
+        android:startColor="#F21C1721" />
+</shape>

@@ -94,7 +94,9 @@
         <item name="chipBackgroundColor">@color/chip_color</item>
         <item name="chipStrokeColor">@color/white_transparent_toggle</item>
         <!--        <item name="chipStrokeColor">@color/transparent</item>-->
-        <item name="chipStrokeWidth">2dp</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="chipCornerRadius">50dp</item>
+        <item name="chipMinHeight">36dp</item>
         <item name="textColor">@color/chip_color_text</item>
         <item name="android:textColor">@color/chip_color_text</item>
         <item name="checkedIconTint">@color/chip_color_text</item>
@@ -124,6 +126,81 @@
         <item name="chipSpacingVertical">-5dp</item>
         <item name="chipSpacingHorizontal">5dp</item>
         <item name="textColor">?attr/textColor</item>
+    </style>
+
+    <!-- Chica family: plum dark (default) and blush light. -->
+    <style name="ChicaMode">
+        <item name="primaryGrayBackground">@color/chicaSurface</item>
+        <item name="primaryBlackBackground">@color/chicaBg</item>
+        <item name="iconGrayBackground">@color/chicaBar</item>
+        <item name="boxItemBackground">@color/chicaSurface</item>
+        <item name="textColor">@color/chicaInk</item>
+        <item name="grayTextColor">@color/chicaMuted</item>
+        <item name="iconColor">@color/chicaMuted</item>
+        <item name="white">@color/chicaInk</item>
+        <item name="black">@color/chicaBg</item>
+        <item name="account_unselected_stroke">@color/chicaLine</item>
+        <item name="colorOnPrimary">@color/chicaOnPink</item>
+    </style>
+
+    <style name="ChicaLightMode">
+        <item name="primaryGrayBackground">@color/chicaLightSurface</item>
+        <item name="primaryBlackBackground">@color/chicaLightBg</item>
+        <item name="iconGrayBackground">@color/chicaLightSurface</item>
+        <item name="boxItemBackground">@color/chicaLightSurface</item>
+        <item name="textColor">@color/chicaLightInk</item>
+        <item name="grayTextColor">@color/chicaLightMuted</item>
+        <item name="iconColor">@color/chicaLightMuted</item>
+        <item name="white">@color/chicaLightInk</item>
+        <item name="black">@color/chicaLightBg</item>
+        <item name="account_unselected_stroke">@color/chicaLightLine</item>
+        <item name="colorOnPrimary">@color/chicaOnPink</item>
+        <item name="isLightTheme">true</item>
+        <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
+    </style>
+
+    <style name="OverlayPrimaryColorBlush">
+        <item name="colorPrimary">@color/chicaPink</item>
+        <item name="android:colorPrimary">@color/chicaPink</item>
+        <item name="colorPrimaryDark">@color/chicaOnPink</item>
+        <item name="colorAccent">@color/chicaPink</item>
+        <item name="colorOnPrimary">@color/chicaOnPink</item>
+        <item name="android:colorAccent">@color/chicaPink</item>
+    </style>
+
+    <!-- Chica family buttons: the blush pill is the one primary action on a surface. -->
+    <style name="ChicaPrimaryButton" parent="NiceButton">
+        <item name="backgroundTint">?attr/colorPrimary</item>
+        <item name="iconTint">?attr/colorOnPrimary</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="rippleColor">@color/chicaPinkLight</item>
+        <item name="strokeWidth">0dp</item>
+        <item name="android:layout_marginStart">0dp</item>
+        <item name="android:layout_marginEnd">0dp</item>
+    </style>
+
+    <style name="ChicaOutlineButton" parent="NiceButton">
+        <item name="backgroundTint">@color/transparent</item>
+        <item name="strokeColor">?attr/textColor</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="iconTint">?attr/textColor</item>
+        <item name="android:textColor">?attr/textColor</item>
+        <item name="rippleColor">?attr/primaryGrayBackground</item>
+        <item name="android:layout_marginStart">0dp</item>
+        <item name="android:layout_marginEnd">0dp</item>
+    </style>
+
+    <!-- Source pill on Home: selected = blush fill, others = hairline outline. -->
+    <style name="ChicaSourcePill" parent="ChipFilled">
+        <item name="chipBackgroundColor">@color/chica_pill_bg</item>
+        <item name="chipStrokeColor">@color/chica_pill_stroke</item>
+        <item name="chipStrokeWidth">1dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="chipMinHeight">38dp</item>
+        <item name="chipStartPadding">6dp</item>
+        <item name="chipEndPadding">6dp</item>
+        <item name="android:tag">@null</item>
+        <item name="android:focusable">true</item>
     </style>
 
     <style name="AmoledMode">
@@ -697,7 +774,9 @@
         <item name="android:padding">5dp</item>
         <item name="android:layout_marginStart">5dp</item>
         <item name="android:layout_marginEnd">5dp</item>
-        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:paddingStart">18dp</item>
+        <item name="android:paddingEnd">20dp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textAllCaps">false</item>
         <item name="iconGravity">textStart</item>

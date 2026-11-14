@@ -5,6 +5,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isGone
 import com.lagradost.cloudstream3.LoadResponse
+import com.lagradost.cloudstream3.R
+import com.lagradost.cloudstream3.TvType
 import com.lagradost.cloudstream3.databinding.HomeScrollViewBinding
 import com.lagradost.cloudstream3.databinding.HomeScrollViewTvBinding
 import com.lagradost.cloudstream3.ui.BaseDiffCallback
@@ -60,9 +62,16 @@ class HomeScrollAdapter(
             is HomeScrollViewBinding -> {
                 binding.homeScrollPreview.loadImage(posterUrl, item.posterHeaders)
                 binding.homeScrollPreviewTags.apply {
-                    text = item.tags?.joinToString(" • ") ?: ""
-                    isGone = item.tags.isNullOrEmpty()
-                    maxLines = 2
+                    val context = binding.root.context
+                    // "Series · 2026 · ★ 9.0", then the first genres when there is room.
+                    val meta = listOfNotNull(
+                        context.getString(typeLabel(item.type)),
+                        item.year?.toString(),
+                        item.score?.toStringNull(0.1, 10, 1, false)?.let { "\u2605 $it" },
+                    ) + (item.tags?.take(2) ?: emptyList())
+                    text = meta.joinToString(" \u00B7 ")
+                    isGone = meta.isEmpty()
+                    maxLines = 1
                 }
                 binding.homeScrollPreviewTitle.text = item.name.html()
 
@@ -83,4 +92,22 @@ class HomeScrollAdapter(
             }
         }
     }
+}
+
+/** Short type label for the hero's meta line ("Series · 2026 · ★ 9.0"). */
+private fun typeLabel(type: TvType): Int = when (type) {
+    TvType.Movie, TvType.AnimeMovie -> R.string.movies_singular
+    TvType.TvSeries -> R.string.tv_series_singular
+    TvType.Anime -> R.string.anime_singular
+    TvType.OVA -> R.string.ova_singular
+    TvType.Cartoon -> R.string.cartoons_singular
+    TvType.Documentary -> R.string.documentaries_singular
+    TvType.AsianDrama -> R.string.asian_drama_singular
+    TvType.Live -> R.string.live_singular
+    TvType.Torrent -> R.string.torrent_singular
+    TvType.NSFW -> R.string.nsfw_singular
+    TvType.Music -> R.string.music_singular
+    TvType.AudioBook -> R.string.audio_book_singular
+    TvType.CustomMedia -> R.string.custom_media_singular
+    TvType.Others -> R.string.other_singular
 }

@@ -699,7 +699,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
             homeMasterRecycler.setRecycledViewPool(ParentItemAdapter.sharedPool)
             homeMasterRecycler.adapter = homeMasterAdapter
 
-            homeApiFab.isVisible = isLayout(PHONE)
+            homeApiFab.isVisible = false // phone: the source pills on the header replace the FAB
 
             homePreviewReloadProvider.setOnClickListener {
                 homeViewModel.loadAndCancel(

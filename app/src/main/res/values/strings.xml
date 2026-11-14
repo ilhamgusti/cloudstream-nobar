@@ -881,4 +881,5 @@
     <string name="nobar_new_host">%s is the host now</string>
     <string name="nobar_you_are_host">You\'re the host now</string>
     <string name="nobar_kicked">You were removed from the room</string>
+    <string name="home_all_sources">All sources</string>
 </resources>

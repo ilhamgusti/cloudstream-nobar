@@ -28,6 +28,7 @@ import com.lagradost.cloudstream3.MainActivity
 import com.lagradost.cloudstream3.R
 import com.lagradost.cloudstream3.SearchResponse
 import com.lagradost.cloudstream3.databinding.FragmentHomeHeadBinding
+import com.lagradost.cloudstream3.nobar.NobarDialog
 import com.lagradost.cloudstream3.databinding.FragmentHomeHeadTvBinding
 import com.lagradost.cloudstream3.mvvm.Resource
 import com.lagradost.cloudstream3.mvvm.debugException
@@ -509,6 +510,8 @@ class HomeParentItemAdapterPreview(
 
         fun bind() = Unit
 
+        private val sourcePills = HomeSourcePillAdapter(viewModel)
+
         init {
             previewViewpager.setPageTransformer(HomeScrollTransformer())
 
@@ -640,6 +643,11 @@ class HomeParentItemAdapterPreview(
             }
 
             (binding as? FragmentHomeHeadBinding)?.apply {
+                homeSourcePills.adapter = sourcePills
+                homeSourcePills.itemAnimator = null
+                homePreviewNobar.setOnClickListener {
+                    activity?.let { act -> NobarDialog.show(act) }
+                }
                 homeSearch.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String): Boolean {
                         viewModel.queryTextSubmit(query)
@@ -797,6 +805,9 @@ class HomeParentItemAdapterPreview(
                         binding.homePreviewReloadProvider.isGone = (name == noneApi.name)
                     }
                 }*/
+                observe(viewModel.apiName) { name ->
+                    sourcePills.refresh(context, name)
+                }
                 observe(viewModel.resumeWatching) {
                     updateResume(it)
                 }
