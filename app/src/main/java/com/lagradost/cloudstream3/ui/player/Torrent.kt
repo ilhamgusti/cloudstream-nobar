@@ -2,7 +2,13 @@ package com.lagradost.cloudstream3.ui.player
 
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.lagradost.api.Log
+import android.widget.Toast
 import com.lagradost.cloudstream3.CommonActivity
+import com.lagradost.cloudstream3.CommonActivity.showToast
+import com.lagradost.cloudstream3.R
+import com.lagradost.cloudstream3.utils.NativeLibs
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import com.lagradost.cloudstream3.ErrorLoadingException
 import com.lagradost.cloudstream3.app
 import com.lagradost.cloudstream3.mvvm.logError
@@ -199,6 +205,18 @@ object Torrent {
 
     /** Spins up the torrent server. */
     private suspend fun setup(dir: String): Boolean {
+        // Nobar: the torrent server's native library is downloaded the first time it is needed.
+        if (!NativeLibs.isLoaded(NativeLibs.TORRENT)) {
+            val ok = withContext(Dispatchers.IO) {
+                if (NativeLibs.loadIfDownloaded(NativeLibs.TORRENT)) return@withContext true
+                withContext(Dispatchers.Main) { showToast(R.string.torrent_engine_downloading, Toast.LENGTH_LONG) }
+                NativeLibs.ensure(NativeLibs.TORRENT)
+            }
+            if (!ok) {
+                withContext(Dispatchers.Main) { showToast(R.string.torrent_engine_unavailable, Toast.LENGTH_LONG) }
+                return false
+            }
+        }
         go.Seq.load()
         if (echo()) {
             return true

@@ -1,4 +1,6 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.security.MessageDigest
+import java.util.zip.ZipFile
 import org.jetbrains.dokka.gradle.engine.parameters.KotlinPlatform
 import org.jetbrains.dokka.gradle.engine.parameters.VisibilityModifier
 import org.jetbrains.kotlin.gradle.dsl.JvmDefaultMode
@@ -59,6 +61,52 @@ val generateGitHash = tasks.register<GenerateGitHashTask>("generateGitHash") {
     headsDir.set(gitDir.dir("refs/heads"))
 
     outputDir.set(layout.buildDirectory.dir("generated/git"))
+}
+
+// Native libraries downloaded on first use instead of shipped in the APK (see NativeLibs.kt):
+// FFmpeg (software decoding, fetched in the background after first launch) and the torrent server
+// (fetched the first time a torrent is played). CI uploads them to the release `natives-<hash>`.
+// libavformat/libmediainfo come only from nextlib-mediainfo, which the app never calls: not shipped.
+data class NativeSo(val group: String, val abi: String, val name: String, val entry: String, val aar: File, val sha256: String, val size: Long)
+val nativeGroups = mapOf(
+    "ffmpeg" to listOf("io.github.anilbeesetti:nextlib-media3ext:${libs.versions.nextlibMedia3.get()}@aar"),
+    "torrent" to listOf("com.github.recloudstream:torrentserver:${libs.versions.torrentserver.get()}@aar"),
+)
+val nativeAbis = listOf("arm64-v8a", "armeabi-v7a")
+val nativeLibs: List<NativeSo> by lazy {
+    nativeGroups.flatMap { (group, coords) ->
+        coords.flatMap { coord ->
+            val aar = configurations.detachedConfiguration(dependencies.create(coord)).apply { isTransitive = false }.singleFile
+            ZipFile(aar).use { zip ->
+                zip.entries().toList().mapNotNull { e ->
+                    val m = Regex("jni/([^/]+)/(lib[^/]+\\.so)").matchEntire(e.name) ?: return@mapNotNull null
+                    val (abi, name) = m.destructured
+                    if (abi !in nativeAbis) return@mapNotNull null
+                    val bytes = zip.getInputStream(e).readBytes()
+                    val sha = MessageDigest.getInstance("SHA-256").digest(bytes).joinToString("") { "%02x".format(it) }
+                    NativeSo(group, abi, name, e.name, aar, sha, bytes.size.toLong())
+                }
+            }
+        }
+    }.distinctBy { Triple(it.group, it.abi, it.name) }
+}
+val nativeSpec: String by lazy { nativeLibs.joinToString(",") { "${it.group}:${it.abi}:${it.name}:${it.sha256}:${it.size}" } }
+val nativeTag: String by lazy {
+    "natives-" + MessageDigest.getInstance("SHA-256").digest(nativeSpec.toByteArray()).joinToString("") { "%02x".format(it) }.take(10)
+}
+
+tasks.register("exportNativeLibs") {
+    description = "Writes the lazily loaded native libraries and their release tag to build/natives."
+    doLast {
+        val out = layout.buildDirectory.dir("natives").get().asFile
+        out.deleteRecursively(); out.mkdirs()
+        nativeLibs.forEach { so ->
+            ZipFile(so.aar).use { zip ->
+                File(out, "${so.abi}-${so.name}").writeBytes(zip.getInputStream(zip.getEntry(so.entry)).readBytes())
+            }
+        }
+        File(out, "TAG").writeText(nativeTag)
+    }
 }
 
 android {
@@ -142,6 +190,8 @@ android {
             "NOBAR_SERVER",
             "\"" + (System.getenv("NOBAR_SERVER") ?: localProperties["nobar.server"] ?: "https://syncroom.invitee.app") + "\""
         )
+        buildConfigField("String", "NATIVE_URL", "\"https://github.com/ilhamgusti/cloudstream-nobar/releases/download/$nativeTag\"")
+        buildConfigField("String", "NATIVE_LIBS", "\"$nativeSpec\"")
         buildConfigField(
             "String",
             "ANILIST_KEY",
@@ -217,6 +267,11 @@ android {
             // Enables legacy JNI packaging to reduce APK size (similar to builds before minSdk 23).
             // Note: This may increase app startup time slightly.
             useLegacyPackaging = true
+            // Downloaded on first use (NativeLibs.kt), or never used (avformat, mediainfo).
+            excludes += listOf(
+                "**/libgojni.so", "**/libavcodec.so", "**/libavutil.so", "**/libswresample.so",
+                "**/libswscale.so", "**/libmedia3ext.so", "**/libavformat.so", "**/libmediainfo.so",
+            )
         }
     }
 

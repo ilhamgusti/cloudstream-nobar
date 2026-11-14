@@ -882,4 +882,6 @@
     <string name="nobar_you_are_host">You\'re the host now</string>
     <string name="nobar_kicked">You were removed from the room</string>
     <string name="home_all_sources">All sources</string>
+    <string name="torrent_engine_downloading">Downloading the torrent engine (one time)…</string>
+    <string name="torrent_engine_unavailable">Torrent engine is unavailable. Check your connection and try again.</string>
 </resources>

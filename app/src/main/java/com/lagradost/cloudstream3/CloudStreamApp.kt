@@ -2,6 +2,7 @@ package com.lagradost.cloudstream3
 
 import android.app.Activity
 import android.app.Application
+import com.lagradost.cloudstream3.utils.NativeLibs
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
@@ -84,6 +85,13 @@ class CloudStreamApp : Application(), SingletonImageLoader.Factory {
         }
 
         AppDebug.isDebug = BuildConfig.DEBUG
+
+        // Nobar: FFmpeg (software decoding) is not in the APK. Load it if it is already on the
+        // device, else fetch it in the background; until then the player runs without it.
+        NativeLibs.init(this)
+        Thread({
+            if (!NativeLibs.loadIfDownloaded(NativeLibs.FFMPEG)) NativeLibs.ensure(NativeLibs.FFMPEG)
+        }, "nativelibs").apply { isDaemon = true; priority = Thread.MIN_PRIORITY }.start()
     }
 
     override fun attachBaseContext(base: Context?) {

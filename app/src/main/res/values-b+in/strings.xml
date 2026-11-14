@@ -828,4 +828,6 @@
     <string name="nobar_you_are_host">Kamu sekarang host</string>
     <string name="nobar_kicked">Kamu dikeluarkan dari room</string>
     <string name="home_all_sources">Semua sumber</string>
+    <string name="torrent_engine_downloading">Mengunduh mesin torrent (sekali saja)…</string>
+    <string name="torrent_engine_unavailable">Mesin torrent tidak tersedia. Periksa koneksi lalu coba lagi.</string>
 </resources>
