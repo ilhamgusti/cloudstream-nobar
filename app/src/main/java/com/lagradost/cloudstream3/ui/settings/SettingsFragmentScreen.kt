@@ -437,7 +437,10 @@ object SettingsFragmentScreen : Screen {
             // This can not be converted to joinToString due to stringResource being composable
             subtitle =
                 @Suppress("SimplifiableCallChain")
-                settingsTab.subtitle.map { stringResource(it) }.joinToString(),
+                settingsTab.subtitle
+                    // Nobar on TV has no downloads, so don't advertise them.
+                    .filter { !(it == R.string.title_downloads && isLayout(TV)) }
+                    .map { stringResource(it) }.joinToString(),
             // Clear it if we have already set it but navigated back instantly
             onPreferenceClick = {
                 SearchableSettings.highlightKey = null

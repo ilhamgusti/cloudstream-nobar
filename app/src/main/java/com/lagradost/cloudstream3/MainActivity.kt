@@ -1713,6 +1713,7 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
         val activePill = ColorStateList.valueOf(getResourceColor(R.attr.colorPrimary, 1.0f))
 
         binding?.navView?.apply {
+            menu.findItem(R.id.navigation_library)?.isVisible = false // Nobar: Library is unused
             itemRippleColor = rippleColor
             itemActiveIndicatorColor = activePill
             setupWithNavController(navController)
@@ -1780,6 +1781,8 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
             // write a nextFocus for the navrail
             // Nobar on TV: no Downloads destination (TV storage is small).
             if (isLayout(TV or EMULATOR)) rail.menu.findItem(R.id.navigation_downloads)?.isVisible = false
+            // Nobar: no Library destination anywhere (unused).
+            rail.menu.findItem(R.id.navigation_library)?.isVisible = false
             rail.findViewById<View?>(R.id.navigation_settings)?.nextFocusDownId =
                 R.id.navigation_settings
             for (id in arrayOf(
@@ -1790,6 +1793,7 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
                 R.id.navigation_settings
             )) {
                 if (id == R.id.navigation_downloads && isLayout(TV or EMULATOR)) continue
+                if (id == R.id.navigation_library) continue
                 val view = rail.findViewById<View?>(id) ?: continue
                 prevId?.let { view.nextFocusUpId = it }
                 prevView?.nextFocusDownId = id
