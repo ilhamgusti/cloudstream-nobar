@@ -533,8 +533,9 @@ class HomeParentItemAdapterPreview(
                 }
             }
 
-            headProfilePicCard?.isGone = isLayout(TV or EMULATOR)
-            alternateHeadProfilePicCard?.isGone = isLayout(TV or EMULATOR)
+            // Nobar has no profiles: no avatar on the header.
+            headProfilePicCard?.isGone = true
+            alternateHeadProfilePicCard?.isGone = true
 
             (headProfilePic ?: alternateHeadProfilePic)?.observe(viewModel.currentAccount) { currentAccount ->
                 headProfilePic?.loadImage(currentAccount?.image)

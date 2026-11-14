@@ -1763,30 +1763,8 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
 
             val navProfileRoot = findViewById<LinearLayout>(R.id.nav_footer_root)
 
-            if (isLayout(TV or EMULATOR)) {
-                val navProfilePic = findViewById<ImageView>(R.id.nav_footer_profile_pic)
-                val navProfileCard = findViewById<CardView>(R.id.nav_footer_profile_card)
-
-                navProfileCard?.setOnClickListener {
-                    showAccountSelectLinear()
-                }
-
-                val homeViewModel =
-                    ViewModelProvider(this@MainActivity)[HomeViewModel::class.java]
-
-                observe(homeViewModel.currentAccount) { currentAccount ->
-                    if (currentAccount != null) {
-                        navProfilePic?.loadImage(
-                            currentAccount.image
-                        )
-                        navProfileRoot.isVisible = true
-                    } else {
-                        navProfileRoot.isGone = true
-                    }
-                }
-            } else {
-                navProfileRoot.isGone = true
-            }
+            // Nobar has no profiles: the rail never shows the account avatar.
+            navProfileRoot.isGone = true
         }
 
         val rail = binding?.navRailView
@@ -1801,7 +1779,7 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
             // The genius engineers at google did not actually 
             // write a nextFocus for the navrail
             rail.findViewById<View?>(R.id.navigation_settings)?.nextFocusDownId =
-                R.id.nav_footer_profile_card
+                R.id.navigation_settings
             for (id in arrayOf(
                 R.id.navigation_home,
                 R.id.navigation_search,

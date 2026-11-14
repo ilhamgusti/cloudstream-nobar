@@ -689,9 +689,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                 true
             }
             homeChangeApi.setOnClickListener(apiChangeClickListener)
-            homeSwitchAccount.setOnClickListener {
-                activity?.showAccountSelectLinear()
-            }
+            homeSwitchAccount.isGone = true // Nobar has no profiles
 
             homeMasterAdapter = HomeParentItemAdapterPreview(
                 homeViewModel, accountViewModel

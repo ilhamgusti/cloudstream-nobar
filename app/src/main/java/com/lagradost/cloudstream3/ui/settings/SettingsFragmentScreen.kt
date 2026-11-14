@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -230,57 +231,30 @@ object SettingsFragmentScreen : Screen {
             Column(modifier = Modifier.verticalScroll(outerListState)) {
                 Spacer(modifier = Modifier.height(MaterialTheme.padding.small))
 
-                val default = DataStoreHelper.getDefaultAccount(
-                    LocalContext.current
-                )
-                val flow by DataStoreHelper.selectedAccountNumberFlow.collectAsState()
-                val account = remember(flow) {
-                    DataStoreHelper.getCurrentAccount() ?: default
-                }
-
+                // Nobar has no profiles: a plain header (brand mark + title) instead of the account row.
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(horizontal = MaterialTheme.padding.small)
-                        .clip(RoundedCornerShape(16.dp))
-                        .focusOutline(shape = RoundedCornerShape(16.dp))
-                        .clickable {
-                            activity.navigate(
-                                R.id.accountSelectActivity,
-                                Bundle().apply { putBoolean("isFromMainActivity", true) }
-                            )
-                        }
                         .padding(
                             vertical = MaterialTheme.padding.medium,
-                            horizontal = MaterialTheme.padding.small
+                            horizontal = MaterialTheme.padding.medium
                         )
                 ) {
-                    val image =
-                        account.customImage ?: profileImages.getOrNull(account.defaultImageIndex)
-                        ?: profileImages.first()
-
-                    AsyncImage(
-                        contentScale = ContentScale.Crop,
-                        model = image,
-                        modifier = Modifier.circleBorder(52.dp),
+                    androidx.compose.foundation.Image(
+                        painter = painterResource(R.drawable.brand_mark),
                         contentDescription = null,
+                        modifier = Modifier
+                            .size(40.dp)
+                            .clip(RoundedCornerShape(12.dp)),
                     )
                     Spacer(modifier = Modifier.width(MaterialTheme.padding.medium))
-                    Column {
-                        Text(
-                            text = account.name,
-                            style = MaterialTheme.typography.titleLarge,
-                            fontWeight = FontWeight.SemiBold,
-                            color = MaterialTheme.colorScheme.onBackground,
-                        )
-                        Text(
-                            text = stringResource(R.string.title_settings),
-                            style = MaterialTheme.typography.bodyMedium,
-                            fontSize = 13.sp,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant,
-                        )
-                    }
+                    Text(
+                        text = stringResource(R.string.title_settings),
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onBackground,
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(MaterialTheme.padding.small))
