@@ -157,6 +157,8 @@ object SettingsGeneralScreen : SearchableSettings {
             )),
 
             Preference.PreferenceGroup(
+                // Nobar on TV: no downloads (TV storage is small), so no download settings.
+                enabled = isLayout(PHONE),
                 title = stringResource(R.string.title_downloads),
                 preferenceItems = persistentListOf(
                     Preference.PreferenceItem.TextPreference(

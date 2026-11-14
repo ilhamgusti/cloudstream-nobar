@@ -896,7 +896,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
 
                         // Show the downloads button if we have any sort of network shenanigans
                         homeReloadConnectionGoToDownloads.isVisible =
-                            hasNoNetworkConnection || isNetworkError
+                            (hasNoNetworkConnection || isNetworkError) && isLayout(PHONE)
 
                         // Only hide the open in browser button if we know this is not network shenanigans related to cs3
                         homeReloadConnectionOpenInBrowser.isGone = hasNoNetworkConnection
