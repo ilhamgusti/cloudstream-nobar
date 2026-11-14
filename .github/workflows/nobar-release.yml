@@ -88,7 +88,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          ./gradlew :app:exportNativeLibs
+          ./gradlew --no-configuration-cache :app:exportNativeLibs
           d=app/build/natives; tag=$(cat $d/TAG)
           gh release view "$tag" >/dev/null 2>&1 || gh release create "$tag" --prerelease \
             --title "Native libraries ${tag#natives-}" \
