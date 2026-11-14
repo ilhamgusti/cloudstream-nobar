@@ -35,9 +35,9 @@
                 android:id="@+id/home_preview_info_btt"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
-                android:layout_marginStart="10dp"
+                android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginEnd="16dp"
 
                 android:backgroundTint="@color/transparent"
                 android:focusable="true"
@@ -47,7 +47,8 @@
                 android:nextFocusUp="@id/home_change_api"
                 android:nextFocusDown="@id/home_watch_child_recyclerview"
 
-                app:cardCornerRadius="@dimen/rounded_image_radius">
+                app:cardCornerRadius="16dp"
+                app:cardElevation="0dp">
 
                 <androidx.viewpager2.widget.ViewPager2
                     android:id="@+id/home_preview_viewpager"
@@ -64,7 +65,7 @@
                     android:id="@+id/home_preview_viewpager_text"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/player_gradient_tv"
+                    android:background="@drawable/chica_hero_scrim_tv"
                     android:layout_gravity="bottom"
                     android:layout_marginStart="@dimen/navbar_width"
                     android:gravity="bottom"
@@ -83,7 +84,7 @@
 
 
                     <TextView
-                        android:textColor="@color/textColor"
+                        android:textColor="@color/chicaInk"
                         android:id="@+id/home_preview_text"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -110,13 +111,8 @@
                             android:id="@+id/home_preview_score"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:background="@drawable/rating_bg_color"
-                            android:textColor="@color/white"
+                            android:textColor="@color/chicaRating"
                             android:textStyle="bold"
-                            android:paddingStart="6dp"
-                            android:paddingEnd="6dp"
-                            android:paddingTop="2dp"
-                            android:paddingBottom="2dp"
                             android:layout_marginEnd="12dp"
                             tools:text="IMDb : 8.5" />
 

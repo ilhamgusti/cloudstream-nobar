@@ -1709,10 +1709,12 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
             .build()*/
 
         val rippleColor = ColorStateList.valueOf(getResourceColor(R.attr.colorPrimary, 0.1f))
+        // Chica: the selected destination sits on a solid blush pill.
+        val activePill = ColorStateList.valueOf(getResourceColor(R.attr.colorPrimary, 1.0f))
 
         binding?.navView?.apply {
             itemRippleColor = rippleColor
-            itemActiveIndicatorColor = rippleColor
+            itemActiveIndicatorColor = activePill
             setupWithNavController(navController)
             setOnItemSelectedListener { item ->
                 onNavDestinationSelected(
@@ -1726,14 +1728,13 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
         binding?.navRailView?.apply {
             if (isLayout(PHONE)) {
                 itemRippleColor = rippleColor
-                itemActiveIndicatorColor = rippleColor
+                itemActiveIndicatorColor = activePill
             } else {
-                val rippleColor = ColorStateList.valueOf(getResourceColor(R.attr.textColor, 1.0f))
                 val rippleColorTransparent =
                     ColorStateList.valueOf(getResourceColor(R.attr.textColor, 0.2f))
                 itemSpacing = 12.toPx // expandedItemSpacing does not have an attr
                 itemRippleColor = rippleColorTransparent
-                itemActiveIndicatorColor = rippleColor
+                itemActiveIndicatorColor = activePill
             }
             setupWithNavController(navController)
             /*if (isLayout(TV or EMULATOR)) {

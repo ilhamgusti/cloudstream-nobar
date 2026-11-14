@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Navigation icons: on the blush active pill when selected, muted otherwise. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:color="?attr/colorOnPrimary" android:state_checked="true" />
+    <item android:color="?attr/colorOnPrimary" android:state_selected="true" />
+    <item android:color="?attr/textColor" android:state_focused="true" />
+    <item android:color="?attr/grayTextColor" />
+</selector>

@@ -109,5 +109,5 @@ private fun typeLabel(type: TvType): Int = when (type) {
     TvType.Music -> R.string.music_singular
     TvType.AudioBook -> R.string.audio_book_singular
     TvType.CustomMedia -> R.string.custom_media_singular
-    TvType.Others -> R.string.other_singular
+    else -> R.string.other_singular
 }
