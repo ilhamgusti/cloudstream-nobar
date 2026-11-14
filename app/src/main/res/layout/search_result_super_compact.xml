@@ -20,7 +20,8 @@
             android:focusable="true">
         <!-- USING CROP RATIO (182/268), centerCrop for fill -->
         <androidx.cardview.widget.CardView
-                app:cardCornerRadius="@dimen/rounded_image_radius"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="0dp"
                 android:layout_width="35dp"
                 android:elevation="0dp"
                 android:layout_height="match_parent">
@@ -47,7 +48,7 @@
                     tools:text="@string/no_data"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="17sp"
+                    android:textSize="16sp"
                     android:textColor="?attr/textColor"
                     android:id="@+id/imageText"
                     android:textStyle="normal"
@@ -61,7 +62,7 @@
                     android:textColor="?attr/grayTextColor"
                     android:id="@+id/imageTextExtra"
                     android:textSize="13sp"
-                    android:textStyle="bold"
+                    android:textStyle="normal"
                     android:maxLines="3" />
 
             <TextView
@@ -69,7 +70,8 @@
                     android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textColor="?attr/colorPrimary"
+                    android:textColor="?attr/grayTextColor"
+                    android:textSize="13sp"
                     android:id="@+id/imageTextProvider"
                     android:maxLines="1" />
         </LinearLayout>

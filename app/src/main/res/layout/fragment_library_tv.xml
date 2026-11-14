@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/library_root"
-    android:background="?attr/primaryGrayBackground"
+    android:background="?attr/primaryBlackBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,6 +15,8 @@
         android:layout_gravity="center"
         android:layout_margin="30dp"
         android:gravity="center"
+        android:textColor="?attr/grayTextColor"
+        android:textSize="15sp"
         android:visibility="gone"
         tools:visibility="visible" />
 
@@ -22,76 +24,68 @@
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/primaryGrayBackground">
+        android:background="?attr/primaryBlackBackground"
+        app:elevation="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:paddingStart="12dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="4dp"
             app:layout_scrollFlags="scroll|enterAlways">
 
             <ImageView
                 android:id="@+id/provider_selector"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="end|center_vertical"
-                android:layout_marginStart="10dp"
-                android:background="?selectableItemBackgroundBorderless"
+                style="@style/ChicaListsPillIcon"
+                android:layout_marginStart="4dp"
                 android:contentDescription="@string/change_providers_img_des"
                 android:focusable="true"
                 android:nextFocusLeft="@id/navigation_library"
                 android:nextFocusRight="@id/library_sort"
-                android:padding="2dp"
                 android:src="@drawable/ic_baseline_extension_24"
-                android:tag="@string/tv_no_focus_tag"
-                app:tint="?attr/textColor" />
+                android:tag="@string/tv_no_focus_tag" />
 
             <ImageView
                 android:id="@+id/library_sort"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="end|center_vertical"
-                android:layout_marginStart="10dp"
-                android:background="?selectableItemBackgroundBorderless"
+                style="@style/ChicaListsPillIcon"
+                android:layout_marginStart="4dp"
                 android:contentDescription="@string/change_providers_img_des"
                 android:focusable="true"
                 android:nextFocusLeft="@id/provider_selector"
                 android:nextFocusRight="@id/list_selector"
                 android:src="@drawable/ic_baseline_sort_24"
-                android:tag="@string/tv_no_focus_tag"
-                app:tint="?attr/textColor" />
+                android:tag="@string/tv_no_focus_tag" />
 
             <ImageView
                 android:id="@+id/list_selector"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="end|center_vertical"
-                android:layout_marginStart="10dp"
-                android:background="?selectableItemBackgroundBorderless"
+                style="@style/ChicaListsPillIcon"
+                android:layout_marginStart="4dp"
                 android:contentDescription="@string/change_providers_img_des"
                 android:focusable="true"
                 android:nextFocusLeft="@id/library_sort"
                 android:nextFocusRight="@id/main_search"
-                android:padding="1dp"
                 android:src="@drawable/ic_baseline_filter_list_24"
-                android:tag="@string/tv_no_focus_tag"
-                app:tint="?attr/textColor" />
+                android:tag="@string/tv_no_focus_tag" />
 
             <FrameLayout
                 android:layout_width="0dp"
-                android:layout_height="40dp"
-                android:layout_margin="10dp"
+                android:layout_height="56dp"
+                android:layout_marginHorizontal="12dp"
                 android:layout_weight="1"
-                android:background="@drawable/search_background"
+                android:addStatesFromChildren="true"
+                android:background="@drawable/chica_lists_search_pill"
+                android:paddingHorizontal="8dp"
                 android:visibility="visible"
                 app:layout_scrollFlags="scroll|enterAlways">
 
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/main_search"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="end"
-
+                    android:layout_height="44dp"
+                    android:layout_gravity="center_vertical"
                     android:focusable="true"
                     android:iconifiedByDefault="false"
                     android:imeOptions="actionSearch"
@@ -112,40 +106,36 @@
 
             <ImageView
                 android:id="@+id/library_random_button_tv"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="end|center_vertical"
-                android:layout_marginEnd="10dp"
-                android:background="?selectableItemBackgroundBorderless"
+                style="@style/ChicaListsPillIcon"
+                android:layout_marginEnd="8dp"
                 android:contentDescription="@string/home_random"
                 android:focusable="true"
                 android:nextFocusLeft="@id/main_search"
                 android:nextFocusDown="@id/search_result_root"
-                android:padding="8dp"
                 android:src="@drawable/ic_baseline_play_arrow_24"
                 android:tag="@string/tv_no_focus_tag"
-                android:visibility="gone"
-                app:tint="?attr/textColor" />
+                android:visibility="gone" />
         </LinearLayout>
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/library_tab_layout"
             style="@style/Theme.Widget.Tabs"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="56dp"
             android:layout_gravity="top"
-            android:background="?attr/primaryGrayBackground"
+            android:background="?attr/primaryBlackBackground"
             android:focusable="true"
             android:nextFocusDown="@id/search_result_root"
-            android:paddingHorizontal="5dp"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp"
             app:tabGravity="center"
             app:tabIndicator="@drawable/indicator_background"
-            app:tabIndicatorColor="?attr/white"
+            app:tabIndicatorColor="?attr/colorPrimary"
             app:tabIndicatorGravity="center"
-            app:tabIndicatorHeight="30dp"
+            app:tabIndicatorHeight="36dp"
             app:tabMode="scrollable"
-            app:tabRippleColor="?attr/textColor"
-            app:tabSelectedTextColor="?attr/primaryBlackBackground"
+            app:tabRippleColor="?attr/primaryGrayBackground"
+            app:tabSelectedTextColor="?attr/colorOnPrimary"
             app:tabTextAppearance="@style/TabNoCaps"
             app:tabTextColor="?attr/textColor" />
     </com.google.android.material.appbar.AppBarLayout>

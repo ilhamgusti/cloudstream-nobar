@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Episode row: 16:9 thumbnail (12dp corners) with a blush progress bar, title, meta, synopsis. -->
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,31 +8,35 @@
     android:layout_width="wrap_content"
 
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
+    android:layout_marginBottom="4dp"
     android:foreground="@drawable/outline_drawable"
     android:nextFocusRight="@id/download_button"
-    app:cardBackgroundColor="?attr/boxItemBackground"
-
+    app:cardBackgroundColor="@color/transparent"
+    app:cardElevation="0dp"
     app:cardCornerRadius="@dimen/rounded_image_radius">
 
     <LinearLayout
         android:id="@+id/episode_holder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:foreground="?android:attr/selectableItemBackgroundBorderless"
+        android:foreground="?android:attr/selectableItemBackground"
         android:orientation="vertical"
-        android:padding="10dp">
+        android:paddingHorizontal="4dp"
+        android:paddingVertical="8dp">
 
         <LinearLayout
             android:id="@+id/episode_lin_holder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <!--app:cardCornerRadius="@dimen/roundedImageRadius"-->
+
             <androidx.cardview.widget.CardView
-                android:layout_width="126dp"
-                android:layout_height="72dp"
-                android:foreground="@drawable/outline_drawable">
+                android:layout_width="144dp"
+                android:layout_height="81dp"
+                android:foreground="@drawable/outline_drawable"
+                app:cardBackgroundColor="?attr/primaryGrayBackground"
+                app:cardCornerRadius="@dimen/rounded_image_radius"
+                app:cardElevation="0dp">
 
                 <ImageView
                     android:id="@+id/episode_poster"
@@ -43,25 +48,17 @@
                     android:foreground="?android:attr/selectableItemBackgroundBorderless"
                     android:nextFocusRight="@id/download_button"
                     android:scaleType="centerCrop"
-                    tools:src="@drawable/example_poster"
-                    tools:visibility="invisible" />
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/episode_play_icon"-->
-<!--                    android:layout_width="36dp"-->
-<!--                    android:layout_height="36dp"-->
-<!--                    android:layout_gravity="center"-->
-<!--                    android:contentDescription="@string/play_episode"-->
-<!--                    android:src="@drawable/play_button"-->
-<!--                    tools:visibility="invisible" />-->
+                    tools:src="@drawable/example_poster" />
 
                 <ImageView
                     android:id="@+id/episode_upcoming_icon"
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
                     android:layout_gravity="center"
+                    android:importantForAccessibility="no"
                     android:src="@drawable/hourglass_24"
                     android:visibility="gone"
+                    app:tint="?attr/grayTextColor"
                     tools:visibility="visible" />
 
                 <FrameLayout
@@ -73,20 +70,36 @@
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/episode_play_icon"
                         style="@style/EpisodePlayUnderlayProgress"
-                        />
-                    <com.google.android.material.progressindicator.CircularProgressIndicator
-                        android:id="@+id/episode_progress"
-                        style="@style/EpisodeCircularProgress"
-                        tools:progress="100" />
+                        android:layout_width="36dp"
+                        android:layout_height="36dp" />
                 </FrameLayout>
+
+                <!-- Watch progress: blush bar along the bottom edge of the thumbnail. -->
+                <com.google.android.material.progressindicator.LinearProgressIndicator
+                    android:id="@+id/episode_progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginBottom="6dp"
+                    android:indeterminate="false"
+                    android:visibility="gone"
+                    app:indicatorColor="?attr/colorPrimary"
+                    app:indicatorTrackGapSize="0dp"
+                    app:trackColor="@color/white_attr_20"
+                    app:trackCornerRadius="2dp"
+                    app:trackStopIndicatorSize="0dp"
+                    app:trackThickness="4dp"
+                    tools:progress="60"
+                    tools:visibility="visible" />
             </androidx.cardview.widget.CardView>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="50dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="48dp"
                 android:orientation="vertical">
 
                 <LinearLayout
@@ -96,9 +109,9 @@
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/episode_filler"
-                        style="@style/SmallWhiteButton"
-                        android:layout_gravity="start"
-                        android:layout_marginEnd="10dp"
+                        style="@style/ChicaResultMetaPill"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginEnd="8dp"
                         android:text="@string/filler" />
 
                     <TextView
@@ -106,7 +119,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
+                        android:ellipsize="end"
+                        android:maxLines="2"
                         android:textColor="?attr/textColor"
+                        android:textSize="15sp"
                         android:textStyle="bold"
                         tools:text="1. Jobless" />
                 </LinearLayout>
@@ -115,15 +131,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
+                    android:layout_marginTop="2dp"
                     android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/episode_rating"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="10dp"
-                        android:textColor="?attr/grayTextColor"
-                        tools:text="Rated: 8.8" />
 
                     <TextView
                         android:id="@+id/episode_runtime"
@@ -131,7 +140,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
                         android:textColor="?attr/grayTextColor"
+                        android:textSize="13sp"
                         tools:text="80min" />
+
+                    <TextView
+                        android:id="@+id/episode_rating"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:textColor="?attr/grayTextColor"
+                        android:textSize="13sp"
+                        tools:text="Rated: 8.8" />
 
                 </LinearLayout>
 
@@ -140,6 +159,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="?attr/grayTextColor"
+                    android:textSize="13sp"
                     tools:text="15 Apr 2024" />
 
             </LinearLayout>
@@ -149,7 +169,7 @@
                 android:layout_width="@dimen/download_size"
                 android:layout_height="@dimen/download_size"
                 android:layout_gravity="center_vertical|end"
-                android:layout_marginStart="-50dp"
+                android:layout_marginStart="-48dp"
                 android:background="?selectableItemBackgroundBorderless"
                 android:padding="10dp" />
         </LinearLayout>
@@ -159,10 +179,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ellipsize="end"
+            android:lineSpacingExtra="2dp"
             android:maxLines="4"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+            android:paddingTop="8dp"
             android:textColor="?attr/grayTextColor"
-            tools:text="Jon and Daenerys arrive in Winterfell and are met with skepticism. Sam learns about the fate of his family. Cersei gives Euron the reward he aims for. Theon follows his heart. Jon and Daenerys arrive in Winterfell and are met with skepticism. Sam learns about the fate of his family. Cersei gives Euron the reward he aims for. Theon follows his heart." />
+            android:textSize="14sp"
+            tools:text="Jon and Daenerys arrive in Winterfell and are met with skepticism. Sam learns about the fate of his family. Cersei gives Euron the reward he aims for. Theon follows his heart." />
     </LinearLayout>
 </androidx.cardview.widget.CardView>

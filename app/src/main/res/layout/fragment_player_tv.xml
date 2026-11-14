@@ -39,7 +39,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/overlay_loading_skip_button"
-            style="@style/VideoButtonTV"
+            style="@style/ChicaPlayerPillTV"
 
             android:layout_width="wrap_content"
             android:layout_gravity="center"
@@ -59,6 +59,7 @@
             android:id="@+id/main_load"
             android:layout_width="50dp"
             android:layout_height="50dp"
+            android:indeterminateTint="?attr/colorPrimary"
             android:layout_gravity="center" />
 
         <FrameLayout

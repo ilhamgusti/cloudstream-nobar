@@ -25,9 +25,9 @@
         android:nextFocusRight="@id/cancel_btt"
         android:nextFocusLeft="@id/apply_btt"
         android:nextFocusDown="@id/apply_btt"
-        android:layout_marginBottom="60dp"
-        android:layout_marginHorizontal="10dp"
-        android:paddingTop="10dp"
+        android:layout_marginBottom="68dp"
+        android:layout_marginHorizontal="16dp"
+        style="@style/ChicaSheetField"
         android:requiresFadingEdge="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,10 +41,11 @@
         android:orientation="horizontal"
         android:layout_gravity="bottom"
         android:gravity="bottom|end"
-        android:layout_marginTop="-60dp"
-        android:padding="10dp"
+        android:layout_marginTop="-68dp"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="10dp"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="68dp">
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"
@@ -53,7 +54,7 @@
             android:id="@+id/apply_btt"
             android:nextFocusUp="@id/nginx_text_input"
             android:nextFocusRight="@id/cancel_btt"
-            style="@style/WhiteButton" />
+            style="@style/ChicaDialogPrimaryButton" />
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="wrap_content"
@@ -62,6 +63,6 @@
             android:id="@+id/cancel_btt"
             android:nextFocusUp="@id/nginx_text_input"
             android:nextFocusLeft="@id/apply_btt"
-            style="@style/BlackButton" />
+            style="@style/ChicaDialogOutlineButton" />
     </LinearLayout>
 </LinearLayout>

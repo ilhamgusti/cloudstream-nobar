@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_rowWeight="1"
-                android:background="?attr/primaryBlackBackground"
+                android:background="@null"
                 android:listSelector="@drawable/outline_drawable_less"
                 android:nextFocusRight="@id/sort_subtitles"
                 android:nextFocusDown="@id/profile_text_editable"
@@ -115,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_rowWeight="1"
-                android:background="?attr/primaryBlackBackground"
+                android:background="@null"
                 android:listSelector="@drawable/outline_drawable_less"
                 android:nextFocusLeft="@id/sort_sources"
                 android:nextFocusRight="@id/apply_btt"
@@ -131,6 +131,7 @@
 
     <LinearLayout
         android:id="@+id/apply_btt_holder"
+        android:paddingHorizontal="10dp"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="bottom"
@@ -162,7 +163,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/settings_btt"
-            style="@style/WhiteButton"
+            style="@style/ChicaDialogOutlineButton"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical|end"
             android:text="@string/title_settings" />
@@ -176,14 +177,14 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/save_btt"
-            style="@style/WhiteButton"
+            style="@style/ChicaDialogPrimaryButton"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical|end"
             android:text="@string/sort_save" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/close_btt"
-            style="@style/BlackButton"
+            style="@style/ChicaDialogOutlineButton"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical|end"
             android:text="@string/sort_close" />

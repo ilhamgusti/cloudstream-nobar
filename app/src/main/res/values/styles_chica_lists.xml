@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Chica "Mixtape Bareng" styles for search, library, downloads, extensions and settings lists. -->
+<resources>
+
+    <!-- Filter chips row: pills with 8dp gaps, no negative vertical spacing. -->
+    <style name="ChicaListsChipGroup" parent="ChipParent">
+        <item name="chipSpacingHorizontal">8dp</item>
+        <item name="chipSpacingVertical">8dp</item>
+    </style>
+
+    <!-- Round icon button inside the search pill / rows: 48dp target, ink icon, blush focus ring. -->
+    <style name="ChicaListsPillIcon">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:background">?selectableItemBackgroundBorderless</item>
+        <item name="android:foreground">@drawable/chica_lists_icon_focus</item>
+        <item name="android:scaleType">fitCenter</item>
+        <item name="tint">?attr/textColor</item>
+    </style>
+
+    <!-- Section / rail title: ink, bold, 18sp. -->
+    <style name="ChicaListsSectionTitle">
+        <item name="android:textColor">?attr/textColor</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/google_sans</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <!-- Row title (16sp ink) and secondary line (13sp muted). -->
+    <style name="ChicaListsRowTitle">
+        <item name="android:textColor">?attr/textColor</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/google_sans</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+    </style>
+
+    <style name="ChicaListsRowSubtitle">
+        <item name="android:textColor">?attr/grayTextColor</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/google_sans</item>
+    </style>
+
+    <!-- Title under a poster card. -->
+    <style name="ChicaListsPosterTitle">
+        <item name="android:textColor">?attr/textColor</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/google_sans</item>
+        <item name="android:maxLines">2</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:lineSpacingMultiplier">1.05</item>
+    </style>
+
+    <!-- Blush progress bar on a hairline track. -->
+    <style name="ChicaListsProgress" parent="@android:style/Widget.Material.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/chica_lists_progress</item>
+        <item name="android:minHeight">4dp</item>
+        <item name="android:maxHeight">4dp</item>
+    </style>
+
+    <!-- Settings hub row: 56dp, ink label, muted chevron. -->
+    <style name="ChicaListsSettingsItem" parent="SettingsItem">
+        <item name="android:layout_height">56dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">12dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/google_sans</item>
+        <item name="drawableTint">?attr/grayTextColor</item>
+    </style>
+
+    <!-- Toolbar title on list screens: ink, bold, 20sp. -->
+    <style name="ChicaListsToolbarTitle" parent="TextAppearance.Material3.TitleLarge">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/google_sans</item>
+    </style>
+
+</resources>

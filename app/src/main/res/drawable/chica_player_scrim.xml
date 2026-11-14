@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Player scrim: dark plum at the top and bottom edges where the chrome sits, light in the middle. -->
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="90"
+                android:centerColor="@color/chica_player_scrim_mid"
+                android:centerY="0.35"
+                android:endColor="@color/chica_player_scrim_mid"
+                android:startColor="@color/chica_player_scrim_edge" />
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <gradient
+                android:angle="270"
+                android:centerColor="#00000000"
+                android:centerY="0.3"
+                android:endColor="#00000000"
+                android:startColor="#99120E16" />
+        </shape>
+    </item>
+</layer-list>

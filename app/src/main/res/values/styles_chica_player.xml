@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Chica family: player chrome, nobar sheet, dialogs and bottom sheets. -->
+<resources>
+    <!-- Player chrome sits over video: fixed dark plum scrims regardless of app theme. -->
+    <color name="chica_player_scrim_edge">#E6120E16</color>
+    <color name="chica_player_scrim_mid">#33120E16</color>
+    <color name="chica_player_pill_bg">#8C16121A</color>
+    <color name="chica_player_pill_stroke">#33F2E9F1</color>
+    <color name="chica_player_track">#4DF2E9F1</color>
+    <color name="chica_player_buffered">#80F2E9F1</color>
+    <color name="chica_player_surface">#F22A2233</color>
+
+    <!-- Player control pill (phone): 48dp touch, 36dp visible pill on a dark translucent fill. -->
+    <style name="ChicaPlayerPill" parent="VideoButton">
+        <item name="cornerRadius">100dp</item>
+        <item name="backgroundTint">@color/chica_player_pill_bg</item>
+        <item name="strokeColor">@color/chica_player_pill_stroke</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:insetTop">6dp</item>
+        <item name="android:insetBottom">6dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingStart">14dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingTop">0dp</item>
+        <item name="android:paddingBottom">0dp</item>
+        <item name="iconSize">18dp</item>
+        <item name="iconPadding">6dp</item>
+        <item name="iconGravity">textStart</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/google_sans</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
+    </style>
+
+    <!-- Player control pill (TV): blush fill on D-pad focus, dark translucent pill otherwise. -->
+    <style name="ChicaPlayerPillTV" parent="VideoButtonTV">
+        <item name="android:background">@drawable/chica_player_button_tv</item>
+        <item name="iconTint">@color/chica_player_on_button_tv</item>
+        <item name="textColor">@color/chica_player_on_button_tv</item>
+        <item name="android:textColor">@color/chica_player_on_button_tv</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:minHeight">40dp</item>
+        <item name="android:paddingStart">14dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="iconSize">18dp</item>
+        <item name="iconPadding">6dp</item>
+        <item name="iconGravity">textStart</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:fontFamily">@font/google_sans</item>
+        <item name="android:layout_marginStart">4dp</item>
+        <item name="android:layout_marginEnd">4dp</item>
+    </style>
+
+    <!-- Dialog / sheet buttons: primary = blush pill, secondary = outlined pill. -->
+    <style name="ChicaDialogPrimaryButton" parent="ChicaPrimaryButton">
+        <item name="android:foreground">@drawable/chica_player_focus_ring</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="cornerRadius">100dp</item>
+        <item name="android:minWidth">88dp</item>
+        <item name="android:layout_marginStart">6dp</item>
+        <item name="android:layout_marginEnd">6dp</item>
+        <item name="android:fontFamily">@font/google_sans</item>
+    </style>
+
+    <style name="ChicaDialogOutlineButton" parent="ChicaOutlineButton">
+        <item name="android:layout_height">48dp</item>
+        <item name="cornerRadius">100dp</item>
+        <item name="strokeColor">?attr/grayTextColor</item>
+        <item name="android:minWidth">88dp</item>
+        <item name="android:layout_marginStart">6dp</item>
+        <item name="android:layout_marginEnd">6dp</item>
+        <item name="android:fontFamily">@font/google_sans</item>
+    </style>
+
+    <!-- Small pill inside sheets (ask/approve rows, speed presets). -->
+    <style name="ChicaDialogChipButton" parent="ChicaDialogOutlineButton">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:insetTop">4dp</item>
+        <item name="android:insetBottom">4dp</item>
+        <item name="android:minWidth">0dp</item>
+        <item name="android:paddingStart">14dp</item>
+        <item name="android:paddingEnd">14dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:layout_marginStart">0dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+    </style>
+
+    <style name="ChicaSheetTitle">
+        <item name="android:textColor">?attr/textColor</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/google_sans</item>
+    </style>
+
+    <style name="ChicaSheetLabel">
+        <item name="android:textColor">?attr/grayTextColor</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontFamily">@font/google_sans</item>
+    </style>
+
+    <!-- Rounded plum text field; blush outline when focused (touch and D-pad). -->
+    <style name="ChicaSheetField">
+        <item name="android:background">@drawable/chica_player_field</item>
+        <item name="android:minHeight">52dp</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingTop">12dp</item>
+        <item name="android:paddingBottom">12dp</item>
+        <item name="android:textColor">?attr/textColor</item>
+        <item name="android:textColorHint">?attr/grayTextColor</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:fontFamily">@font/google_sans</item>
+    </style>
+</resources>

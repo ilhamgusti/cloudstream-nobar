@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/library_root"
-    android:background="?attr/primaryGrayBackground"
+    android:background="?attr/primaryBlackBackground"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,6 +15,8 @@
         android:layout_gravity="center"
         android:layout_margin="30dp"
         android:gravity="center"
+        android:textColor="?attr/grayTextColor"
+        android:textSize="15sp"
         android:visibility="gone"
         tools:visibility="visible" />
 
@@ -22,86 +24,74 @@
         android:id="@+id/search_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/primaryGrayBackground">
+        android:background="?attr/primaryBlackBackground"
+        app:elevation="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
+            android:paddingStart="16dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="8dp"
+            android:paddingBottom="8dp"
             app:layout_scrollFlags="scroll|enterAlways">
 
-            <ImageView
-                android:id="@+id/provider_selector"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_gravity="end|center_vertical"
-                android:layout_marginStart="10dp"
-                android:background="?selectableItemBackgroundBorderless"
-                android:contentDescription="@string/change_providers_img_des"
-                android:src="@drawable/ic_baseline_extension_24"
-                app:tint="?attr/textColor" />
-
-            <ImageView
-                android:id="@+id/library_sort"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-                android:layout_gravity="end|center_vertical"
-                android:layout_marginStart="10dp"
-                android:background="?selectableItemBackgroundBorderless"
-                android:contentDescription="@string/change_providers_img_des"
-                android:padding="5dp"
-                android:src="@drawable/ic_baseline_sort_24"
-                android:visibility="gone"
-                app:tint="?attr/textColor"
-                tools:visibility="visible" />
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_margin="10dp"
-                android:background="@drawable/search_background"
-                android:visibility="visible"
-                app:layout_scrollFlags="scroll|enterAlways">
+            <!-- Chica pill search field with the list filter inside. -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="56dp"
+                android:layout_weight="1"
+                android:addStatesFromChildren="true"
+                android:background="@drawable/chica_lists_search_pill"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingStart="8dp"
+                android:paddingEnd="4dp">
 
                 <androidx.appcompat.widget.SearchView
                     android:id="@+id/main_search"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginEnd="25dp"
-
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
                     android:iconifiedByDefault="false"
                     android:imeOptions="actionSearch"
-
                     android:inputType="text"
                     android:nextFocusLeft="@id/nav_rail_view"
-
-                    android:nextFocusRight="@id/search_filter"
+                    android:nextFocusRight="@id/list_selector"
                     android:paddingStart="-10dp"
                     app:closeIcon="@drawable/ic_baseline_close_24"
                     app:iconifiedByDefault="false"
                     app:queryBackground="@color/transparent"
                     app:queryHint="@string/search_hint"
                     app:searchIcon="@drawable/search_icon"
-                    tools:ignore="RtlSymmetry">
-
-                </androidx.appcompat.widget.SearchView>
-
+                    tools:ignore="RtlSymmetry" />
 
                 <ImageView
                     android:id="@+id/list_selector"
-                    android:layout_width="45dp"
-                    android:layout_height="45dp"
-                    android:layout_gravity="end|center_vertical"
-                    android:background="?selectableItemBackgroundBorderless"
+                    style="@style/ChicaListsPillIcon"
                     android:contentDescription="@string/change_providers_img_des"
                     android:nextFocusLeft="@id/main_search"
-                    android:nextFocusRight="@id/main_search"
-                    android:padding="10dp"
-                    android:src="@drawable/ic_baseline_filter_list_24"
-                    app:tint="?attr/textColor" />
+                    android:nextFocusRight="@id/library_sort"
+                    android:src="@drawable/ic_baseline_filter_list_24" />
+            </LinearLayout>
 
-            </FrameLayout>
+            <ImageView
+                android:id="@+id/library_sort"
+                style="@style/ChicaListsPillIcon"
+                android:layout_marginStart="4dp"
+                android:contentDescription="@string/sort"
+                android:src="@drawable/ic_baseline_sort_24"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <ImageView
+                android:id="@+id/provider_selector"
+                style="@style/ChicaListsPillIcon"
+                android:layout_marginStart="4dp"
+                android:contentDescription="@string/change_providers_img_des"
+                android:src="@drawable/ic_baseline_extension_24" />
         </LinearLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -192,20 +182,21 @@
         android:id="@+id/library_tab_layout"
         style="@style/Theme.Widget.Tabs"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="56dp"
         android:layout_gravity="bottom"
-        android:background="?attr/primaryGrayBackground"
+        android:background="?attr/primaryBlackBackground"
         android:focusable="true"
-        android:paddingHorizontal="5dp"
+        android:paddingHorizontal="12dp"
+        android:paddingVertical="8dp"
         app:layout_scrollFlags="noScroll"
         app:tabGravity="center"
         app:tabIndicator="@drawable/indicator_background"
-        app:tabIndicatorColor="?attr/white"
+        app:tabIndicatorColor="?attr/colorPrimary"
         app:tabIndicatorGravity="center"
-        app:tabIndicatorHeight="30dp"
+        app:tabIndicatorHeight="36dp"
         app:tabMode="scrollable"
-        app:tabRippleColor="?attr/textColor"
-        app:tabSelectedTextColor="?attr/primaryBlackBackground"
+        app:tabRippleColor="?attr/primaryGrayBackground"
+        app:tabSelectedTextColor="?attr/colorOnPrimary"
         app:tabTextAppearance="@style/TabNoCaps"
         app:tabTextColor="?attr/textColor" />
 

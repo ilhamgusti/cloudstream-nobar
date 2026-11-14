@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/download_child_episode_holder"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:layout_marginBottom="5dp"
-    android:foreground="@drawable/outline_drawable"
+    android:layout_height="64dp"
+    android:layout_marginBottom="8dp"
+    android:foreground="@drawable/chica_lists_poster_focus"
     android:focusable="true"
     android:nextFocusLeft="@id/nav_rail_view"
     android:nextFocusRight="@id/download_button"
-    app:cardBackgroundColor="@color/transparent"
+    app:cardBackgroundColor="?attr/boxItemBackground"
     app:cardCornerRadius="@dimen/rounded_image_radius"
     app:cardElevation="0dp">
 
@@ -28,7 +28,7 @@
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:foreground="?android:attr/selectableItemBackgroundBorderless">
+        android:foreground="?android:attr/selectableItemBackground">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginStart="5dp">
+                android:layout_marginStart="8dp">
 
                 <ImageView
                     android:id="@+id/download_child_episode_play"
@@ -73,6 +73,7 @@
                 android:scrollHorizontally="true"
                 android:singleLine="true"
                 android:textColor="?attr/textColor"
+                android:textSize="15sp"
                 tools:text="Episode 1 Episode 1 Episode 1 Episode 1 Episode 1 Episode 1 Episode 1" />
 
             <TextView
@@ -84,6 +85,7 @@
                 android:layout_marginEnd="10dp"
                 android:gravity="center_vertical"
                 android:textColor="?attr/grayTextColor"
+                android:textSize="13sp"
                 tools:text="128MB / 237MB" />
         </LinearLayout>
         </LinearLayout>
@@ -93,7 +95,7 @@
             android:layout_height="@dimen/download_size"
             android:layout_gravity="center_vertical|end"
             android:layout_marginStart="-50dp"
-            android:foreground="@drawable/outline_drawable"
+            android:foreground="@drawable/chica_lists_icon_focus"
             android:focusable="true"
             android:nextFocusLeft="@id/download_child_episode_holder"
             android:padding="10dp" />
@@ -107,6 +109,7 @@
             android:focusable="true"
             android:nextFocusLeft="@id/download_child_episode_holder"
             android:padding="10dp"
+            android:buttonTint="?attr/colorPrimary"
             android:visibility="gone" />
     </GridLayout>
 </androidx.cardview.widget.CardView>

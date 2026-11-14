@@ -19,8 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:textSize="18sp"
-            android:textStyle="italic"
-            android:alpha="0.7"
+            android:textColor="?attr/grayTextColor"
             android:text="@string/no_subtitles_loaded">
         </TextView>
 
@@ -50,7 +49,7 @@
             android:orientation="vertical">
 
             <TextView
-                style="@style/WatchHeaderText"
+                style="@style/ChicaSheetTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -73,8 +72,8 @@
 
                 <ImageView
                     android:id="@+id/subtitle_offset_subtract_more"
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
@@ -83,13 +82,13 @@
                     android:nextFocusRight="@id/subtitle_offset_subtract"
                     android:padding="10dp"
                     android:src="@drawable/ic_baseline_keyboard_arrow_left_24"
-                    app:tint="?attr/white"
+                    app:tint="?attr/textColor"
                     tools:ignore="ContentDescription" />
 
                 <ImageView
                     android:id="@+id/subtitle_offset_subtract"
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_gravity="center"
                     android:layout_marginEnd="10dp"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
@@ -97,11 +96,12 @@
                     android:nextFocusLeft="@id/subtitle_offset_subtract_more"
                     android:padding="10dp"
                     android:src="@drawable/baseline_remove_24"
-                    app:tint="?attr/white"
+                    app:tint="?attr/textColor"
                     tools:ignore="ContentDescription" />
 
                 <EditText
                     android:id="@+id/subtitle_offset_input"
+                    style="@style/ChicaSheetField"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -113,8 +113,8 @@
 
                 <ImageView
                     android:id="@+id/subtitle_offset_add"
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="10dp"
                     android:background="?android:attr/selectableItemBackgroundBorderless"
@@ -122,13 +122,13 @@
                     android:nextFocusRight="@id/subtitle_offset_add_more"
                     android:padding="10dp"
                     android:src="@drawable/ic_baseline_add_24"
-                    app:tint="?attr/white"
+                    app:tint="?attr/textColor"
                     tools:ignore="ContentDescription" />
 
                 <ImageView
                     android:id="@+id/subtitle_offset_add_more"
-                    android:layout_width="44dp"
-                    android:layout_height="44dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_gravity="center"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
@@ -139,7 +139,7 @@
                     android:padding="10dp"
 
                     android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
-                    app:tint="?attr/white"
+                    app:tint="?attr/textColor"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
 
@@ -155,7 +155,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/apply_btt"
-                style="@style/WhiteButton"
+                style="@style/ChicaDialogPrimaryButton"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center_vertical|end"
                 android:text="@string/sort_apply"
@@ -166,14 +166,14 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/reset_btt"
-                style="@style/BlackButton"
+                style="@style/ChicaDialogOutlineButton"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center_vertical|end"
                 android:text="@string/reset_btn" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/cancel_btt"
-                style="@style/BlackButton"
+                style="@style/ChicaDialogOutlineButton"
                 android:layout_width="wrap_content"
                 android:layout_gravity="center_vertical|end"
                 android:text="@string/sort_cancel" />

@@ -6,22 +6,30 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+    <!-- Rail title: ink, bold, arrow affordance; more air above than below. -->
     <TextView
         android:id="@+id/home_child_more_info"
-        style="@style/WatchHeaderText"
+        style="@style/ChicaListsSectionTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="0dp"
-        android:padding="12dp"
+        android:layout_marginTop="12dp"
+        android:minHeight="48dp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="12dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
         tools:text="@string/continue_watching"
-        app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_24"
-        app:drawableTint="?attr/white"
+        app:drawableEndCompat="@drawable/ic_baseline_keyboard_arrow_right_24"
+        app:drawableTint="?attr/grayTextColor"
         android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@string/home_more_info"/>
 
     <androidx.recyclerview.widget.RecyclerView
             android:nextFocusUp="@id/home_child_more_info"
-            android:paddingHorizontal="5dp"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:paddingBottom="4dp"
             android:clipToPadding="false"
             android:descendantFocusability="afterDescendants"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

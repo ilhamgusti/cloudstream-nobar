@@ -10,6 +10,8 @@
         android:id="@+id/checkboxDontShowAgain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:buttonTint="?attr/colorPrimary"
         android:text="@string/dont_show_again"
         android:textColor="?attr/grayTextColor" />
 </LinearLayout>

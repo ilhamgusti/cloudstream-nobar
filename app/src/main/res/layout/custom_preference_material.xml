@@ -19,10 +19,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+    android:minHeight="56dp"
     android:gravity="center_vertical"
-    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+    android:paddingStart="16dp"
+    android:paddingEnd="16dp"
     android:background="?attr/focusBackground"
     android:clipToPadding="false"
     android:baselineAligned="false">
@@ -33,8 +33,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:paddingTop="16dp"
-        android:paddingBottom="16dp">
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp">
 
         <TextView
             android:id="@android:id/title"
@@ -42,6 +42,8 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:textAppearance="?android:attr/textAppearanceListItem"
+            android:textColor="?attr/textColor"
+            android:textSize="16sp"
             android:ellipsize="marquee"/>
 
         <TextView
@@ -52,7 +54,9 @@
             android:layout_alignStart="@android:id/title"
             android:layout_gravity="start"
             android:textAlignment="viewStart"
-            android:textColor="?android:attr/textColorSecondary"
+            android:layout_marginTop="2dp"
+            android:textColor="?attr/grayTextColor"
+            android:textSize="13sp"
             android:maxLines="10"
             style="@style/PreferenceSummaryTextStyle"/>
 

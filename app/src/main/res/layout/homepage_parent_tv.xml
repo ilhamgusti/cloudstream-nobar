@@ -6,14 +6,19 @@
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
+    <!-- Rail title: ink, bold; not focusable on TV, so no arrow. More air above than below. -->
     <TextView
         android:id="@+id/home_child_more_info"
-        style="@style/WatchHeaderText"
-        android:layout_width="match_parent"
+        style="@style/ChicaListsSectionTitle"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/navbar_width"
-        android:layout_marginEnd="0dp"
-        android:padding="12dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingTop="4dp"
+        android:paddingEnd="8dp"
+        android:paddingBottom="8dp"
         tools:text="Trending" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -24,8 +29,9 @@
         android:descendantFocusability="afterDescendants"
         android:nextFocusUp="@id/home_child_more_info"
         android:orientation="horizontal"
-        android:paddingStart="8dp"
-        android:paddingEnd="5dp"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:paddingBottom="4dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/home_result_grid" />
 </LinearLayout>

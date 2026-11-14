@@ -107,7 +107,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/result_sync_score_text"
 
-                    style="@style/BlackButton"
+                    style="@style/ChicaResultMetaPill"
                     android:layout_width="wrap_content"
                     android:layout_height="30dp"
                     android:layout_gravity="center_vertical"
@@ -162,7 +162,7 @@
                 tools:listitem="@layout/sort_bottom_single_choice" />
 
             <com.google.android.material.button.MaterialButton
-                style="@style/WhiteButton"
+                style="@style/ChicaResultSecondaryButton"
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:text="@string/type_watching"
@@ -170,7 +170,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/result_sync_set_score"
-                style="@style/BlackButton"
+                style="@style/ChicaResultPlayButton"
                 android:layout_width="match_parent"
                 android:layout_marginTop="10dp"
                 android:text="@string/upload_sync"

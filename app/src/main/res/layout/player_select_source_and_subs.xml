@@ -65,7 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_rowWeight="1"
-                android:background="?attr/primaryBlackBackground"
+                android:background="@null"
                 android:listSelector="@drawable/outline_drawable_forced"
                 android:nextFocusRight="@id/sort_subtitles"
                 android:nextFocusUp="@id/profiles_click_settings"
@@ -164,7 +164,7 @@
                     android:layout_height="match_parent"
                     android:layout_rowWeight="1"
                     android:layout_weight="1"
-                    android:background="?attr/primaryBlackBackground"
+                    android:background="@null"
                     android:listSelector="@drawable/outline_drawable_forced"
                     android:nextFocusLeft="@id/sort_providers"
                     android:nextFocusRight="@id/sort_subtitles_options"
@@ -181,7 +181,7 @@
                     android:layout_height="match_parent"
                     android:layout_rowWeight="1"
                     android:layout_weight="1"
-                    android:background="?attr/primaryBlackBackground"
+                    android:background="@null"
                     android:listSelector="@drawable/outline_drawable_forced"
                     android:nextFocusLeft="@id/sort_subtitles"
                     android:nextFocusRight="@id/apply_btt"
@@ -199,6 +199,7 @@
 
     <LinearLayout
         android:id="@+id/apply_btt_holder"
+        android:paddingHorizontal="10dp"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="bottom"
@@ -209,14 +210,14 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/apply_btt"
-            style="@style/WhiteButton"
+            style="@style/ChicaDialogPrimaryButton"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical|end"
             android:text="@string/sort_apply" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/cancel_btt"
-            style="@style/BlackButton"
+            style="@style/ChicaDialogOutlineButton"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical|end"
             android:text="@string/sort_cancel" />

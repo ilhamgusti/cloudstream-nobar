@@ -37,7 +37,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/overlay_loading_skip_button"
-        style="@style/BlackButton"
+        style="@style/ChicaDialogOutlineButton"
         android:layout_width="match_parent"
         android:backgroundTint="@color/transparent"
         android:text="@string/skip_loading"

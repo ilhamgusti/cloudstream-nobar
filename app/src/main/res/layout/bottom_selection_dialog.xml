@@ -35,7 +35,8 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:paddingTop="10dp"
-        android:dividerHeight="1dp"
+        android:divider="@null"
+        android:dividerHeight="0dp"
         android:requiresFadingEdge="vertical"
         android:paddingBottom="32dp"
         android:nextFocusRight="@id/cancel_btt"
@@ -44,6 +45,7 @@
 
     <LinearLayout
         android:id="@+id/apply_btt_holder"
+        android:paddingHorizontal="10dp"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:gravity="center_vertical|end"
@@ -54,13 +56,13 @@
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical|end"
             android:text="@string/sort_apply"
-            style="@style/WhiteButton" />
+            style="@style/ChicaDialogPrimaryButton" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/cancel_btt"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical|end"
             android:text="@string/sort_cancel"
-            style="@style/BlackButton" />
+            style="@style/ChicaDialogOutlineButton" />
     </LinearLayout>
 </LinearLayout>

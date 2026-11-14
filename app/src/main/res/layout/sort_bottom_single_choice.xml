@@ -1,20 +1,13 @@
-<!--<CheckedTextView
-        xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
-        android:id="@android:id/text1"
-        android:layout_width="match_parent"
-        android:layout_height="?android:attr/listPreferredItemHeightSmall"
-        android:textAppearance="?android:attr/textAppearanceListItemSmall"
-        android:gravity="center_vertical"
-        android:textColor="?attr/textColor"
-        tools:text="Example Text"
-        android:background="?attr/bitDarkerGrayBackground"
-        android:checkMark="?android:attr/listChoiceIndicatorSingle"
-        android:paddingStart="?android:attr/listPreferredItemPaddingStart"
-        android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"/>
--->
-
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Single-choice row: blush check + ink text on a rounded plum surface when selected. -->
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@android:id/text1"
     style="@style/CheckLabel"
+    android:background="@drawable/chica_player_choice_bg"
+    android:minHeight="52dp"
+    android:paddingStart="24dp"
+    android:paddingEnd="24dp"
+    android:drawablePadding="16dp"
+    android:textStyle="normal"
     tools:text="hello" />

@@ -5,14 +5,13 @@
     android:id="@+id/episode_holder"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginStart="10dp"
-    android:layout_marginTop="10dp"
-    android:layout_marginEnd="10dp"
-    android:foreground="@drawable/outline_drawable"
+    android:layout_marginTop="8dp"
+    android:foreground="@drawable/chica_lists_poster_focus"
     android:focusable="true"
     android:nextFocusRight="@id/download_button"
     app:cardBackgroundColor="?attr/boxItemBackground"
-    app:cardCornerRadius="@dimen/rounded_image_radius">
+    app:cardCornerRadius="@dimen/rounded_image_radius"
+    app:cardElevation="0dp">
 
 <!--    <androidx.core.widget.ContentLoadingProgressBar-->
 <!--        android:id="@+id/download_header_episode_progress"-->
@@ -28,12 +27,16 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:foreground="?android:attr/selectableItemBackgroundBorderless"
-        android:orientation="horizontal">
-        <!--app:cardCornerRadius="@dimen/roundedImageRadius"-->
+        android:foreground="?android:attr/selectableItemBackground"
+        android:orientation="horizontal"
+        android:padding="8dp">
+
         <androidx.cardview.widget.CardView
-            android:layout_width="70dp"
-            android:layout_height="104dp">
+            android:layout_width="64dp"
+            android:layout_height="96dp"
+            app:cardBackgroundColor="?attr/primaryBlackBackground"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="0dp">
 
             <ImageView
                 android:id="@+id/download_header_poster"
@@ -65,15 +68,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="15dp"
-            android:layout_marginEnd="70dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="64dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/download_header_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:textColor="?attr/textColor"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 tools:text="Perfect Run" />
 
@@ -82,6 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="?attr/grayTextColor"
+                android:textSize="13sp"
                 tools:text="1 episode | 285MB" />
         </LinearLayout>
 
@@ -93,7 +101,8 @@
             android:layout_marginStart="-50dp"
             android:contentDescription="@string/download"
             android:padding="10dp"
-            android:src="@drawable/ic_baseline_keyboard_arrow_right_24" />
+            android:src="@drawable/ic_baseline_keyboard_arrow_right_24"
+            app:tint="?attr/grayTextColor" />
 
         <com.lagradost.cloudstream3.ui.download.button.PieFetchButton
             android:id="@+id/download_button"
@@ -101,7 +110,7 @@
             android:layout_height="@dimen/download_size"
             android:layout_gravity="center_vertical|end"
             android:layout_marginStart="-50dp"
-            android:foreground="@drawable/outline_drawable"
+            android:foreground="@drawable/chica_lists_icon_focus"
             android:focusable="true"
             android:nextFocusLeft="@id/episode_holder"
             android:padding="10dp" />
@@ -115,6 +124,7 @@
             android:focusable="true"
             android:nextFocusLeft="@id/episode_holder"
             android:padding="10dp"
+            android:buttonTint="?attr/colorPrimary"
             android:visibility="gone" />
     </LinearLayout>
 </androidx.cardview.widget.CardView>
