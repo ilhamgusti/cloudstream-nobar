@@ -14,6 +14,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import com.lagradost.cloudstream4.generated.resources.Res
 import com.lagradost.cloudstream4.generated.resources.check
 import org.jetbrains.compose.resources.painterResource
@@ -32,15 +33,23 @@ fun WhiteFilterChip(
         border = FilterChipDefaults.filterChipBorder(
             enabled = enabled,
             selected = selected,
+            // Chica: blush ring on a focused pill, ink ring on a focused (blush) selected pill
             borderColor = if (hasFocus) {
-                MaterialTheme.colorScheme.onBackground
+                MaterialTheme.colorScheme.primary
             } else {
                 MaterialTheme.colorScheme.surfaceVariant
             },
             disabledBorderColor = MaterialTheme.colorScheme.surfaceVariant,
-            selectedBorderColor = Color.Transparent,
+            selectedBorderColor = if (hasFocus) {
+                MaterialTheme.colorScheme.onBackground
+            } else {
+                Color.Transparent
+            },
             disabledSelectedBorderColor = MaterialTheme.colorScheme.surfaceVariant,
+            borderWidth = if (hasFocus) 2.dp else 1.dp,
+            selectedBorderWidth = 2.dp,
         ),
+        shape = PillShape(),
         modifier = modifier.onFocusChanged { newFocus ->
             hasFocus = canHaveFocus && newFocus.hasFocus
         },

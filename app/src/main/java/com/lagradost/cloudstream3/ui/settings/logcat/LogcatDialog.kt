@@ -86,7 +86,7 @@ fun LogcatDialog(dismiss: () -> Unit) {
             if (isLoading) {
                 LinearProgressIndicator(
                     modifier = Modifier.fillMaxWidth(),
-                    color = MaterialTheme.colorScheme.onBackground,
+                    color = MaterialTheme.colorScheme.primary,
                     trackColor = MaterialTheme.colorScheme.surfaceVariant,
                 )
             }
@@ -139,13 +139,13 @@ fun LogcatDialog(dismiss: () -> Unit) {
                 }
             }
 
-            WhiteButton(text = stringResource(R.string.sort_copy)) {
+            BlackButton(text = stringResource(R.string.sort_copy)) {
                 clipboardHelper(
                     txt("Logcat"),
                     list.value.joinToString(separator = "\n\n") { it.toString() }
                 )
             }
-            WhiteButton(text = stringResource(R.string.sort_clear)) {
+            BlackButton(text = stringResource(R.string.sort_clear)) {
                 try {
                     Runtime.getRuntime().exec("logcat -c")
                 } catch (t: Throwable) {

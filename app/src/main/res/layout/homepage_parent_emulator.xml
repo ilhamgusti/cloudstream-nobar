@@ -13,10 +13,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/navbar_width"
         android:layout_marginEnd="0dp"
-        android:padding="12dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="12dp"
+        android:paddingVertical="12dp"
         tools:text="@string/continue_watching"
         app:drawableRightCompat="@drawable/ic_baseline_arrow_forward_24"
-        app:drawableTint="?attr/white"
+        app:drawableTint="?attr/grayTextColor"
         android:background="?android:attr/selectableItemBackground"
         android:contentDescription="@string/home_more_info"/>
 

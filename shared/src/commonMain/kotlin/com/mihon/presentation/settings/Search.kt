@@ -4,6 +4,7 @@ import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -22,7 +23,8 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.lagradost.cloudstream4.generated.resources.Res
 import com.lagradost.cloudstream4.generated.resources.no_results_found
-import com.mihon.presentation.secondaryItemAlpha
+import com.mihon.presentation.settings.widget.PreferenceCard
+import com.mihon.presentation.settings.widget.PreferenceGroupPosition
 import com.mihon.presentation.settings.widget.TextPreferenceWidget
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.PersistentList
@@ -139,7 +141,8 @@ fun <T> SettingSearchResults(
             it.isEmpty() -> {
                 Text(
                     text = stringResource(Res.string.no_results_found),
-                    modifier = Modifier.secondaryItemAlpha().fillMaxWidth().padding(20.dp),
+                    modifier = Modifier.fillMaxWidth().padding(20.dp),
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center
                 )
             }
@@ -149,14 +152,16 @@ fun <T> SettingSearchResults(
                     modifier = Modifier
                         .nestedScroll(nestedScrollConnection)
                 ) {
-                    it.forEach { item ->
-                        TextPreferenceWidget(
-                            title = item.title,
-                            subtitle = item.breadcrumbs,
-                            onPreferenceClick = {
-                                onItemClick(item)
-                            }
-                        )
+                    it.forEachIndexed { index, item ->
+                        PreferenceCard(position = PreferenceGroupPosition.of(index, it.size)) {
+                            TextPreferenceWidget(
+                                title = item.title,
+                                subtitle = item.breadcrumbs,
+                                onPreferenceClick = {
+                                    onItemClick(item)
+                                }
+                            )
+                        }
                     }
                 }
             }

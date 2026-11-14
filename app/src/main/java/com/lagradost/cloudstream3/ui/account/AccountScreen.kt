@@ -56,6 +56,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -177,6 +178,8 @@ object AccountScreen {
                             R.string.select_an_account
                         ),
                         style = MaterialTheme.typography.headlineMedium,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onBackground,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.padding(MaterialTheme.padding.large)
                     )
@@ -329,7 +332,7 @@ object AccountScreen {
             containerColor = MaterialTheme.colorScheme.background,
             confirmButton = {
                 if (exists) {
-                    WhiteButton(text = stringResource(R.string.delete)) {
+                    BlackButton(text = stringResource(R.string.delete)) {
                         pendingDialog = WaitForDialogType.DeleteAccount
                     }
                 }
@@ -544,6 +547,7 @@ object AccountScreen {
                 Text(
                     text = stringResource(R.string.add_account),
                     style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     textAlign = TextAlign.Center,
                 )
             }
@@ -830,6 +834,7 @@ object AccountScreen {
                 Text(
                     text = account.name,
                     style = MaterialTheme.typography.bodyLarge,
+                    color = MaterialTheme.colorScheme.onBackground,
                     textAlign = TextAlign.Center,
                     maxLines = 2,
                     overflow = TextOverflow.Ellipsis

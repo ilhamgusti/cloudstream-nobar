@@ -309,7 +309,7 @@ fun <T> SingleSelectionItem(
                 painter = selectedPainter,
                 contentDescription = null,
                 modifier = Modifier.size(24.dp),
-                tint = MaterialTheme.colorScheme.onBackground
+                tint = MaterialTheme.colorScheme.primary
             )
             iconProvider?.invoke(key, text)
             Text(

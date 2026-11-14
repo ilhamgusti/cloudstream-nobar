@@ -2,6 +2,7 @@ package com.mihon.material
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -18,20 +19,20 @@ import androidx.compose.ui.unit.dp
 fun Pill(
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.surfaceContainerHigh,
-    contentColor: Color = MaterialTheme.colorScheme.onSurface,
+    color: Color = MaterialTheme.colorScheme.background,
+    contentColor: Color = MaterialTheme.colorScheme.onBackground,
     style: TextStyle = LocalTextStyle.current,
 ) {
     Surface(
         modifier = modifier
             .padding(start = 4.dp),
-        shape = MaterialTheme.shapes.extraLarge,
+        shape = RoundedCornerShape(50),
         color = color,
         contentColor = contentColor,
     ) {
         Box(
             modifier = Modifier
-                .padding(6.dp, 1.dp),
+                .padding(10.dp, 2.dp),
             contentAlignment = Alignment.Center,
         ) {
             Text(
@@ -47,8 +48,8 @@ fun Pill(
 fun Pill(
     text: String,
     modifier: Modifier = Modifier,
-    color: Color = MaterialTheme.colorScheme.surfaceContainerHigh,
-    contentColor: Color = MaterialTheme.colorScheme.onSurface,
+    color: Color = MaterialTheme.colorScheme.background,
+    contentColor: Color = MaterialTheme.colorScheme.onBackground,
     fontSize: TextUnit = LocalTextStyle.current.fontSize,
 ) {
     Pill(

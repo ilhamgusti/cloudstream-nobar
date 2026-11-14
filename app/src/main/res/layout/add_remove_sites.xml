@@ -8,7 +8,7 @@
         android:id="@+id/add_site"
         android:text="@string/add_site_pref"
         android:focusable="true"
-        style="@style/SettingsItem">
+        style="@style/ChicaListsSettingsItem">
 
         <requestFocus />
     </TextView>
@@ -17,5 +17,5 @@
         android:id="@+id/remove_site"
         android:text="@string/remove_site_pref"
         android:focusable="true"
-        style="@style/SettingsItem" />
+        style="@style/ChicaListsSettingsItem" />
 </LinearLayout>

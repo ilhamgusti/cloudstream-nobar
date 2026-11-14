@@ -9,11 +9,13 @@
 
     <androidx.cardview.widget.CardView
             android:id="@+id/account_profile_picture_holder"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="16dp"
             app:cardCornerRadius="100dp"
+            app:cardElevation="0dp"
+            app:cardBackgroundColor="?attr/primaryGrayBackground"
             android:layout_gravity="center_vertical"
-            android:layout_width="30dp"
-            android:layout_height="30dp">
+            android:layout_width="32dp"
+            android:layout_height="32dp">
 
         <ImageView
             android:id="@+id/account_profile_picture"
@@ -26,6 +28,6 @@
         android:foreground="@null"
         android:id="@+id/account_name"
         tools:text="Account 1"
-        style="@style/SettingsItem" />
+        style="@style/ChicaListsSettingsItem" />
 </LinearLayout>
 

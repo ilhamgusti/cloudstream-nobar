@@ -41,12 +41,13 @@
 
     <LinearLayout
             android:orientation="vertical"
-            android:layout_marginBottom="60dp"
-            android:layout_marginHorizontal="10dp"
+            android:layout_marginBottom="72dp"
+            android:layout_marginHorizontal="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
         <EditText
+                style="@style/ChicaMiscField"
                 android:textColorHint="?attr/grayTextColor"
                 android:hint="@string/example_site_name"
                 android:autofillHints="username"
@@ -61,6 +62,7 @@
                 tools:ignore="LabelFor" />
 
         <EditText
+                style="@style/ChicaMiscField"
                 android:textColorHint="?attr/grayTextColor"
                 android:autofillHints="no"
                 android:hint="@string/example_site_url"
@@ -77,6 +79,7 @@
                 tools:ignore="LabelFor" />
 
         <EditText
+                style="@style/ChicaMiscField"
                 android:textColorHint="?attr/grayTextColor"
                 android:hint="@string/example_lang_name"
                 android:autofillHints="username"
@@ -96,20 +99,21 @@
             android:id="@+id/apply_btt_holder"
             android:orientation="horizontal"
             android:layout_gravity="bottom"
-            android:gravity="bottom|end"
-            android:layout_marginTop="-60dp"
+            android:gravity="center_vertical|end"
+            android:layout_marginTop="-72dp"
             android:layout_width="match_parent"
-            android:layout_height="60dp">
+            android:layout_height="72dp"
+            android:paddingHorizontal="10dp">
 
         <com.google.android.material.button.MaterialButton
-                style="@style/WhiteButton"
+                style="@style/ChicaDialogPrimaryButton"
                 android:layout_gravity="center_vertical|end"
                 android:text="@string/add_site_pref"
                 android:id="@+id/apply_btt"
                 android:layout_width="wrap_content" />
 
         <com.google.android.material.button.MaterialButton
-                style="@style/BlackButton"
+                style="@style/ChicaDialogOutlineButton"
                 android:layout_gravity="center_vertical|end"
                 android:text="@string/sort_cancel"
                 android:id="@+id/cancel_btt"

@@ -10,7 +10,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
-import androidx.compose.material3.surfaceColorAtElevation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -19,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.dp
 import com.lagradost.cloudstream4.compose.WhiteIconButton
 import com.lagradost.cloudstream4.generated.resources.Res
 import com.lagradost.cloudstream4.generated.resources.action_bar_up_description
@@ -120,10 +118,21 @@ fun AppBar(
             },
             title = titleContent,
             actions = actions,
+            // Chica: top bars sit flat on the background (action mode lifts onto surfaceVariant)
             colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = backgroundColor ?: MaterialTheme.colorScheme.surfaceColorAtElevation(
-                    elevation = if (isActionMode) 3.dp else 0.dp,
-                ),
+                containerColor = backgroundColor ?: if (isActionMode) {
+                    MaterialTheme.colorScheme.surfaceVariant
+                } else {
+                    MaterialTheme.colorScheme.background
+                },
+                scrolledContainerColor = backgroundColor ?: if (isActionMode) {
+                    MaterialTheme.colorScheme.surfaceVariant
+                } else {
+                    MaterialTheme.colorScheme.background
+                },
+                navigationIconContentColor = MaterialTheme.colorScheme.onBackground,
+                titleContentColor = MaterialTheme.colorScheme.onBackground,
+                actionIconContentColor = MaterialTheme.colorScheme.onBackground,
             ),
             scrollBehavior = scrollBehavior,
         )

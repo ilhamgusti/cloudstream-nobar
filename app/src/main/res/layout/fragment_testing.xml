@@ -4,22 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/primaryGrayBackground"
+    android:background="?attr/primaryBlackBackground"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/provider_test_appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        app:elevation="0dp">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/settings_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/primaryGrayBackground"
+            android:background="?attr/primaryBlackBackground"
             android:paddingTop="@dimen/navbar_height"
             app:layout_scrollFlags="scroll|enterAlways"
             app:navigationIconTint="?attr/iconColor"
+            app:titleTextAppearance="@style/ChicaListsToolbarTitle"
             app:titleTextColor="?attr/textColor"
             tools:title="@string/category_provider_test">
 
@@ -29,7 +32,12 @@
             android:id="@+id/provider_test"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="8dp"
             android:nextFocusDown="@id/provider_test_recycler_view"
+            app:cardBackgroundColor="?attr/primaryGrayBackground"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
             app:header_text="@string/category_provider_test"
             app:layout_scrollFlags="scroll|enterAlways" />
     </com.google.android.material.appbar.AppBarLayout>
@@ -44,6 +52,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/provider_test_recycler_view"
             android:clipToPadding="false"
+            android:paddingHorizontal="16dp"
+            android:paddingTop="4dp"
             android:paddingBottom="60dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

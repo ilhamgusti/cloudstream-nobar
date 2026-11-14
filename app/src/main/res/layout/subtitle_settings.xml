@@ -50,7 +50,7 @@
 
             <TextView
                 android:id="@+id/subs_font"
-                style="@style/SettingsItem"
+                style="@style/ChicaListsSettingsItem"
                 android:nextFocusLeft="@id/apply_btt"
 
                 android:nextFocusRight="@id/cancel_btt"
@@ -59,7 +59,7 @@
 
             <TextView
                 android:id="@+id/subs_font_size"
-                style="@style/SettingsItem"
+                style="@style/ChicaListsSettingsItem"
                 android:nextFocusLeft="@id/apply_btt"
                 android:nextFocusRight="@id/cancel_btt"
 
@@ -69,7 +69,7 @@
 
             <TextView
                 android:id="@+id/subs_text_color"
-                style="@style/SettingsItem"
+                style="@style/ChicaListsSettingsItem"
                 android:nextFocusLeft="@id/apply_btt"
                 android:nextFocusRight="@id/cancel_btt"
 
@@ -79,7 +79,7 @@
 
             <TextView
                 android:id="@+id/subs_outline_color"
-                style="@style/SettingsItem"
+                style="@style/ChicaListsSettingsItem"
                 android:nextFocusLeft="@id/apply_btt"
                 android:nextFocusRight="@id/cancel_btt"
 
@@ -89,7 +89,7 @@
 
             <TextView
                 android:id="@+id/subs_background_color"
-                style="@style/SettingsItem"
+                style="@style/ChicaListsSettingsItem"
                 android:nextFocusLeft="@id/apply_btt"
                 android:nextFocusRight="@id/cancel_btt"
 
@@ -99,7 +99,7 @@
 
             <TextView
                 android:id="@+id/subs_background_radius"
-                style="@style/SettingsItem"
+                style="@style/ChicaListsSettingsItem"
                 android:nextFocusLeft="@id/apply_btt"
                 android:nextFocusRight="@id/cancel_btt"
 
@@ -109,7 +109,7 @@
 
             <TextView
                 android:id="@+id/subs_window_color"
-                style="@style/SettingsItem"
+                style="@style/ChicaListsSettingsItem"
                 android:nextFocusLeft="@id/apply_btt"
                 android:nextFocusRight="@id/cancel_btt"
 
@@ -119,7 +119,7 @@
 
             <TextView
                 android:id="@+id/subs_edge_type"
-                style="@style/SettingsItem"
+                style="@style/ChicaListsSettingsItem"
                 android:nextFocusLeft="@id/apply_btt"
                 android:nextFocusRight="@id/cancel_btt"
 
@@ -129,7 +129,7 @@
 
             <TextView
                 android:id="@+id/subs_edge_size"
-                style="@style/SettingsItem"
+                style="@style/ChicaListsSettingsItem"
                 android:nextFocusLeft="@id/apply_btt"
                 android:nextFocusRight="@id/cancel_btt"
 
@@ -139,7 +139,7 @@
 
             <TextView
                 android:id="@+id/subs_subtitle_alignment"
-                style="@style/SettingsItem"
+                style="@style/ChicaListsSettingsItem"
                 android:nextFocusLeft="@id/apply_btt"
                 android:nextFocusRight="@id/cancel_btt"
 
@@ -149,7 +149,7 @@
 
             <TextView
                 android:id="@+id/subs_subtitle_elevation"
-                style="@style/SettingsItem"
+                style="@style/ChicaListsSettingsItem"
                 android:nextFocusLeft="@id/apply_btt"
                 android:nextFocusRight="@id/cancel_btt"
 
@@ -159,7 +159,7 @@
 
             <TextView
                 android:id="@+id/subs_auto_select_language"
-                style="@style/SettingsItem"
+                style="@style/ChicaListsSettingsItem"
                 android:nextFocusLeft="@id/apply_btt"
                 android:nextFocusRight="@id/cancel_btt"
 
@@ -169,7 +169,7 @@
 
             <TextView
                 android:id="@+id/subs_download_languages"
-                style="@style/SettingsItem"
+                style="@style/ChicaListsSettingsItem"
                 android:nextFocusLeft="@id/apply_btt"
                 android:nextFocusRight="@id/cancel_btt"
 
@@ -179,7 +179,7 @@
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/subtitles_remove_bloat"
-                style="@style/SettingsItem"
+                style="@style/ChicaListsSettingsItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/google_sans"
@@ -193,7 +193,7 @@
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/subtitles_remove_captions"
-                style="@style/SettingsItem"
+                style="@style/ChicaListsSettingsItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/google_sans"
@@ -207,7 +207,7 @@
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/subtitles_filter_sub_lang"
-                style="@style/SettingsItem"
+                style="@style/ChicaListsSettingsItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/google_sans"
@@ -221,7 +221,7 @@
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/subtitles_uppercase"
-                style="@style/SettingsItem"
+                style="@style/ChicaListsSettingsItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/google_sans"
@@ -235,7 +235,7 @@
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/subtitles_bold"
-                style="@style/SettingsItem"
+                style="@style/ChicaListsSettingsItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/google_sans"
@@ -249,7 +249,7 @@
 
             <com.google.android.material.switchmaterial.SwitchMaterial
                 android:id="@+id/subtitles_italic"
-                style="@style/SettingsItem"
+                style="@style/ChicaListsSettingsItem"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:fontFamily="@font/google_sans"
@@ -267,8 +267,10 @@
                 android:layout_rowWeight="1"
 
                 android:gravity="center"
+                android:paddingHorizontal="20dp"
+                android:paddingTop="12dp"
                 android:text="@string/subs_hold_to_reset_to_default"
-                android:textColor="?attr/textColor"
+                android:textColor="?attr/grayTextColor"
                 android:textSize="14sp" />
 
             <TextView
@@ -278,19 +280,20 @@
                 android:layout_rowWeight="1"
                 android:gravity="center"
                 android:text="@string/subs_import_text"
-                android:textColor="?attr/textColor"
+                android:textColor="?attr/grayTextColor"
                 android:textSize="14sp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="72dp"
+                android:paddingHorizontal="10dp"
                 android:layout_gravity="bottom"
-                android:gravity="bottom|end"
+                android:gravity="center_vertical|end"
                 android:orientation="horizontal">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/apply_btt"
-                    style="@style/WhiteButton"
+                    style="@style/ChicaDialogPrimaryButton"
                     android:layout_width="wrap_content"
                     android:layout_gravity="center_vertical|end"
                     android:nextFocusRight="@id/cancel_btt"
@@ -303,7 +306,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/cancel_btt"
-                    style="@style/BlackButton"
+                    style="@style/ChicaDialogOutlineButton"
                     android:layout_width="wrap_content"
                     android:layout_gravity="center_vertical|end"
                     android:nextFocusLeft="@id/apply_btt"

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Chica family: accounts, small dialogs, skeletons, previews and other leftover surfaces. -->
+<resources>
+
+    <dimen name="chica_misc_card_radius">12dp</dimen>
+    <dimen name="chica_misc_line_radius">8dp</dimen>
+
+    <!-- Loading skeleton: flat plum surface (the shimmer animates its alpha). -->
+    <style name="ChicaMiscSkeleton">
+        <item name="cardBackgroundColor">?attr/boxItemBackground</item>
+        <item name="cardCornerRadius">@dimen/chica_misc_card_radius</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardUseCompatPadding">false</item>
+    </style>
+
+    <!-- Skeleton text line: same surface, softer pill-like corners. -->
+    <style name="ChicaMiscSkeletonLine" parent="ChicaMiscSkeleton">
+        <item name="cardCornerRadius">@dimen/chica_misc_line_radius</item>
+    </style>
+
+    <!-- Rounded plum text field stacked in a dialog form. -->
+    <style name="ChicaMiscField" parent="ChicaSheetField">
+        <item name="android:layout_marginBottom">12dp</item>
+    </style>
+
+    <!-- Checkbox: blush box, ink label, 48dp target. -->
+    <style name="ChicaMiscCheckBox">
+        <item name="buttonTint">?attr/colorPrimary</item>
+        <item name="android:buttonTint">?attr/colorPrimary</item>
+        <item name="android:textColor">?attr/textColor</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingStart">8dp</item>
+    </style>
+
+    <!-- Slider in small dialogs: blush thumb + active track on a plum inactive track. -->
+    <style name="ChicaMiscSlider">
+        <item name="thumbColor">?attr/colorPrimary</item>
+        <item name="trackColorActive">?attr/colorPrimary</item>
+        <item name="trackColorInactive">?attr/primaryGrayBackground</item>
+        <item name="haloColor">@color/chica_misc_halo</item>
+        <item name="tickVisible">false</item>
+    </style>
+
+    <!-- Small filter pill beside a search field (year picker in online subtitles). -->
+    <style name="ChicaMiscYearPill" parent="ChicaDialogChipButton">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:layout_marginEnd">0dp</item>
+    </style>
+
+    <color name="chica_misc_halo">#33F2BED1</color>
+</resources>

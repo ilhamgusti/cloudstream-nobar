@@ -8,5 +8,5 @@
         android:gravity="center"
         tools:src="@drawable/ic_anilist_icon"
         android:background="?android:attr/selectableItemBackgroundBorderless"
-        app:tint="?attr/white">
+        app:tint="?attr/textColor">
 </ImageView>

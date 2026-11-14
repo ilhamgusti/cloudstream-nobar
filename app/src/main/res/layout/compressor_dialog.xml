@@ -31,7 +31,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:gravity="center_horizontal"
+        android:textColor="?attr/textColor"
         android:textSize="20sp"
+        android:textStyle="bold"
         tools:text="Compressor: Off" />
 
     <!-- On / Off row — styled like speed preset buttons -->
@@ -44,7 +46,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/compressor_enable_btt"
-            style="@style/BlackButton"
+            style="@style/ChicaDialogChipButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -57,7 +59,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/compressor_disable_btt"
-            style="@style/BlackButton"
+            style="@style/ChicaDialogChipButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -117,11 +119,8 @@
             android:valueTo="0"
             android:stepSize="1"
             android:value="-24"
-            app:labelStyle="@style/BlackLabel"
-            app:thumbColor="?attr/white"
-            app:tickVisible="false"
-            app:trackColorActive="?attr/white"
-            app:trackColorInactive="?attr/primaryGrayBackground" />
+            style="@style/ChicaMiscSlider"
+            app:labelStyle="@style/BlackLabel" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/threshold_plus"
@@ -185,11 +184,8 @@
             android:valueTo="24"
             android:stepSize="1"
             android:value="12"
-            app:labelStyle="@style/BlackLabel"
-            app:thumbColor="?attr/white"
-            app:tickVisible="false"
-            app:trackColorActive="?attr/white"
-            app:trackColorInactive="?attr/primaryGrayBackground" />
+            style="@style/ChicaMiscSlider"
+            app:labelStyle="@style/BlackLabel" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/ratio_plus"
@@ -212,7 +208,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/compressor_preset_light"
-            style="@style/BlackButton"
+            style="@style/ChicaDialogChipButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -224,7 +220,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/compressor_preset_dialog"
-            style="@style/BlackButton"
+            style="@style/ChicaDialogChipButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -236,7 +232,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/compressor_preset_heavy"
-            style="@style/BlackButton"
+            style="@style/ChicaDialogChipButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -251,15 +247,16 @@
     <!-- Apply / Reset / Cancel — exactly like subtitle_offset.xml -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:paddingBottom="20dp"
+        android:layout_height="72dp"
+        android:paddingHorizontal="10dp"
+        android:paddingBottom="12dp"
         android:layout_gravity="bottom"
-        android:gravity="bottom|end"
+        android:gravity="center_vertical|end"
         android:orientation="horizontal">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/apply_btt"
-            style="@style/WhiteButton"
+            style="@style/ChicaDialogPrimaryButton"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical|end"
             android:nextFocusRight="@id/reset_btt"
@@ -269,7 +266,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/reset_btt"
-            style="@style/BlackButton"
+            style="@style/ChicaDialogOutlineButton"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical|end"
             android:nextFocusLeft="@id/apply_btt"
@@ -280,7 +277,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/cancel_btt"
-            style="@style/BlackButton"
+            style="@style/ChicaDialogOutlineButton"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical|end"
             android:nextFocusLeft="@id/reset_btt"

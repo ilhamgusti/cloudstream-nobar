@@ -44,6 +44,7 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import com.lagradost.cloudstream4.compose.RoundedShape
 import com.lagradost.cloudstream4.compose.whiteOutline
 import com.lagradost.cloudstream4.generated.resources.Res
 import com.lagradost.cloudstream4.generated.resources.arrow_downward
@@ -54,6 +55,7 @@ import com.mihon.common.preference.PreferenceData
 import com.mihon.common.preference.toggle
 import com.mihon.presentation.secondaryItemAlpha
 import com.mihon.presentation.settings.collectAsState
+import com.mihon.presentation.settings.widget.LocalPreferenceCardShape
 import com.mihon.presentation.settings.widget.PrefsHorizontalPadding
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
@@ -179,7 +181,7 @@ fun SliderItem(
     steps: Int = with(valueRange) { (last - first) - 1 },
     valueString: String = value.toString(),
     labelStyle: TextStyle = MaterialTheme.typography.bodyMedium,
-    pillColor: Color = MaterialTheme.colorScheme.surfaceContainerHigh,
+    pillColor: Color = MaterialTheme.colorScheme.background,
 ) {
     BaseSliderItem(
         value = value,
@@ -209,13 +211,13 @@ fun BaseSliderItem(
     valueString: String = value.toString(),
     titleStyle: TextStyle = MaterialTheme.typography.titleLarge,
     subtitleStyle: TextStyle = MaterialTheme.typography.bodySmall,
-    pillColor: Color = MaterialTheme.colorScheme.surfaceContainerHigh,
+    pillColor: Color = MaterialTheme.colorScheme.background,
     icon: Painter? = null,
 ) {
     var hasFocus by remember { mutableStateOf(false) }
     val haptic = LocalHapticFeedback.current
     Column(
-        modifier = Modifier.whiteOutline(hasFocus)
+        modifier = Modifier.whiteOutline(hasFocus, shape = LocalPreferenceCardShape.current ?: RoundedShape())
             .fillMaxWidth()
             .then(modifier),
         verticalArrangement = Arrangement.spacedBy(2.dp),

@@ -1,11 +1,13 @@
 package com.lagradost.cloudstream4.compose
 
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 
 @Composable
 fun BlackTextField(
@@ -18,7 +20,7 @@ fun BlackTextField(
     onValueChange: (String) -> Unit,
 ) {
     TextField(
-        modifier = modifier.focusOutline(),
+        modifier = modifier.focusOutline(shape = if (singleLine) PillShape() else RoundedCornerShape(16.dp)),
         value = value,
         onValueChange = onValueChange,
         keyboardOptions = keyboardOptions,
@@ -27,7 +29,7 @@ fun BlackTextField(
             Text(text = placeHolder)
         },
         singleLine = singleLine,
-        shape = RoundedShape(),
+        shape = if (singleLine) PillShape() else RoundedCornerShape(16.dp),
         colors = Colors.blackTextField,
     )
 }
