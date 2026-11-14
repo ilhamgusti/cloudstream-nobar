@@ -3,7 +3,7 @@ name: Artifact Build
 on: [pull_request]
 
 permissions:
-  contents: read
+  contents: write  # publishes the natives-<hash> release (see "Publish native libraries")
 
 jobs:
   build:
@@ -37,6 +37,23 @@ jobs:
     - name: Run Gradle
       # Fork: skip the ABI check here too (`check` depends on it); it's reported above.
       run: ./gradlew assemblePrereleaseDebug lint check -x library:checkKotlinAbi
+
+    - name: Publish native libraries
+      # Nobar: FFmpeg and the torrent engine are downloaded by the app on first use
+      # (NativeLibs.kt) from the release natives-<hash>; make sure it holds this build's set.
+      if: github.event.pull_request.head.repo.full_name == github.repository || github.event_name != 'pull_request'
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        ./gradlew --no-configuration-cache :app:exportNativeLibs
+        d=app/build/natives; tag=$(cat $d/TAG)
+        gh release view "$tag" >/dev/null 2>&1 || gh release create "$tag" --prerelease \
+          --title "Native libraries ${tag#natives-}" \
+          --notes "Downloaded by CloudStream Nobar on first use (FFmpeg decoders, torrent engine). Do not delete." || true
+        have=$(gh release view "$tag" --json assets --jq '.assets[].name')
+        for f in $d/*.so; do echo "$have" | grep -qx "$(basename "$f")" || gh release upload "$tag" "$f" || true; done
+        have=$(gh release view "$tag" --json assets --jq '.assets[].name')
+        for f in $d/*.so; do echo "$have" | grep -qx "$(basename "$f")" || { echo "::error::$(basename "$f") missing from $tag"; exit 1; }; done
 
     - name: Upload Artifact
       uses: actions/upload-artifact@v7

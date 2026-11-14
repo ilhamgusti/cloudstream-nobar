@@ -3,6 +3,7 @@ package com.lagradost.cloudstream3.ui.settings
 import android.text.format.Formatter.formatShortFileSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
@@ -21,6 +22,7 @@ import com.lagradost.cloudstream3.ui.settings.SettingsFragment.Companion.getFold
 import com.lagradost.cloudstream3.ui.subtitles.ChromecastSubtitlesFragment
 import com.lagradost.cloudstream3.ui.subtitles.SubtitlesFragment
 import com.lagradost.cloudstream3.utils.Coroutines.ioSafe
+import com.lagradost.cloudstream3.utils.NativeLibs
 import com.lagradost.cloudstream4.compose.EMULATOR
 import com.lagradost.cloudstream4.compose.PHONE
 import com.lagradost.cloudstream4.compose.TV
@@ -28,6 +30,7 @@ import com.lagradost.cloudstream4.compose.isLayout
 import com.lagradost.cloudstream4.rememberAppSettings
 import com.mihon.presentation.settings.Preference
 import com.mihon.presentation.settings.SearchableSettings
+import com.mihon.presentation.settings.collectAsState
 import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -60,7 +63,47 @@ object SettingsPlayerScreen : SearchableSettings {
             }
         }
 
+        // Nobar: optional components, downloaded only when switched on (NativeLibs).
+        val nativeState by NativeLibs.state.collectAsState()
+        @Composable
+        fun componentStatus(group: String, enabled: Boolean, desc: Int): String {
+            val size = formatShortFileSize(context, NativeLibs.sizeOf(group))
+            val status = when (val st = nativeState[group] ?: NativeLibs.IDLE) {
+                NativeLibs.READY -> stringResource(R.string.component_ready)
+                NativeLibs.FAILED -> stringResource(R.string.component_failed)
+                in 0..100 -> stringResource(R.string.component_downloading, st)
+                else -> if (enabled && NativeLibs.isDownloaded(group)) stringResource(R.string.component_restart)
+                else stringResource(R.string.component_size, size)
+            }
+            return stringResource(desc) + "\n" + status
+        }
+        val ffmpegOn by settings.player.ffmpegEnabled.collectAsState()
+        val torrentOn by settings.player.torrentEnabled.collectAsState()
+        fun toggle(group: String, on: Boolean): Boolean {
+            if (on) ioSafe { NativeLibs.ensure(group) } else NativeLibs.delete(group)
+            return true
+        }
+
         return persistentListOf(
+            Preference.PreferenceGroup(
+                title = stringResource(R.string.pref_category_components),
+                preferenceItems = persistentListOf(
+                    Preference.PreferenceItem.SwitchPreference(
+                        preference = settings.player.ffmpegEnabled,
+                        title = stringResource(R.string.component_ffmpeg),
+                        subtitle = componentStatus(NativeLibs.FFMPEG, ffmpegOn, R.string.component_ffmpeg_desc),
+                        icon = painterResource(R.drawable.memory_24px),
+                        onValueChanged = { on -> toggle(NativeLibs.FFMPEG, on) },
+                    ),
+                    Preference.PreferenceItem.SwitchPreference(
+                        preference = settings.player.torrentEnabled,
+                        title = stringResource(R.string.component_torrent),
+                        subtitle = componentStatus(NativeLibs.TORRENT, torrentOn, R.string.component_torrent_desc),
+                        icon = painterResource(R.drawable.baseline_downloading_24),
+                        onValueChanged = { on -> toggle(NativeLibs.TORRENT, on) },
+                    ),
+                ),
+            ),
             Preference.PreferenceGroup(
                 title = stringResource(R.string.pref_category_subtitles),
                 preferenceItems = persistentListOf(

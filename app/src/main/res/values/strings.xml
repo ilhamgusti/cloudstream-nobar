@@ -882,4 +882,17 @@
     <string name="nobar_you_are_host">You\'re the host now</string>
     <string name="nobar_kicked">You were removed from the room</string>
     <string name="home_all_sources">All sources</string>
+    <string name="torrent_engine_downloading">Downloading the torrent engine (one time)…</string>
+    <string name="torrent_engine_unavailable">Torrent engine is unavailable. Check your connection and try again.</string>
+    <string name="pref_category_components">Extra components</string>
+    <string name="component_ffmpeg">FFmpeg decoder</string>
+    <string name="component_ffmpeg_desc">Plays audio and video the device cannot decode (AC3, DTS, TrueHD…). Downloaded when switched on.</string>
+    <string name="component_torrent">Torrent</string>
+    <string name="component_torrent_desc">Plays torrent and magnet links. Downloaded when switched on.</string>
+    <string name="component_ready">Ready</string>
+    <string name="component_failed">Download failed. Switch off and on to retry.</string>
+    <string name="component_downloading" formatted="true">Downloading… %d%%</string>
+    <string name="component_restart">Downloaded, active after restarting the app</string>
+    <string name="component_size" formatted="true">Not downloaded · %s</string>
+    <string name="torrent_engine_off">Torrent is off. Turn it on in Settings → Player → Extra components.</string>
 </resources>

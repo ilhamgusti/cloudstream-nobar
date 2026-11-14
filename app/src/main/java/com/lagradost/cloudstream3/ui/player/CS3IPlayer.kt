@@ -112,6 +112,8 @@ import com.lagradost.cloudstream3.utils.WIDEVINE_DRM_UUID
 import com.lagradost.cloudstream3.utils.videoskip.VideoSkipStamp
 import com.lagradost.cloudstream4.AppSettings
 import kotlinx.coroutines.delay
+import com.lagradost.cloudstream3.utils.NativeLibs
+import com.lagradost.cloudstream4.NOBAR_FFMPEG_KEY
 import okhttp3.Interceptor
 import org.chromium.net.CronetEngine
 import java.io.File
@@ -1134,8 +1136,12 @@ class CS3IPlayer : IPlayer {
                     compressor =
                         if (isCompressorEnabled) DynamicRangeCompressor().apply { restoreSavedSettings() } else null
 
+                    // Nobar: FFmpeg arrives after the first launch (NativeLibs); without it, use the
+                    // platform decoders only.
+                    val ffmpeg = NativeLibs.isLoaded(NativeLibs.FFMPEG) &&
+                        settingsManager.getBoolean(NOBAR_FFMPEG_KEY, false)
                     val factory =
-                        if (isAudioOnly) {
+                        if (isAudioOnly && ffmpeg) {
                             FixedNextRenderersFactoryWithoutVideo(context, compressor).apply {
                                 setEnableDecoderFallback(true)
                                 setExtensionRendererMode(
@@ -1145,7 +1151,7 @@ class CS3IPlayer : IPlayer {
                                         DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON
                                 )
                             }
-                        } else if (isSoftwareDecodingEnabled) {
+                        } else if (isSoftwareDecodingEnabled && ffmpeg) {
                             FixedNextRenderersFactory(context, compressor).apply {
                                 setEnableDecoderFallback(true)
                                 setExtensionRendererMode(
