@@ -166,9 +166,10 @@ object InAppUpdater {
         }
 
         // Fork: one APK per architecture (…-arm64.apk / …-arm32.apk) plus a universal one.
-        val apks = found?.assets?.filter { it ->
+        if (found == null) return Update(false, null, null, null, null)
+        val apks = found.assets.filter { it ->
             it.contentType == "application/vnd.android.package-archive"
-        }.orEmpty()
+        }
         val abiTag = when (NativeLibs.abi()) {
             "arm64-v8a" -> "-arm64."
             "armeabi-v7a" -> "-arm32."
