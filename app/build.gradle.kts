@@ -151,8 +151,6 @@ android {
     compileSdk = libs.versions.compileSdk.get().toInt()
 
     defaultConfig {
-        // Nobar: ARM only (phones and TV boxes); x86/x86_64 native libs were ~19 MB of the APK.
-        ndk { abiFilters += listOf("arm64-v8a", "armeabi-v7a") }
         applicationId = "com.lagradost.cloudstream3"
         minSdk = libs.versions.minSdk.get().toInt()
         targetSdk = libs.versions.targetSdk.get().toInt()
@@ -260,6 +258,22 @@ android {
     buildFeatures {
         buildConfig = true
         viewBinding = true
+    }
+
+    // Nobar: ARM only (phones and TV boxes; x86/x86_64 were ~19 MB), one APK per architecture,
+    // plus a universal one that older in-app updaters (which take the first APK) can still install.
+    splits {
+        abi {
+            isEnable = true
+            reset()
+            include("arm64-v8a", "armeabi-v7a")
+            isUniversalApk = true
+        }
+    }
+
+    // Nobar: English and Indonesian only (values-b+in); the other 60 languages were dead weight.
+    androidResources {
+        localeFilters += listOf("en", "in", "id")
     }
 
     packaging {

@@ -141,6 +141,8 @@ val appLanguages = arrayListOf(
     Pair("한국어", "ko"),
 /* end language list */
 ).sortedBy { it.first.lowercase(Locale.ROOT) } // ye, we go alphabetical, so ppl don't put their lang on top
+    // Nobar ships only English and Indonesian resources (androidResources.localeFilters).
+    .filter { it.second == "en" || it.second == "in" }
 
 fun Pair<String, String>.nameNextToFlagEmoji(): String {
     // fallback to [A][A] -> [?] question mak flag

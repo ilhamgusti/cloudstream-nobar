@@ -65,7 +65,6 @@ object SettingsPlayerScreen : SearchableSettings {
 
         // Nobar: optional components, downloaded only when switched on (NativeLibs).
         val nativeState by NativeLibs.state.collectAsState()
-        val context = LocalContext.current
         @Composable
         fun componentStatus(group: String, enabled: Boolean, desc: Int): String {
             val size = formatShortFileSize(context, NativeLibs.sizeOf(group))

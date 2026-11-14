@@ -165,9 +165,18 @@ object InAppUpdater {
             rel.prerelease || rel.tagName == "pre-release"
         }
 
-        val foundAsset = found?.assets?.filter { it ->
+        // Fork: one APK per architecture (…-arm64.apk / …-arm32.apk) plus a universal one.
+        val apks = found?.assets?.filter { it ->
             it.contentType == "application/vnd.android.package-archive"
-        }?.getOrNull(0)
+        }.orEmpty()
+        val abiTag = when (NativeLibs.abi()) {
+            "arm64-v8a" -> "-arm64."
+            "armeabi-v7a" -> "-arm32."
+            else -> null
+        }
+        val foundAsset = apks.firstOrNull { abiTag != null && it.name.contains(abiTag) }
+            ?: apks.firstOrNull { it.name.contains("-universal.") }
+            ?: apks.getOrNull(0)
 
         if (foundAsset == null) {
             return Update(false, null, null, null, null)

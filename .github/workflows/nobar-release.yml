@@ -101,13 +101,19 @@ jobs:
       - name: Collect APK and notes
         run: |
           n=${{ github.run_number }}
-          apk=$(ls "$APK_DIR"/*.apk | head -1)
-          cp "$apk" "cloudstream-nobar-$n.apk"
-          echo "APK=cloudstream-nobar-$n.apk" >> "$GITHUB_ENV"
+          # One APK per architecture plus a universal one. The universal goes first: older in-app
+          # updaters take the first APK of the release, newer ones pick their architecture.
+          cp "$(ls "$APK_DIR"/*universal*.apk | head -1)" "cloudstream-nobar-$n-universal.apk"
+          cp "$(ls "$APK_DIR"/*arm64-v8a*.apk | head -1)" "cloudstream-nobar-$n-arm64.apk"
+          cp "$(ls "$APK_DIR"/*armeabi-v7a*.apk | head -1)" "cloudstream-nobar-$n-arm32.apk"
+          echo "APKS=cloudstream-nobar-$n-universal.apk cloudstream-nobar-$n-arm64.apk cloudstream-nobar-$n-arm32.apk" >> "$GITHUB_ENV"
+          ls -l cloudstream-nobar-$n-*.apk
           {
             echo "CloudStream Nobar build $n${SIGNING_NOTE} · \`${GITHUB_SHA::7}\`"
             echo
-            echo "Install **cloudstream-nobar-$n.apk**. It installs next to the official CloudStream"
+            echo "Pick one: **cloudstream-nobar-$n-arm64.apk** (almost every phone and TV box since ~2017),"
+            echo "**cloudstream-nobar-$n-arm32.apk** (older 32-bit devices), or **-universal** if unsure."
+            echo "It installs next to the official CloudStream"
             echo "(package \`com.lagradost.cloudstream3.nobar\`), and new builds install over the old one."
             echo "Everyone in a room needs the same extension installed."
             echo
@@ -123,7 +129,10 @@ jobs:
           name: CloudStream Nobar ${{ github.run_number }}${{ env.SIGNING_NOTE }}
           prerelease: true
           body_path: release-body.md
-          files: ${{ env.APK }}
+          files: |
+            cloudstream-nobar-${{ github.run_number }}-universal.apk
+            cloudstream-nobar-${{ github.run_number }}-arm64.apk
+            cloudstream-nobar-${{ github.run_number }}-arm32.apk
 
       # Move the "pre-release" tag (and its release) to this commit for the in-app updater.
       - name: Update in-app update channel
@@ -133,5 +142,5 @@ jobs:
         run: |
           gh release delete pre-release --cleanup-tag --yes 2>/dev/null || true
           git push origin ":refs/tags/pre-release" 2>/dev/null || true
-          gh release create pre-release "$APK" --target "$GITHUB_SHA" --prerelease \
+          gh release create pre-release $APKS --target "$GITHUB_SHA" --prerelease \
             --title "Pre-release (in-app updates)" --notes-file release-body.md
