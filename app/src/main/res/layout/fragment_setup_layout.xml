@@ -37,6 +37,8 @@
 
     <LinearLayout
         android:id="@+id/apply_btt_holder"
+        android:paddingEnd="16dp"
+        android:paddingBottom="8dp"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_gravity="bottom"

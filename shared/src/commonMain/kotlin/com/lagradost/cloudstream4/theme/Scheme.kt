@@ -84,6 +84,33 @@ class CloudStreamColorScheme(
     )
 }
 
+/** Chica family "Mixtape Bareng": plum ink, blush paper, one blush tape (see the XML ChicaMode). */
+internal fun chicaScheme() = CloudStreamColorScheme(
+    background = Color(0xFF1C1721),
+    surfaceVariant = Color(0xFF2A2233),
+    surface = Color(0xFF16121A),
+    surfaceContainer = Color(0xFF2A2233),
+    onBackground = Color(0xFFF2E9F1),
+    onSurfaceVariant = Color(0xFF9D8FA5),
+    icon = Color(0xFF9D8FA5),
+    primary = Color(0xFFF2BED1),
+    ongoing = Color(0xFFF43F5E),
+    isLight = false,
+)
+
+internal fun chicaLightScheme() = CloudStreamColorScheme(
+    background = Color(0xFFF9F5F6),
+    surfaceVariant = Color(0xFFF8E8E8),
+    surface = Color(0xFFF8E8E8),
+    surfaceContainer = Color(0xFFF8E8E8),
+    onBackground = Color(0xFF4A3B47),
+    onSurfaceVariant = Color(0xFF8A7A85),
+    icon = Color(0xFF8A7A85),
+    primary = Color(0xFFF2BED1),
+    ongoing = Color(0xFFF43F5E),
+    isLight = true,
+)
+
 internal fun darkScheme() = CloudStreamColorScheme(
     background = CloudStreamPalette.DarkBlackBg,
     surfaceVariant = CloudStreamPalette.DarkPrimaryGrayBg,
