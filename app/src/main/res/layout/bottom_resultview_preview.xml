@@ -24,7 +24,8 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="@dimen/rounded_image_radius">
+                app:cardCornerRadius="@dimen/rounded_image_radius"
+                app:cardElevation="0dp">
 
                 <ImageView
                     android:id="@+id/resultview_preview_poster"
@@ -58,28 +59,26 @@
 
                     <ImageView
                         android:id="@+id/resultview_preview_subscribe"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
                         android:layout_gravity="end|center_vertical"
-
-                        android:layout_margin="5dp"
+                        android:padding="10dp"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
+                        android:foreground="@drawable/chica_lists_icon_focus"
                         android:contentDescription="@string/subscribe_tooltip"
-                        android:elevation="10dp"
                         android:nextFocusDown="@id/resultview_preview_bookmark"
                         android:src="@drawable/baseline_notifications_none_24"
                         app:tint="?attr/textColor" />
 
                     <ImageView
                         android:id="@+id/resultview_preview_favorite"
-                        android:layout_width="25dp"
-                        android:layout_height="25dp"
+                        android:layout_width="44dp"
+                        android:layout_height="44dp"
                         android:layout_gravity="end|center_vertical"
-
-                        android:layout_margin="5dp"
+                        android:padding="10dp"
                         android:background="?android:attr/selectableItemBackgroundBorderless"
+                        android:foreground="@drawable/chica_lists_icon_focus"
                         android:contentDescription="@string/favorite"
-                        android:elevation="10dp"
                         android:nextFocusDown="@id/resultview_preview_bookmark"
                         android:src="@drawable/ic_baseline_favorite_border_24"
                         app:tint="?attr/textColor" />
@@ -93,27 +92,27 @@
 
                     <TextView
                         android:id="@+id/resultview_preview_meta_type"
-                        style="@style/ResultInfoText"
+                        style="@style/ChicaResultMetaText"
                         tools:text="Movie" />
 
                     <TextView
                         android:id="@+id/resultview_preview_meta_year"
-                        style="@style/ResultInfoText"
+                        style="@style/ChicaResultMetaText"
                         tools:text="2022" />
 
                     <TextView
                         android:id="@+id/resultview_preview_meta_rating"
-                        style="@style/ResultInfoText"
+                        style="@style/ChicaResultMetaRating"
                         tools:text="Rated: 8.5/10.0" />
 
                     <TextView
                         android:id="@+id/resultview_preview_meta_status"
-                        style="@style/ResultInfoText"
+                        style="@style/ChicaResultMetaText"
                         tools:text="Ongoing" />
 
                     <TextView
                         android:id="@+id/resultview_preview_meta_duration"
-                        style="@style/ResultInfoText"
+                        style="@style/ChicaResultMetaText"
                         tools:text="121min" />
                 </com.lagradost.cloudstream3.widget.FlowLayout>
 
@@ -135,7 +134,8 @@
                         android:layout_height="wrap_content"
 
                         android:ellipsize="end"
-                        android:textColor="?attr/textColor"
+                        android:lineSpacingMultiplier="1.1"
+                        android:textColor="?attr/grayTextColor"
                         tools:text="Ryan Quicksave Romano is an eccentric adventurer with a strange power: he can create a save-point in time and redo his life whenever he dies. Arriving in New Rome, the glitzy capital of sin of a rebuilding Europe, he finds the city torn between mega-corporations, sponsored heroes, superpowered criminals, and true monsters. It's a time of chaos, where potions can grant the power to rule the world and dangers lurk everywhere. " />
 
                     <View
@@ -155,7 +155,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/resultview_preview_bookmark"
-                style="@style/BlackButton"
+                style="@style/ChicaDialogOutlineButton"
                 android:layout_width="50dp"
                 android:layout_weight="1"
 
@@ -169,7 +169,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/resultview_preview_more_info"
-                style="@style/WhiteButton"
+                style="@style/ChicaDialogPrimaryButton"
                 android:layout_width="50dp"
                 android:layout_weight="1"
 
@@ -238,11 +238,11 @@
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
-                    android:layout_height="26dp"
+                    android:layout_height="48dp"
                     android:layout_margin="@dimen/result_padding"
                     android:layout_marginBottom="@dimen/loading_margin"
-                    android:background="@color/grayShimmer"
-                    app:cardCornerRadius="@dimen/loading_radius"
+                    style="@style/ChicaMiscSkeleton"
+                    app:cardCornerRadius="24dp"
                     tools:ignore="ContentDescription" />
             </LinearLayout>
         </com.facebook.shimmer.ShimmerFrameLayout>

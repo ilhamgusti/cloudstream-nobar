@@ -11,18 +11,20 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.input.rememberTextFieldState
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
@@ -47,6 +49,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.lagradost.cloudstream3.APIHolder.allProviders
@@ -61,10 +64,13 @@ import com.lagradost.cloudstream4.compose.LogBoxBlack
 import com.lagradost.cloudstream4.compose.LogBoxWhite
 import com.lagradost.cloudstream4.compose.LogText
 import com.lagradost.cloudstream4.compose.PHONE
+import com.lagradost.cloudstream4.compose.RoundedShape
 import com.lagradost.cloudstream4.compose.Screen
 import com.lagradost.cloudstream4.compose.WhiteButton
 import com.lagradost.cloudstream4.compose.WhiteFilterChip
+import com.lagradost.cloudstream4.compose.WhiteIconButton
 import com.lagradost.cloudstream4.compose.isLayout
+import com.lagradost.cloudstream4.compose.focusOutline
 import com.lagradost.cloudstream4.state.LogItem
 import com.lagradost.cloudstream4.state.LogLevel
 import com.lagradost.cloudstream4.state.SearchableDataState
@@ -74,6 +80,9 @@ import com.mihon.material.AppBar
 import com.mihon.material.Scaffold
 import com.mihon.material.padding
 import com.mihon.presentation.LocalBackPress
+import com.mihon.presentation.settings.widget.PreferenceGroupPosition
+import com.mihon.presentation.settings.widget.PreferenceCard
+import com.mihon.presentation.settings.widget.LocalPreferenceCardShape
 import kotlinx.collections.immutable.PersistentMap
 import kotlinx.collections.immutable.PersistentSet
 import kotlinx.collections.immutable.persistentMapOf
@@ -155,8 +164,9 @@ object TestScreen : Screen {
                 if (isLayout(PHONE)) {
                     val loading = state.activeQueries > 0
                     FloatingActionButton(
-                        containerColor = MaterialTheme.colorScheme.surfaceVariant,
-                        contentColor = MaterialTheme.colorScheme.onBackground,
+                        shape = RoundedCornerShape(50),
+                        containerColor = MaterialTheme.colorScheme.primary,
+                        contentColor = MaterialTheme.colorScheme.onPrimary,
                         onClick = {
                             if (loading) {
                                 onAction(TestAction.Cancel)
@@ -167,7 +177,7 @@ object TestScreen : Screen {
                         if (loading) {
                             CircularProgressIndicator(
                                 modifier = Modifier.size(24.dp),
-                                color = MaterialTheme.colorScheme.onBackground,
+                                color = MaterialTheme.colorScheme.onPrimary,
                             )
                         } else {
                             Icon(
@@ -232,17 +242,27 @@ object TestScreen : Screen {
                 FilterRow(state = state, onAction = onAction)
             }
 
-            items(
+            item(key = "results top padding") {
+                Spacer(modifier = Modifier.height(MaterialTheme.padding.medium))
+            }
+
+            val resultCount = state.items.sorted.size
+            itemsIndexed(
                 items = state.items.sorted,
-                key = { api -> api }
-            ) { uuid ->
+                key = { _, api -> api }
+            ) { index, uuid ->
                 val result = state.items.data[uuid]!!
 
-                TestResult(
-                    result = result,
-                    onAction = onAction,
+                // Chica: results grouped on one rounded surfaceVariant card
+                PreferenceCard(
+                    position = PreferenceGroupPosition.of(index, resultCount),
                     modifier = Modifier.animateItem(),
-                )
+                ) {
+                    TestResult(
+                        result = result,
+                        onAction = onAction,
+                    )
+                }
             }
         }
     }
@@ -271,7 +291,7 @@ object TestScreen : Screen {
                 .fillMaxWidth()
                 .horizontalScroll(state = rememberScrollState())
         ) {
-            Spacer(modifier = Modifier.width(MaterialTheme.padding.small))
+            Spacer(modifier = Modifier.width(MaterialTheme.padding.medium))
             val highestLogLevelCount = state.items.state.highestLogLevelCount
             SelectSingleButton(
                 name = R.string.no_data,
@@ -301,7 +321,7 @@ object TestScreen : Screen {
                 highestLogLevelCount = highestLogLevelCount,
                 onAction = onAction,
             )
-            Spacer(modifier = Modifier.width(MaterialTheme.padding.small))
+            Spacer(modifier = Modifier.width(MaterialTheme.padding.medium))
         }
     }
 
@@ -329,7 +349,7 @@ object TestScreen : Screen {
                         if (result.isLoading) {
                             LinearProgressIndicator(
                                 modifier = Modifier.fillMaxWidth(),
-                                color = MaterialTheme.colorScheme.onBackground,
+                                color = MaterialTheme.colorScheme.primary,
                                 trackColor = MaterialTheme.colorScheme.surfaceVariant,
                             )
                             Spacer(Modifier.height(height = MaterialTheme.padding.small))
@@ -361,13 +381,13 @@ object TestScreen : Screen {
                     }
                 }
 
-                WhiteButton(text = stringResource(R.string.sort_copy)) {
+                BlackButton(text = stringResource(R.string.sort_copy)) {
                     clipboardHelper(
                         txt("Log"),
                         result.log.joinToString(separator = "\n\n") { it.format() }
                     )
                 }
-                WhiteButton(text = stringResource(R.string.sort_clear)) {
+                BlackButton(text = stringResource(R.string.sort_clear)) {
                     onAction(TestAction.ClearSingle(result.uuid))
                 }
             },
@@ -400,13 +420,25 @@ object TestScreen : Screen {
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
             modifier = modifier
+                .fillMaxWidth()
+                .focusOutline(shape = LocalPreferenceCardShape.current ?: RoundedShape())
+                .heightIn(min = 56.dp)
                 .clickable(onClick = {
                     dialogShown = !dialogShown
                 })
-                .padding(horizontal = MaterialTheme.padding.medium)
+                .padding(
+                    start = MaterialTheme.padding.medium,
+                    end = MaterialTheme.padding.small,
+                    top = MaterialTheme.padding.small,
+                    bottom = MaterialTheme.padding.small,
+                )
         ) {
             Column(modifier = Modifier.weight(1.0f)) {
-                Text(text = result.name)
+                Text(
+                    text = result.name,
+                    fontSize = 16.sp,
+                    color = MaterialTheme.colorScheme.onBackground,
+                )
 
                 Row(horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small)) {
                     if (result.result != null) {
@@ -415,12 +447,17 @@ object TestScreen : Screen {
                             LogLevel.Warning -> R.string.test_warning to R.color.colorTestWarning
                             LogLevel.Verbose, LogLevel.Debug, LogLevel.Info -> R.string.test_passed to R.color.colorTestPass
                         }
-                        Text(text = stringResource(text), color = colorResource(color))
+                        Text(
+                            text = stringResource(text),
+                            color = colorResource(color),
+                            fontSize = 13.sp,
+                        )
                     }
                     if (result.plugin != null) {
                         Text(
                             text = result.plugin,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            fontSize = 13.sp,
                         )
                     }
                 }
@@ -428,7 +465,7 @@ object TestScreen : Screen {
 
             Spacer(modifier = Modifier.width(MaterialTheme.padding.small))
 
-            IconButton(
+            WhiteIconButton(
                 onClick = {
                     if (result.isLoading) {
                         onAction(TestAction.CancelSingle(result.uuid))
@@ -441,7 +478,7 @@ object TestScreen : Screen {
                 if (result.isLoading) {
                     CircularProgressIndicator(
                         modifier = Modifier.padding(MaterialTheme.padding.small),
-                        color = MaterialTheme.colorScheme.onBackground,
+                        color = MaterialTheme.colorScheme.primary,
                     )
                 } else {
                     Icon(

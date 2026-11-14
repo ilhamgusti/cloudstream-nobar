@@ -5,7 +5,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.util.fastForEachIndexed
 import com.mihon.presentation.settings.widget.PreferenceGroupHeader
+import com.mihon.presentation.settings.widget.PreferenceGroupPosition
 import kotlinx.coroutines.delay
 import kotlin.time.Duration.Companion.seconds
 
@@ -56,10 +57,22 @@ fun PreferenceScreen(
                             PreferenceGroupHeader(title = preference.title)
                         }
                     }
-                    items(preference.preferenceItems) { item ->
+                    // Chica: a group renders as one rounded surfaceVariant card; positions are
+                    // counted over the visible (enabled) rows so the corners land correctly
+                    val visibleCount = preference.preferenceItems.count { it.enabled }
+                    var visibleIndex = 0
+                    val positions = preference.preferenceItems.map { item ->
+                        if (item.enabled) {
+                            PreferenceGroupPosition.of(visibleIndex++, visibleCount)
+                        } else {
+                            PreferenceGroupPosition.Middle
+                        }
+                    }
+                    itemsIndexed(preference.preferenceItems) { index, item ->
                         PreferenceItem(
                             item = item,
                             highlightKey = highlightKey,
+                            position = positions[index],
                         )
                     }
                     item {
@@ -74,6 +87,13 @@ fun PreferenceScreen(
                     PreferenceItem(
                         item = preference,
                         highlightKey = highlightKey,
+                        // Loose rows get their own card; info text and custom content stay bare
+                        position = when (preference) {
+                            is Preference.PreferenceItem.InfoPreference,
+                            is Preference.PreferenceItem.CustomPreference -> null
+
+                            else -> PreferenceGroupPosition.Single
+                        },
                     )
                 }
             }

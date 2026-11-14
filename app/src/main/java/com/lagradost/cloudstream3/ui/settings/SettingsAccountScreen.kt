@@ -111,11 +111,7 @@ object SettingsAccountScreen : SearchableSettings, BiometricAuthenticator.Biomet
                                 addAccount(activity, api)
                             }
                         })
-                } + Preference.PreferenceItem.SwitchPreference(
-                    preference = settings.security.skipAccountSelection,
-                    title = stringResource(R.string.skip_startup_account_select_pref),
-                    icon = painterResource(R.drawable.ic_outline_account_circle_24)
-                ),
+                },
             ), Preference.PreferenceGroup(
                 enabled = hasSecurity && isLayout(PHONE),
                 title = stringResource(R.string.pref_category_security),

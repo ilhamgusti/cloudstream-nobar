@@ -329,8 +329,9 @@ fun LoadResponse.toResultData(repo: APIRepository): ResultData {
         ),
         yearText = txt(year?.toString()),
         apiName = txt(apiName),
+        // Chica: "★ 8.0" (the star is drawn by the meta style), no "/10.0".
         ratingText = score?.toStringNull(0.1, 10, 1, false, '.')
-            ?.let { txt(R.string.rating_format, it) },
+            ?.let { txt(it) },
         contentRatingText = txt(contentRating),
         vpnText = txt(
             when (repo.vpnStatus) {

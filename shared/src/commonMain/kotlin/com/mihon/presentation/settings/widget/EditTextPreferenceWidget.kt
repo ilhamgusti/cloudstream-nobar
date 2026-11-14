@@ -2,8 +2,10 @@ package com.mihon.presentation.settings.widget
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -75,6 +77,7 @@ fun EditTextPreferenceWidget(
             ),
             confirmButton = {
                 TextButton(
+                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onBackground),
                     enabled = textFieldValue.text != value && textFieldValue.text.isNotBlank(),
                     onClick = {
                         scope.launch {
@@ -88,7 +91,10 @@ fun EditTextPreferenceWidget(
                 }
             },
             dismissButton = {
-                TextButton(onClick = onDismissRequest) {
+                TextButton(
+                    onClick = onDismissRequest,
+                    colors = ButtonDefaults.textButtonColors(contentColor = MaterialTheme.colorScheme.onSurfaceVariant),
+                ) {
                     Text(text = stringResource(Res.string.cancel))
                 }
             },

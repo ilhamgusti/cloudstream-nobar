@@ -10,17 +10,18 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="72dp"
         tools:listitem="@layout/item_logcat" />
 
     <HorizontalScrollView
         android:id="@+id/apply_btt_holder"
         android:scrollbars="none"
-        android:gravity="bottom|end"
+        android:gravity="center_vertical|end"
         android:layout_gravity="bottom"
-        android:layout_marginTop="-60dp"
+        android:layout_marginTop="-72dp"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="72dp"
+        android:paddingHorizontal="10dp">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -33,7 +34,7 @@
                 android:layout_gravity="center_vertical|end"
                 android:layout_width="wrap_content"
                 android:nextFocusRight="@id/copy_btt"
-                style="@style/WhiteButton" />
+                style="@style/ChicaDialogPrimaryButton" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/copy_btt"
@@ -42,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:nextFocusLeft="@id/save_btt"
                 android:nextFocusRight="@id/clear_btt"
-                style="@style/BlackButton" />
+                style="@style/ChicaDialogOutlineButton" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/clear_btt"
@@ -51,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:nextFocusRight="@id/close_btt"
                 android:nextFocusLeft="@id/copy_btt"
-                style="@style/BlackButton" />
+                style="@style/ChicaDialogOutlineButton" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/close_btt"
@@ -59,7 +60,7 @@
                 android:layout_gravity="center_vertical|end"
                 android:layout_width="wrap_content"
                 android:nextFocusLeft="@id/clear_btt"
-                style="@style/BlackButton" />
+                style="@style/ChicaDialogOutlineButton" />
         </LinearLayout>
     </HorizontalScrollView>
 </LinearLayout>

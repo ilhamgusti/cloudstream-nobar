@@ -27,8 +27,8 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:layout_gravity="center"
-            android:backgroundTint="?attr/primaryGrayBackground"
-            android:foreground="@drawable/rounded_outline"
+            app:cardBackgroundColor="?attr/primaryGrayBackground"
+            android:foreground="@drawable/chica_misc_avatar_ring"
             android:duplicateParentState="true"
             app:cardCornerRadius="100dp"
             app:cardElevation="0dp">
@@ -55,11 +55,11 @@
             android:layout_width="26dp"
             android:layout_height="26dp"
             android:layout_gravity="top|end"
-            android:background="@drawable/lock_icon_bg"
+            android:background="@drawable/chica_misc_lock_badge"
             android:padding="5dp"
             android:src="@drawable/video_locked"
             android:visibility="gone"
-            app:tint="@color/white"
+            app:tint="?attr/textColor"
             tools:visibility="visible" />
 
     </FrameLayout>
@@ -73,7 +73,7 @@
         android:maxLines="2"
         android:ellipsize="end"
         android:textColor="?attr/textColor"
-        android:textSize="15sp"
+        android:textSize="14sp"
         tools:text="anime" />
 
 </LinearLayout>

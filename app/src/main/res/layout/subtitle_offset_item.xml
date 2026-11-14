@@ -14,10 +14,10 @@
         android:layout_marginBottom="2dp"
         android:ellipsize="end"
         android:lineSpacingMultiplier="1.1"
-        android:paddingHorizontal="10dp"
-        android:paddingVertical="6dp"
-        android:textSize="18sp"
-        android:textStyle="bold"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:textColor="?attr/textColor"
+        android:textSize="16sp"
         tools:text="Long testing subtitle line 1\nSubtitle line 2" />
 
 
@@ -25,11 +25,11 @@
         android:id="@+id/subtitle_progress"
         style="@android:style/Widget.Material.ProgressBar.Horizontal"
         android:layout_width="match_parent"
-        android:layout_height="5dp"
+        android:layout_height="4dp"
         android:layout_gravity="bottom"
         android:max="1000"
-        android:progressBackgroundTint="?attr/white"
-        android:progressTint="?attr/white"
+        android:progressBackgroundTint="?attr/primaryGrayBackground"
+        android:progressTint="?attr/colorPrimary"
         android:visibility="gone"
         tools:progress="50"
         tools:visibility="visible" />

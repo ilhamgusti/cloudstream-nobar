@@ -1709,10 +1709,13 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
             .build()*/
 
         val rippleColor = ColorStateList.valueOf(getResourceColor(R.attr.colorPrimary, 0.1f))
+        // Chica: the selected destination sits on a solid blush pill.
+        val activePill = ColorStateList.valueOf(getResourceColor(R.attr.colorPrimary, 1.0f))
 
         binding?.navView?.apply {
+            menu.findItem(R.id.navigation_library)?.isVisible = false // Nobar: Library is unused
             itemRippleColor = rippleColor
-            itemActiveIndicatorColor = rippleColor
+            itemActiveIndicatorColor = activePill
             setupWithNavController(navController)
             setOnItemSelectedListener { item ->
                 onNavDestinationSelected(
@@ -1726,14 +1729,13 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
         binding?.navRailView?.apply {
             if (isLayout(PHONE)) {
                 itemRippleColor = rippleColor
-                itemActiveIndicatorColor = rippleColor
+                itemActiveIndicatorColor = activePill
             } else {
-                val rippleColor = ColorStateList.valueOf(getResourceColor(R.attr.textColor, 1.0f))
                 val rippleColorTransparent =
                     ColorStateList.valueOf(getResourceColor(R.attr.textColor, 0.2f))
                 itemSpacing = 12.toPx // expandedItemSpacing does not have an attr
                 itemRippleColor = rippleColorTransparent
-                itemActiveIndicatorColor = rippleColor
+                itemActiveIndicatorColor = activePill
             }
             setupWithNavController(navController)
             /*if (isLayout(TV or EMULATOR)) {
@@ -1762,30 +1764,8 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
 
             val navProfileRoot = findViewById<LinearLayout>(R.id.nav_footer_root)
 
-            if (isLayout(TV or EMULATOR)) {
-                val navProfilePic = findViewById<ImageView>(R.id.nav_footer_profile_pic)
-                val navProfileCard = findViewById<CardView>(R.id.nav_footer_profile_card)
-
-                navProfileCard?.setOnClickListener {
-                    showAccountSelectLinear()
-                }
-
-                val homeViewModel =
-                    ViewModelProvider(this@MainActivity)[HomeViewModel::class.java]
-
-                observe(homeViewModel.currentAccount) { currentAccount ->
-                    if (currentAccount != null) {
-                        navProfilePic?.loadImage(
-                            currentAccount.image
-                        )
-                        navProfileRoot.isVisible = true
-                    } else {
-                        navProfileRoot.isGone = true
-                    }
-                }
-            } else {
-                navProfileRoot.isGone = true
-            }
+            // Nobar has no profiles: the rail never shows the account avatar.
+            navProfileRoot.isGone = true
         }
 
         val rail = binding?.navRailView
@@ -1799,8 +1779,12 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
 
             // The genius engineers at google did not actually 
             // write a nextFocus for the navrail
+            // Nobar on TV: no Downloads destination (TV storage is small).
+            if (isLayout(TV or EMULATOR)) rail.menu.findItem(R.id.navigation_downloads)?.isVisible = false
+            // Nobar: no Library destination anywhere (unused).
+            rail.menu.findItem(R.id.navigation_library)?.isVisible = false
             rail.findViewById<View?>(R.id.navigation_settings)?.nextFocusDownId =
-                R.id.nav_footer_profile_card
+                R.id.navigation_settings
             for (id in arrayOf(
                 R.id.navigation_home,
                 R.id.navigation_search,
@@ -1808,6 +1792,8 @@ class MainActivity : AppCompatActivity(), ColorPickerDialogListener, BiometricCa
                 R.id.navigation_downloads,
                 R.id.navigation_settings
             )) {
+                if (id == R.id.navigation_downloads && isLayout(TV or EMULATOR)) continue
+                if (id == R.id.navigation_library) continue
                 val view = rail.findViewById<View?>(id) ?: continue
                 prevId?.let { view.nextFocusUpId = it }
                 prevView?.nextFocusDownId = id

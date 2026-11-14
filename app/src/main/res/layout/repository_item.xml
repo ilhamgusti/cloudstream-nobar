@@ -5,15 +5,21 @@
     android:id="@+id/repository_item_root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
+    android:layout_marginBottom="8dp"
+    android:background="@drawable/chica_lists_row"
+    android:foreground="?attr/selectableItemBackground"
+    android:minHeight="64dp"
     android:nextFocusRight="@id/action_button"
     android:orientation="horizontal"
-    android:padding="12dp">
+    android:paddingStart="16dp"
+    android:paddingTop="12dp"
+    android:paddingEnd="4dp"
+    android:paddingBottom="12dp">
 
     <ImageView
         android:id="@+id/entry_icon"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:layout_gravity="start|center_vertical"
         android:layout_marginEnd="16dp"
         android:scaleType="fitCenter"
@@ -30,8 +36,10 @@
             android:id="@+id/main_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="2dp"
             android:textColor="?attr/textColor"
             android:textSize="16sp"
+            android:textStyle="bold"
             tools:text="Test repository" />
 
         <LinearLayout
@@ -101,7 +109,7 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:textColor="?attr/grayTextColor"
-            android:textSize="12sp"
+            android:textSize="13sp"
             tools:text="https://github.com/..." />
 
         <com.google.android.material.button.MaterialButton
@@ -115,28 +123,33 @@
 
     <ImageView
         android:id="@+id/action_settings"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_gravity="center_vertical"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="4dp"
+        android:padding="12dp"
         android:background="?attr/selectableItemBackgroundBorderless"
+        android:foreground="@drawable/chica_lists_icon_focus"
         android:contentDescription="@string/title_settings"
         android:visibility="gone"
         app:srcCompat="@drawable/ic_baseline_tune_24"
+        app:tint="?attr/grayTextColor"
         tools:visibility="visible" />
 
     <ImageView
         android:id="@+id/action_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_gravity="center_vertical|end"
-        android:layout_marginStart="10dp"
+        android:layout_marginStart="4dp"
         android:background="?attr/selectableItemBackgroundBorderless"
+        android:foreground="@drawable/chica_lists_icon_focus"
         android:clickable="true"
         android:contentDescription="@string/download"
         android:focusable="true"
         android:nextFocusLeft="@id/repository_item_root"
         android:padding="12dp"
+        app:tint="?attr/textColor"
         tools:src="@drawable/ic_baseline_add_24" />
 
 </LinearLayout>

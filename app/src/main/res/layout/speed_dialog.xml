@@ -14,7 +14,10 @@
         android:layout_margin="20dp"
         android:gravity="center_horizontal"
         android:text="1.00x"
-        android:textSize="20sp"
+        android:fontFamily="@font/google_sans"
+        android:textColor="?attr/textColor"
+        android:textSize="24sp"
+        android:textStyle="bold"
         tools:ignore="HardcodedText" />
 
     <LinearLayout
@@ -44,16 +47,16 @@
             android:nextFocusRight="@id/speed_plus"
             android:nextFocusUp="@id/speed_bar"
             android:nextFocusDown="@id/speed_125"
-            android:progressTint="?attr/white"
+            android:progressTint="?attr/colorPrimary"
             android:stepSize="0.05"
-            android:thumbTint="?attr/white"
+            android:thumbTint="?attr/colorPrimary"
             android:value="1.0"
             android:valueFrom="0.1"
             android:valueTo="2.0"
             app:labelStyle="@style/BlackLabel"
-            app:thumbColor="?attr/white"
+            app:thumbColor="?attr/colorPrimary"
             app:tickVisible="false"
-            app:trackColorActive="?attr/white"
+            app:trackColorActive="?attr/colorPrimary"
             app:trackColorInactive="?attr/primaryGrayBackground">
 
             <requestFocus />
@@ -74,13 +77,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="14dp">
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/speed_25"
-            style="@style/BlackButton"
+            style="@style/ChicaDialogChipButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:nextFocusLeft="@id/speed_200"
             android:nextFocusRight="@id/speed_100"
@@ -91,9 +95,8 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/speed_100"
-            style="@style/BlackButton"
+            style="@style/ChicaDialogChipButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:nextFocusLeft="@id/speed_25"
             android:nextFocusRight="@id/speed_125"
@@ -104,9 +107,8 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/speed_125"
-            style="@style/BlackButton"
+            style="@style/ChicaDialogChipButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:nextFocusLeft="@id/speed_100"
             android:nextFocusRight="@id/speed_150"
@@ -117,9 +119,8 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/speed_150"
-            style="@style/BlackButton"
+            style="@style/ChicaDialogChipButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:nextFocusLeft="@id/speed_125"
             android:nextFocusRight="@id/speed_200"
@@ -130,9 +131,8 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/speed_200"
-            style="@style/BlackButton"
+            style="@style/ChicaDialogChipButton"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:nextFocusLeft="@id/speed_150"
             android:nextFocusRight="@id/speed_25"

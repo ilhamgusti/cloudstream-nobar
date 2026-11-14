@@ -8,53 +8,52 @@
 
     <FrameLayout
             android:id="@+id/result_top_bar"
-            android:background="?attr/primaryGrayBackground"
-            android:paddingStart="@dimen/result_padding"
-            android:paddingEnd="@dimen/result_padding"
+            android:background="?attr/primaryBlackBackground"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:minHeight="56dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         <LinearLayout
                 android:orientation="horizontal"
                 android:gravity="center_vertical"
                 android:layout_gravity="center_vertical"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
             <ImageView
+                    style="@style/ChicaResultTopIcon"
                     android:nextFocusRight="@id/result_mini_sync"
-                    android:background="?android:attr/selectableItemBackgroundBorderless"
 
                     android:id="@+id/result_back"
                     android:clickable="true"
                     android:focusable="true"
 
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:padding="12dp"
                     android:layout_gravity="center_vertical|start"
                     android:src="@drawable/ic_baseline_arrow_back_24"
                     android:contentDescription="@string/go_back"
-                    app:tint="?attr/white" />
+                    app:tint="?attr/textColor" />
 
             <ImageView
+                style="@style/ChicaResultTopIcon"
                 android:visibility="gone"
                 android:nextFocusRight="@id/result_subscribe"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
 
                 android:id="@+id/result_mini_sync"
                 android:clickable="true"
                 android:focusable="true"
 
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="5dp"
                 android:layout_gravity="center_vertical|start"
                 android:src="@drawable/bookmark_star_24px"
-                app:tint="?attr/white" />
+                app:tint="?attr/textColor" />
         </LinearLayout>
 
         <LinearLayout
-                android:gravity="end"
+                android:gravity="end|center_vertical"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="56dp"
                 android:id="@+id/media_route_button_holder"
                 android:animateLayoutChanges="true"
                 android:layout_gravity="center_vertical|end">
@@ -62,13 +61,14 @@
             <androidx.mediarouter.app.MediaRouteButton
                     android:layout_gravity="end|center_vertical"
                     android:id="@+id/media_route_button"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:mediaRouteTypes="user"
                     android:visibility="gone"
                     app:mediaRouteButtonTint="?attr/textColor" />
 
             <ImageView
+                    style="@style/ChicaResultTopIcon"
                     android:visibility="gone"
                     android:nextFocusUp="@id/result_back"
                     android:nextFocusDown="@id/result_description"
@@ -78,87 +78,62 @@
                     tools:visibility="visible"
 
                     android:id="@+id/result_subscribe"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_margin="5dp"
-                    android:elevation="10dp"
                     android:tooltipText="@string/subscribe_tooltip"
-                    android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/baseline_notifications_none_24"
-                    android:layout_gravity="end|center_vertical"
                     app:tint="?attr/textColor" />
 
             <ImageView
+                style="@style/ChicaResultTopIcon"
                 android:nextFocusUp="@id/result_back"
                 android:nextFocusDown="@id/result_description"
                 android:nextFocusLeft="@id/result_subscribe"
                 android:nextFocusRight="@id/result_share"
 
                 android:id="@+id/result_favorite"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_margin="5dp"
-                android:elevation="10dp"
                 android:tooltipText="@string/action_add_to_favorites"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_baseline_favorite_border_24"
-                android:layout_gravity="end|center_vertical"
                 app:tint="?attr/textColor" />
 
             <ImageView
+                    style="@style/ChicaResultTopIcon"
                     android:nextFocusUp="@id/result_back"
                     android:nextFocusDown="@id/result_description"
                     android:nextFocusLeft="@id/result_favorite"
                     android:nextFocusRight="@id/result_open_in_browser"
 
                     android:id="@+id/result_share"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_margin="5dp"
-                    android:elevation="10dp"
                     android:tooltipText="@string/result_share"
-                    android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_outline_share_24"
-                    android:layout_gravity="end|center_vertical"
                     android:contentDescription="@string/result_share"
                     app:tint="?attr/textColor" />
 
             <ImageView
+                    style="@style/ChicaResultTopIcon"
                     android:nextFocusUp="@id/result_back"
                     android:nextFocusDown="@id/result_description"
                     android:nextFocusLeft="@id/result_share"
                     android:nextFocusRight="@id/result_search"
 
                     android:id="@+id/result_open_in_browser"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_margin="5dp"
-                    android:elevation="10dp"
                     android:tooltipText="@string/result_open_in_browser"
-                    android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/ic_baseline_public_24"
-                    android:layout_gravity="end|center_vertical"
                     android:contentDescription="@string/result_open_in_browser"
                     app:tint="?attr/textColor" />
 
             <ImageView
+                    style="@style/ChicaResultTopIcon"
                     android:nextFocusUp="@id/result_back"
                     android:nextFocusDown="@id/result_description"
                     android:nextFocusLeft="@id/result_open_in_browser"
                     android:nextFocusRight="@id/result_recommendations_btt"
 
                     android:id="@+id/result_search"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_margin="5dp"
-                    android:elevation="10dp"
                     android:tooltipText="@string/result_search_tooltip"
-                    android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/search_icon"
-                    android:layout_gravity="end|center_vertical"
-                    android:contentDescription="@string/result_open_in_browser"
+                    android:contentDescription="@string/result_search_tooltip"
                     app:tint="?attr/textColor" />
             <ImageView
+                    style="@style/ChicaResultTopIcon"
                     tools:visibility="visible"
                     android:visibility="gone"
                     android:nextFocusUp="@id/result_back"
@@ -166,15 +141,9 @@
                     android:nextFocusLeft="@id/result_search"
 
                     android:id="@+id/result_recommendations_btt"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:layout_margin="5dp"
-                    android:elevation="10dp"
                     android:tooltipText="@string/recommendations_tooltip"
-                    android:background="?android:attr/selectableItemBackgroundBorderless"
                     android:src="@drawable/baseline_list_alt_24"
-                    android:layout_gravity="end|center_vertical"
-                    android:contentDescription="@string/result_open_in_browser"
+                    android:contentDescription="@string/recommendations_tooltip"
                     app:tint="?attr/textColor" />
         </LinearLayout>
     </FrameLayout>
@@ -240,7 +209,7 @@
                     tools:visibility="visible"
                     android:id="@+id/result_bookmark_fab"
                     app:icon="@drawable/ic_baseline_bookmark_24"
-                    style="@style/ExtendedFloatingActionButton"
+                    style="@style/ChicaResultBookmarkFab"
                     tools:ignore="ContentDescription" />
 
             <fragment

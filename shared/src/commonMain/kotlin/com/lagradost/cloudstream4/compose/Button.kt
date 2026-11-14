@@ -88,7 +88,16 @@ fun BaseButton(
         modifier = modifier.onFocusChanged { newFocus ->
             hasFocus = canHaveFocus && newFocus.hasFocus
         },
-        border = if (hasFocus) BorderStroke(1.dp, MaterialTheme.colorScheme.onBackground) else null
+        shape = PillShape(),
+        // Chica: blush ring on focused secondary pills, ink ring on the blush primary pill
+        border = if (hasFocus) BorderStroke(
+            2.dp,
+            if (buttonColors.containerColor == MaterialTheme.colorScheme.primary) {
+                MaterialTheme.colorScheme.onBackground
+            } else {
+                MaterialTheme.colorScheme.primary
+            }
+        ) else null
     ) {
         AnimatedVisibility(hasFocus) {
             Icon(

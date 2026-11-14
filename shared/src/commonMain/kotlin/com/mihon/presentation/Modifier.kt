@@ -26,7 +26,7 @@ import com.mihon.material.SECONDARY_ALPHA
 fun Modifier.selectedBackground(isSelected: Boolean): Modifier {
     if (!isSelected) return this
     val alpha = if (isSystemInDarkTheme()) 0.16f else 0.22f
-    val color = MaterialTheme.colorScheme.secondary.copy(alpha = alpha)
+    val color = MaterialTheme.colorScheme.primary.copy(alpha = alpha)
     return this.drawBehind { drawRect(color) }
 }
 

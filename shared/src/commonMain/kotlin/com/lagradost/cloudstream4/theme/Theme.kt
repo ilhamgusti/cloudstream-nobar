@@ -12,6 +12,7 @@ import androidx.compose.runtime.ReadOnlyComposable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
 
 enum class CloudStreamThemeMode {
     /** "Black" standard dark, #111111 backgrounds */
@@ -34,6 +35,12 @@ enum class CloudStreamThemeMode {
 
     /** "SilentBlue" */
     SilentBlue,
+
+    /** "Chica": the Chica family's plum dark (CloudStream Nobar's default) */
+    Chica,
+
+    /** "ChicaLight": the Chica family's blush light */
+    ChicaLight,
 
     /** "System" resolved on each platform via [isSystemInDarkTheme] */
     FollowSystem,
@@ -60,7 +67,9 @@ fun modeToTheme(mode : CloudStreamThemeMode, primaryColor: CloudStreamPrimaryCol
             CloudStreamThemeMode.Dracula -> draculaScheme()
             CloudStreamThemeMode.Lavender -> lavenderScheme()
             CloudStreamThemeMode.SilentBlue -> silentBlueScheme()
-            CloudStreamThemeMode.FollowSystem -> if (systemDark) darkScheme() else lightScheme()
+            CloudStreamThemeMode.Chica -> chicaScheme()
+            CloudStreamThemeMode.ChicaLight -> chicaLightScheme()
+            CloudStreamThemeMode.FollowSystem -> if (systemDark) chicaScheme() else chicaLightScheme()
             CloudStreamThemeMode.Dynamic -> dynamicTheme
         }
         when {
@@ -83,7 +92,7 @@ private fun CloudStreamColorScheme.toMaterial3ColorScheme() = if (isLight) {
         onBackground = onBackground,
         onSurface = onBackground,
         onSurfaceVariant = onSurfaceVariant,
-        onPrimary = Color.White,
+        onPrimary = onPrimaryFor(primary),
     )
 } else {
     darkColorScheme(
@@ -95,9 +104,13 @@ private fun CloudStreamColorScheme.toMaterial3ColorScheme() = if (isLight) {
         onBackground = onBackground,
         onSurface = onBackground,
         onSurfaceVariant = onSurfaceVariant,
-        onPrimary = Color.White,
+        onPrimary = onPrimaryFor(primary),
     )
 }
+
+/** Ink on light accents (Chica's blush), white on dark ones. */
+private fun onPrimaryFor(primary: Color) =
+    if (primary.luminance() > 0.5f) Color(0xFF4A3B47) else Color.White
 
 internal val LocalSharedInfiniteTransition = staticCompositionLocalOf<InfiniteTransition> { throw NotImplementedError() }
 
@@ -116,8 +129,8 @@ fun CloudStreamPreviewTheme(content: @Composable () -> Unit) {
 
 @Composable
 fun CloudStreamTheme(
-    mode: CloudStreamThemeMode = CloudStreamThemeMode.FollowSystem,
-    primaryColor: CloudStreamPrimaryColor = CloudStreamPrimaryColor.NORMAL,
+    mode: CloudStreamThemeMode = CloudStreamThemeMode.Chica,
+    primaryColor: CloudStreamPrimaryColor = CloudStreamPrimaryColor.BLUSH,
     content: @Composable () -> Unit,
 ) {
     val csColors = modeToTheme(mode, primaryColor)

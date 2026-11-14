@@ -9,7 +9,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/account_list"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:background="?attr/primaryBlackBackground"
+        android:background="@null"
         tools:listitem="@layout/account_single"
         android:layout_width="match_parent"
         android:layout_rowWeight="1"
@@ -19,14 +19,14 @@
     <TextView
         android:id="@+id/account_none"
         android:text="@string/no_account"
-        style="@style/SettingsItem"
+        style="@style/ChicaListsSettingsItem"
         android:focusable="true">
     </TextView>
 
     <TextView
         android:id="@+id/account_add"
         android:text="@string/add_account"
-        style="@style/SettingsItem"
+        style="@style/ChicaListsSettingsItem"
         android:focusable="true">
 
         <requestFocus />

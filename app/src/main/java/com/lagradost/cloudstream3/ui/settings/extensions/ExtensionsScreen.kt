@@ -31,7 +31,7 @@ import androidx.compose.foundation.layout.sizeIn
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -85,12 +85,14 @@ import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringArrayResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.DialogProperties
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.findNavController
@@ -173,6 +175,9 @@ import com.mihon.presentation.secondaryItemAlpha
 import com.mihon.presentation.settings.LocalPreferenceHighlighted
 import com.mihon.presentation.settings.LocalPreferenceMinHeight
 import com.mihon.presentation.settings.widget.BasePreferenceWidget
+import com.mihon.presentation.settings.widget.PreferenceCard
+import com.mihon.presentation.settings.widget.PreferenceGroupPosition
+import com.mihon.presentation.settings.widget.cardShape
 import com.mihon.presentation.settings.widget.PrefsHorizontalPadding
 import com.mihon.presentation.settings.widget.TextPreferenceWidget
 import kotlinx.collections.immutable.PersistentList
@@ -638,18 +643,27 @@ object ExtensionsScreen : Screen {
                     )
                 }
 
-                items(items = state.plugins.sorted, key = { uuid -> uuid }) { uuid ->
+                item(key = "plugins top padding") {
+                    Spacer(modifier = Modifier.height(MaterialTheme.padding.medium))
+                }
+
+                val pluginCount = state.plugins.sorted.size
+                itemsIndexed(items = state.plugins.sorted, key = { _, uuid -> uuid }) { index, uuid ->
                     val plugin = state.plugins[uuid]!!
                     val isHighlighted = uuid == highLight
                     CompositionLocalProvider(
                         LocalPreferenceHighlighted provides isHighlighted,
                     ) {
-                        Plugin(
-                            plugin = plugin,
-                            onAction = onAction,
+                        PreferenceCard(
+                            position = PreferenceGroupPosition.of(index, pluginCount),
                             modifier = Modifier
                                 .animateItem()
                                 .graphicsLayer { alpha = itemAlpha.value },
+                        ) {
+                        Plugin(
+                            plugin = plugin,
+                            onAction = onAction,
+                            modifier = Modifier,
                             onClick = if (state.pluginFilter.repository != null) {
                                 null
                             } else {
@@ -659,6 +673,7 @@ object ExtensionsScreen : Screen {
                                 }
                             }
                         )
+                        }
                     }
                 }
 
@@ -676,7 +691,7 @@ object ExtensionsScreen : Screen {
                             item {
                                 LinearProgressIndicator(
                                     modifier = Modifier.fillMaxWidth(),
-                                    color = MaterialTheme.colorScheme.onBackground,
+                                    color = MaterialTheme.colorScheme.primary,
                                     trackColor = MaterialTheme.colorScheme.surfaceVariant,
                                 )
                             }
@@ -727,9 +742,10 @@ object ExtensionsScreen : Screen {
                         val scope = rememberCoroutineScope()
                         val clipboard = LocalClipboard.current
                         val minHeight = LocalPreferenceMinHeight.current
+                        PreferenceCard(position = PreferenceGroupPosition.Single) {
                         Row(
                             modifier = Modifier
-                                .focusOutline()
+                                .focusOutline(shape = PreferenceGroupPosition.Single.cardShape())
                                 .sizeIn(minHeight = minHeight)
                                 .combinedClickable(onClick = {
                                     scope.launch {
@@ -751,8 +767,10 @@ object ExtensionsScreen : Screen {
                             Spacer(modifier = Modifier.width(MaterialTheme.padding.medium))
                             Text(
                                 text = stringResource(R.string.add_repository),
-                                style = MaterialTheme.typography.bodyMedium
+                                style = MaterialTheme.typography.bodyLarge,
+                                color = MaterialTheme.colorScheme.onBackground,
                             )
+                        }
                         }
                     }
                 } else {
@@ -761,7 +779,11 @@ object ExtensionsScreen : Screen {
                     }
                 }
 
-                items(items = state.repositories.sorted, key = { uuid -> uuid }) { uuid ->
+                val repositoryCount = state.repositories.sorted.size
+                itemsIndexed(
+                    items = state.repositories.sorted,
+                    key = { _, uuid -> uuid }
+                ) { index, uuid ->
                     val repository = state.repositories[uuid]!!
                     val isHighlighted = uuid == highLight
                     val derivedState = state.plugins.state.repositories[uuid]
@@ -769,14 +791,19 @@ object ExtensionsScreen : Screen {
                     CompositionLocalProvider(
                         LocalPreferenceHighlighted provides isHighlighted,
                     ) {
-                        Repository(
-                            repository = repository,
-                            onAction = onAction,
-                            derivedState = derivedState,
+                        PreferenceCard(
+                            position = PreferenceGroupPosition.of(index, repositoryCount),
                             modifier = Modifier
                                 .animateItem()
                                 .graphicsLayer { alpha = itemAlpha.value }
-                        )
+                        ) {
+                            Repository(
+                                repository = repository,
+                                onAction = onAction,
+                                derivedState = derivedState,
+                                modifier = Modifier
+                            )
+                        }
                     }
                 }
             }
@@ -797,7 +824,7 @@ object ExtensionsScreen : Screen {
                 .focusGroup()
                 .focusRestorer(defaultFocusRequester),
             horizontalArrangement = Arrangement.spacedBy(MaterialTheme.padding.small),
-            contentPadding = PaddingValues(horizontal = MaterialTheme.padding.small)
+            contentPadding = PaddingValues(horizontal = MaterialTheme.padding.medium)
         ) {
             var first = true
             for ((text, types) in contentTypes) {
@@ -1093,23 +1120,20 @@ object ExtensionsScreen : Screen {
                             if (!language.isNullOrBlank()) {
                                 Text(
                                     text = getNameNextToFlagEmoji(language) ?: language,
-                                    modifier = Modifier
-                                        .secondaryItemAlpha(),
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     style = MaterialTheme.typography.bodySmall,
                                 )
                             }
                             Text(
                                 text = "v${plugin.info.version}",
-                                modifier = Modifier
-                                    .secondaryItemAlpha(),
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 style = MaterialTheme.typography.bodySmall,
                             )
                             val sizeBytes = plugin.source?.size
                             if (sizeBytes != null) {
                                 Text(
                                     text = formatShortFileSize(LocalContext.current, sizeBytes),
-                                    modifier = Modifier
-                                        .secondaryItemAlpha(),
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     style = MaterialTheme.typography.bodySmall,
                                 )
                             }
@@ -1124,8 +1148,7 @@ object ExtensionsScreen : Screen {
                         if (!description.isNullOrBlank()) {
                             Text(
                                 text = description,
-                                modifier = Modifier
-                                    .secondaryItemAlpha(),
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 style = MaterialTheme.typography.bodySmall,
                                 maxLines = 3,
                                 overflow = TextOverflow.Ellipsis
@@ -1293,14 +1316,14 @@ object ExtensionsScreen : Screen {
                                 modifier = Modifier
                                     .size(IconButtonDefaults.smallContainerSize())
                                     .padding(MaterialTheme.padding.small),
-                                color = MaterialTheme.colorScheme.onBackground,
+                                color = MaterialTheme.colorScheme.primary,
                             )
                         } else {
                             CircularProgressIndicator(
                                 modifier = Modifier
                                     .size(IconButtonDefaults.smallContainerSize())
                                     .padding(MaterialTheme.padding.small),
-                                color = MaterialTheme.colorScheme.onBackground,
+                                color = MaterialTheme.colorScheme.primary,
                             )
                         }
                     }
@@ -1391,7 +1414,7 @@ object ExtensionsScreen : Screen {
                     if (!finished) {
                         LinearProgressIndicator(
                             modifier = Modifier.fillMaxWidth(),
-                            color = MaterialTheme.colorScheme.onBackground,
+                            color = MaterialTheme.colorScheme.primary,
                             trackColor = MaterialTheme.colorScheme.surfaceVariant,
                             progress = {
                                 if (dialog.total == 0) {
@@ -1463,7 +1486,7 @@ object ExtensionsScreen : Screen {
                                 Spacer(modifier = Modifier.height(MaterialTheme.padding.medium))
                                 LinearProgressIndicator(
                                     modifier = Modifier.width(TextFieldDefaults.MinWidth),
-                                    color = MaterialTheme.colorScheme.onBackground,
+                                    color = MaterialTheme.colorScheme.primary,
                                     trackColor = MaterialTheme.colorScheme.surfaceVariant,
                                 )
                             }
@@ -1554,8 +1577,9 @@ object ExtensionsScreen : Screen {
         val scope = rememberCoroutineScope()
 
         ExtendedFloatingActionButton(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-            contentColor = MaterialTheme.colorScheme.onBackground,
+            shape = RoundedCornerShape(50),
+            containerColor = MaterialTheme.colorScheme.primary,
+            contentColor = MaterialTheme.colorScheme.onPrimary,
             elevation = FloatingActionButtonDefaults.elevation(
                 defaultElevation = 0.dp,
                 pressedElevation = 0.dp,
@@ -1622,17 +1646,27 @@ object ExtensionsScreen : Screen {
                     onClick = {
                         openInstalledPlugins()
                     })
-                .padding(MaterialTheme.padding.small)
+                .padding(
+                    horizontal = MaterialTheme.padding.medium,
+                    vertical = MaterialTheme.padding.small + MaterialTheme.padding.extraSmall
+                )
         ) {
-            Text(stringResource(R.string.extensions))
+            Text(
+                text = stringResource(R.string.extensions),
+                color = MaterialTheme.colorScheme.onBackground,
+                style = MaterialTheme.typography.titleSmall,
+                fontSize = 15.sp,
+                fontWeight = FontWeight.SemiBold,
+            )
             Spacer(modifier = Modifier.height(MaterialTheme.padding.small))
-            val shape = RoundedCornerShape(3.dp)
-            val size = 10.dp
+            // Chica: blush = installed and on (progress), muted = disabled, plum ground = not downloaded
+            val shape = RoundedCornerShape(50)
+            val size = 8.dp
             Row(modifier = Modifier.clip(shape)) {
                 Box(
                     modifier = Modifier
                         .height(size)
-                        .background(color = MaterialTheme.colorScheme.onBackground)
+                        .background(color = MaterialTheme.colorScheme.primary)
                         .weight(
                             maxOf(
                                 state.plugins.state.downloadedAndEnabled.toFloat(),
@@ -1643,7 +1677,7 @@ object ExtensionsScreen : Screen {
                 Box(
                     modifier = Modifier
                         .height(size)
-                        .background(color = MaterialTheme.colorScheme.primary)
+                        .background(color = MaterialTheme.colorScheme.onSurfaceVariant)
                         .weight(
                             maxOf(
                                 state.plugins.state.downloadedAndDisabled.toFloat(),
@@ -1654,7 +1688,7 @@ object ExtensionsScreen : Screen {
                 Box(
                     modifier = Modifier
                         .height(size)
-                        .background(color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        .background(color = MaterialTheme.colorScheme.background)
                         .weight(maxOf(state.plugins.state.notDownloaded.toFloat(), 0.02f))
                 )
             }
@@ -1669,19 +1703,19 @@ object ExtensionsScreen : Screen {
                     text = stringResource(
                         R.string.plugins_downloaded,
                         state.plugins.state.downloadedAndEnabled
-                    ), color = MaterialTheme.colorScheme.onBackground
+                    ), color = MaterialTheme.colorScheme.primary
                 )
                 DownloadBox(
                     text = stringResource(
                         R.string.plugins_disabled,
                         state.plugins.state.downloadedAndDisabled
-                    ), color = MaterialTheme.colorScheme.primary
+                    ), color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 DownloadBox(
                     text = stringResource(
                         R.string.plugins_not_downloaded,
                         state.plugins.state.notDownloaded
-                    ), color = MaterialTheme.colorScheme.onSurfaceVariant
+                    ), color = MaterialTheme.colorScheme.background
                 )
             }
         }
@@ -1764,8 +1798,8 @@ object ExtensionsScreen : Screen {
                         } else if (repository.status == RepositoryStatus.Loading) {
                             LinearProgressIndicator(
                                 modifier = Modifier.fillMaxWidth(),
-                                color = MaterialTheme.colorScheme.onBackground,
-                                trackColor = MaterialTheme.colorScheme.surfaceVariant,
+                                color = MaterialTheme.colorScheme.primary,
+                                trackColor = MaterialTheme.colorScheme.background,
                             )
                         } else {
                             Text(
@@ -1779,8 +1813,9 @@ object ExtensionsScreen : Screen {
                     }
                     Text(
                         text = repository.info.description ?: repository.info.url,
-                        modifier = Modifier.secondaryItemAlpha(),
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                         style = MaterialTheme.typography.bodyMedium,
+                        fontSize = 13.sp,
                         maxLines = 10,
                     )
                 }
@@ -1890,15 +1925,16 @@ object ExtensionsScreen : Screen {
     ) {
         Box(
             modifier = Modifier
-                .size(10.dp)
+                .size(8.dp)
                 .background(
                     color = color,
-                    shape = RoundedCornerShape(3.dp)
+                    shape = RoundedCornerShape(50)
                 )
         )
         Text(
             text = text,
-            style = MaterialTheme.typography.labelMedium
+            style = MaterialTheme.typography.labelMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
     }
 

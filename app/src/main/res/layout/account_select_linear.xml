@@ -24,6 +24,8 @@
         android:orientation="horizontal"
         android:descendantFocusability="afterDescendants"
         android:layout_marginTop="10dp"
+        android:layout_marginBottom="8dp"
+        android:paddingHorizontal="6dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clipChildren="false"
@@ -37,10 +39,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginBottom="10dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="16dp"
         android:text="@string/manage_accounts"
-        android:textSize="16sp"
         app:icon="@drawable/ic_baseline_edit_24"
-        style="@style/BlackButton" />
+        app:iconGravity="textStart"
+        app:iconTint="?attr/textColor"
+        style="@style/ChicaDialogOutlineButton" />
 
 </LinearLayout>

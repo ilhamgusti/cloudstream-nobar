@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Chica family restyle of the result/detail page (phone + TV). -->
+<resources>
+
+    <!-- Meta line under the title: "Series  2026  ★ 9.0" in muted ink. -->
+    <style name="ChicaResultMetaText" parent="ResultInfoText">
+        <item name="android:textColor">?attr/grayTextColor</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <!-- Rating is the only place amber is allowed. -->
+    <style name="ChicaResultMetaRating" parent="ChicaResultMetaText">
+        <item name="android:textColor">@color/chicaRating</item>
+        <item name="android:drawablePadding">4dp</item>
+        <item name="drawableStartCompat">@drawable/chica_result_star</item>
+    </style>
+
+    <!-- Quiet hairline pill for source / content rating / filler tags. -->
+    <style name="ChicaResultMetaPill" parent="SmallBlackButton">
+        <item name="android:layout_height">28dp</item>
+        <item name="android:paddingStart">10dp</item>
+        <item name="android:paddingEnd">10dp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">?attr/grayTextColor</item>
+        <item name="backgroundTint">@color/transparent</item>
+        <item name="strokeColor">?attr/account_unselected_stroke</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="iconTint">?attr/grayTextColor</item>
+        <item name="cornerRadius">14dp</item>
+    </style>
+
+    <!-- Primary action: blush pill, 48dp touch target. -->
+    <style name="ChicaResultPlayButton" parent="ChicaPrimaryButton">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="cornerRadius">24dp</item>
+    </style>
+
+    <!-- Secondary actions: outlined pill, 48dp touch target. -->
+    <style name="ChicaResultSecondaryButton" parent="ChicaOutlineButton">
+        <item name="android:layout_height">48dp</item>
+        <item name="cornerRadius">24dp</item>
+    </style>
+
+    <!-- Season / range / dub / sort selectors: quiet surface pills. -->
+    <style name="ChicaResultSelectButton" parent="MultiSelectButton">
+        <item name="android:layout_height">44dp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">14sp</item>
+        <item name="backgroundTint">?attr/primaryGrayBackground</item>
+        <item name="strokeColor">?attr/account_unselected_stroke</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="rippleColor">?attr/grayTextColor</item>
+        <item name="cornerRadius">22dp</item>
+    </style>
+
+    <!-- Section title ("8 Episode", "Rekomendasi"). -->
+    <style name="ChicaResultSectionTitle">
+        <item name="android:textColor">?attr/textColor</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!-- Bookmark / watch status floating pill on phone. -->
+    <style name="ChicaResultBookmarkFab" parent="ExtendedFloatingActionButton">
+        <item name="android:layout_height">48dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="cornerRadius">24dp</item>
+        <item name="backgroundTint">?attr/primaryGrayBackground</item>
+        <item name="strokeColor">?attr/account_unselected_stroke</item>
+        <item name="strokeWidth">1dp</item>
+        <item name="rippleColor">?attr/grayTextColor</item>
+        <item name="android:layout_marginBottom">16dp</item>
+    </style>
+
+    <!-- Top bar icon buttons on phone: 24dp glyph in a 44dp hit area. -->
+    <style name="ChicaResultTopIcon">
+        <item name="android:layout_width">44dp</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_gravity">end|center_vertical</item>
+        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
+    </style>
+
+    <!-- TV action buttons: surface pill, blush fill when focused. -->
+    <style name="ChicaResultSmallButtonTV" parent="ResultSmallButtonTV">
+        <item name="android:layout_width">64dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:background">@drawable/chica_result_tv_button</item>
+        <item name="iconSize">20dp</item>
+    </style>
+
+    <!-- TV primary action: blush at rest, ink ring on focus. -->
+    <style name="ChicaResultPlayButtonTV" parent="ChicaResultSmallButtonTV">
+        <item name="android:layout_width">88dp</item>
+        <item name="android:background">@drawable/chica_result_tv_button_primary</item>
+        <item name="iconTint">?attr/colorOnPrimary</item>
+    </style>
+
+    <style name="ChicaResultTvButtonLabel" parent="ResultMarqueeButtonText">
+        <item name="android:textColor">?attr/grayTextColor</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:paddingTop">4dp</item>
+    </style>
+
+    <!-- TV season / range / dub list item. -->
+    <style name="ChicaResultSelectionTV" parent="SelectableButtonTV">
+        <item name="android:background">@drawable/chica_result_selection_bg</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+</resources>

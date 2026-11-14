@@ -3,6 +3,7 @@ package com.lagradost.cloudstream4.theme
 import androidx.compose.ui.graphics.Color
 
 enum class CloudStreamPrimaryColor(val color: Color) {
+    BLUSH(Color(0xFFF2BED1)),
     NORMAL(Color(0xFF3D50FA)),
     BLUE(Color(0xFF5664B7)),
     PURPLE(Color(0xFF6200EA)),

@@ -320,7 +320,7 @@ object CommonActivity {
     fun updateTheme(act: Activity) {
         val settingsManager = PreferenceManager.getDefaultSharedPreferences(act)
         if (settingsManager
-                .getString(act.getString(R.string.app_theme_key), "AmoledLight") == "System"
+                .getString(act.getString(R.string.app_theme_key), "Chica") == "System"
             && Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q
         ) {
             loadThemes(act)
@@ -332,11 +332,11 @@ object CommonActivity {
             val currentNightMode =
                 act.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
             return when (currentNightMode) {
-                Configuration.UI_MODE_NIGHT_NO -> R.style.LightMode // Night mode is not active, we're using the light theme
-                else -> R.style.AppTheme // Night mode is active, we're using dark theme
+                Configuration.UI_MODE_NIGHT_NO -> R.style.ChicaLightMode // Night mode is not active, we're using the light theme
+                else -> R.style.ChicaMode // Night mode is active, we're using dark theme
             }
         } else {
-            return R.style.AppTheme
+            return R.style.ChicaMode
         }
     }
 
@@ -345,8 +345,10 @@ object CommonActivity {
         val settingsManager = PreferenceManager.getDefaultSharedPreferences(act)
 
         val currentTheme =
-            when (settingsManager.getString(act.getString(R.string.app_theme_key), "AmoledLight")) {
+            when (settingsManager.getString(act.getString(R.string.app_theme_key), "Chica")) {
                 "System" -> mapSystemTheme(act)
+                "Chica" -> R.style.ChicaMode
+                "ChicaLight" -> R.style.ChicaLightMode
                 "Black" -> R.style.AppTheme
                 "Light" -> R.style.LightMode
                 "Amoled" -> R.style.AmoledMode
@@ -358,11 +360,12 @@ object CommonActivity {
                 "Lavender" -> R.style.LavenderMode
                 "SilentBlue" -> R.style.SilentBlueMode
 
-                else -> R.style.AppTheme
+                else -> R.style.ChicaMode
             }
 
         val currentOverlayTheme =
-            when (settingsManager.getString(act.getString(R.string.primary_color_key), "Normal")) {
+            when (settingsManager.getString(act.getString(R.string.primary_color_key), "Blush")) {
+                "Blush" -> R.style.OverlayPrimaryColorBlush
                 "Normal" -> R.style.OverlayPrimaryColorNormal
                 "DandelionYellow" -> R.style.OverlayPrimaryColorDandelionYellow
                 "CarnationPink" -> R.style.OverlayPrimaryColorCarnationPink
@@ -388,7 +391,7 @@ object CommonActivity {
                 "Monet2" -> if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S)
                     R.style.OverlayPrimaryColorMonetTwo else R.style.OverlayPrimaryColorNormal
 
-                else -> R.style.OverlayPrimaryColorNormal
+                else -> R.style.OverlayPrimaryColorBlush
             }
 
         act.theme.applyStyle(currentTheme, true)

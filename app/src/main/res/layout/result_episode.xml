@@ -5,11 +5,11 @@
     android:id="@+id/episode_holder"
 
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:layout_marginBottom="5dp"
+    android:layout_height="56dp"
+    android:layout_marginBottom="8dp"
 
     android:nextFocusRight="@id/download_button"
-    app:cardBackgroundColor="@color/transparent"
+    app:cardBackgroundColor="?attr/primaryGrayBackground"
     app:cardCornerRadius="@dimen/rounded_image_radius"
     app:cardElevation="0dp"
     android:foreground="@drawable/outline_drawable"
@@ -54,14 +54,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:foreground="?android:attr/selectableItemBackgroundBorderless"
-        android:orientation="horizontal">
+        android:foreground="?android:attr/selectableItemBackground"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="8dp">
 
         <FrameLayout
             android:id="@+id/watch_progress_container"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
             android:layout_gravity="center">
 
             <ImageView
@@ -71,13 +72,15 @@
 
             <com.google.android.material.progressindicator.CircularProgressIndicator
                 android:id="@+id/episode_progress"
-                style="@style/ContinueWatchingCircularProgress" />
+                style="@style/ContinueWatchingCircularProgress"
+                app:indicatorColor="?attr/colorPrimary" />
         </FrameLayout>
         <!--marquee_forever-->
         <com.google.android.material.button.MaterialButton
             android:id="@+id/episode_filler"
-            style="@style/SmallWhiteButton"
+            style="@style/ChicaResultMetaPill"
             android:layout_gravity="center"
+            android:layout_marginStart="8dp"
             android:text="@string/filler" />
 
         <TextView
@@ -85,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="12dp"
             android:layout_marginEnd="50dp"
             android:ellipsize="marquee"
 
@@ -96,6 +99,8 @@
             android:singleLine="true"
 
             android:textColor="?attr/textColor"
+            android:textSize="15sp"
+            android:textStyle="bold"
             tools:text="Episode 1" />
 
         <com.lagradost.cloudstream3.ui.download.button.PieFetchButton

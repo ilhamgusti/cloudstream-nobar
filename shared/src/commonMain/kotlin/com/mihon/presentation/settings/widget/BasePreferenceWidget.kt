@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.lagradost.cloudstream4.compose.RoundedShape
 import com.lagradost.cloudstream4.compose.focusOutline
 import com.mihon.presentation.settings.LocalPreferenceHighlighted
 import com.mihon.presentation.settings.LocalPreferenceMinHeight
@@ -48,10 +49,11 @@ fun BasePreferenceWidget(
 ) {
     val highlighted = LocalPreferenceHighlighted.current
     val minHeight = LocalPreferenceMinHeight.current
+    val cardShape = LocalPreferenceCardShape.current
     Row(
         modifier = modifier
             .highlightBackground(highlighted)
-            .focusOutline()
+            .focusOutline(shape = cardShape ?: RoundedShape())
             .sizeIn(minHeight = minHeight)
             .combinedClickable(enabled = onClick != null, onLongClick = onLongClick, onClick = { onClick?.invoke() })
             .fillMaxWidth(),
@@ -76,6 +78,7 @@ fun BasePreferenceWidget(
                     maxLines = 2,
                     style = MaterialTheme.typography.titleLarge,
                     fontSize = TitleFontSize,
+                    color = MaterialTheme.colorScheme.onBackground,
                 )
             }
             subcomponent?.invoke(this)
@@ -129,3 +132,4 @@ internal val TrailingWidgetBuffer = 16.dp
 val PrefsHorizontalPadding = 16.dp
 internal val PrefsVerticalPadding = 16.dp
 internal val TitleFontSize = 16.sp
+internal val SubtitleFontSize = 13.sp

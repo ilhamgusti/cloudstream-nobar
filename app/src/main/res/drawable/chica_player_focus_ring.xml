@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- D-pad focus on a blush pill: an ink ring, since a blush ring would vanish on the blush fill. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_focused="true">
+        <shape android:shape="rectangle">
+            <stroke
+                android:width="3dp"
+                android:color="?attr/textColor" />
+            <corners android:radius="100dp" />
+        </shape>
+    </item>
+</selector>

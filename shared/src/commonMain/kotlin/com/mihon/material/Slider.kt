@@ -3,6 +3,7 @@ package com.mihon.material
 import androidx.annotation.IntRange
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.height
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.SliderColors
 import androidx.compose.material3.SliderDefaults
@@ -23,7 +24,14 @@ fun Slider(
     valueRange: IntProgression = 0..1,
     @IntRange(from = 0) steps: Int = with(valueRange) { (last - first) - 1 },
     onValueChangeFinished: (() -> Unit)? = null,
-    colors: SliderColors = SliderDefaults.colors(),
+    // Chica: blush is progress, the rest of the track is the plum ground
+    colors: SliderColors = SliderDefaults.colors(
+        thumbColor = MaterialTheme.colorScheme.primary,
+        activeTrackColor = MaterialTheme.colorScheme.primary,
+        activeTickColor = MaterialTheme.colorScheme.onPrimary,
+        inactiveTrackColor = MaterialTheme.colorScheme.background,
+        inactiveTickColor = MaterialTheme.colorScheme.onSurfaceVariant,
+    ),
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     thumb: @Composable (SliderState) -> Unit = {
         SliderDefaults.Thumb(

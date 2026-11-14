@@ -5,7 +5,6 @@ import android.content.ActivityNotFoundException
 import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.compose.animation.Crossfade
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,10 +13,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.text.input.TextFieldLineLimits
 import androidx.compose.foundation.text.input.TextFieldState
@@ -44,6 +45,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
@@ -65,7 +67,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.core.app.ActivityOptionsCompat
 import coil3.compose.AsyncImage
 import com.lagradost.cloudstream3.BuildConfig
@@ -85,11 +89,14 @@ import com.lagradost.cloudstream4.compose.TV
 import com.lagradost.cloudstream4.compose.circleBorder
 import com.lagradost.cloudstream4.compose.focusOutline
 import com.lagradost.cloudstream4.compose.isLayout
+import com.lagradost.cloudstream4.compose.PillShape
 import com.lagradost.cloudstream4.theme.CloudStreamPreviewTheme
 import com.mihon.material.padding
 import com.mihon.presentation.settings.SearchableSettings
 import com.mihon.presentation.settings.SettingSearchResults
 import com.mihon.presentation.settings.SettingsData
+import com.mihon.presentation.settings.widget.PreferenceCard
+import com.mihon.presentation.settings.widget.PreferenceGroupPosition
 import com.mihon.presentation.settings.widget.TextPreferenceWidget
 import kotlinx.collections.immutable.PersistentList
 import kotlinx.collections.immutable.persistentListOf
@@ -224,55 +231,35 @@ object SettingsFragmentScreen : Screen {
             Column(modifier = Modifier.verticalScroll(outerListState)) {
                 Spacer(modifier = Modifier.height(MaterialTheme.padding.small))
 
-                val default = DataStoreHelper.getDefaultAccount(
-                    LocalContext.current
-                )
-                val flow by DataStoreHelper.selectedAccountNumberFlow.collectAsState()
-                val account = remember(flow) {
-                    DataStoreHelper.getCurrentAccount() ?: default
-                }
-
+                // Nobar has no profiles: a plain header (brand mark + title) instead of the account row.
                 Row(
+                    verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
                         .fillMaxSize()
-                        .focusOutline()
-                        .clickable {
-                            activity.navigate(
-                                R.id.accountSelectActivity,
-                                Bundle().apply { putBoolean("isFromMainActivity", true) }
-                            )
-                        }
                         .padding(
-                            vertical = MaterialTheme.padding.large,
+                            vertical = MaterialTheme.padding.medium,
                             horizontal = MaterialTheme.padding.medium
                         )
                 ) {
-                    val image =
-                        account.customImage ?: profileImages.getOrNull(account.defaultImageIndex)
-                        ?: profileImages.first()
-
-                    AsyncImage(
-                        contentScale = ContentScale.Crop,
-                        model = image,
-                        modifier = Modifier.circleBorder(50.dp),
+                    androidx.compose.foundation.Image(
+                        painter = painterResource(R.drawable.brand_mark),
                         contentDescription = null,
+                        modifier = Modifier
+                            .size(40.dp)
+                            .clip(RoundedCornerShape(12.dp)),
                     )
                     Spacer(modifier = Modifier.width(MaterialTheme.padding.medium))
-                    Column {
-                        Text(
-                            text = account.name,
-                            style = MaterialTheme.typography.titleLarge,
-                        )
-                        Text(
-                            text = stringResource(R.string.title_settings),
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                    }
+                    Text(
+                        text = stringResource(R.string.title_settings),
+                        style = MaterialTheme.typography.titleLarge,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onBackground,
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(MaterialTheme.padding.small))
                 SettingsSearch(textFieldState = textFieldState)
-                Spacer(modifier = Modifier.height(MaterialTheme.padding.small))
+                Spacer(modifier = Modifier.height(MaterialTheme.padding.medium))
 
                 SettingSearchResults(
                     nestedScrollConnection = parentFirstScrollConnection,
@@ -286,10 +273,19 @@ object SettingsFragmentScreen : Screen {
                             modifier = Modifier
                                 .nestedScroll(parentFirstScrollConnection)
                         ) {
-                            screens.forEach { settingsTab ->
-                                SettingsTab(settingsTab)
+                            // Chica: watching together comes first, on its own card
+                            PreferenceCard(position = PreferenceGroupPosition.Single) {
+                                NobarTab()
                             }
-                            NobarTab()
+                            Spacer(modifier = Modifier.height(MaterialTheme.padding.medium))
+                            screens.forEachIndexed { index, settingsTab ->
+                                PreferenceCard(
+                                    position = PreferenceGroupPosition.of(index, screens.size)
+                                ) {
+                                    SettingsTab(settingsTab)
+                                }
+                            }
+                            Spacer(modifier = Modifier.height(MaterialTheme.padding.small))
                             BuildStamp()
                         }
                     })
@@ -315,7 +311,6 @@ object SettingsFragmentScreen : Screen {
     fun SettingsSearch(textFieldState: TextFieldState) {
         var hasFocus by remember { mutableStateOf(false) }
         var isWritable by remember { mutableStateOf(false) }
-        val focusProgress by animateFloatAsState(targetValue = if (hasFocus) 1.0f else 0.0f)
         val focusManager = LocalFocusManager.current
         val focusRequester = remember { FocusRequester() }
         val isTv = isLayout(TV)
@@ -335,8 +330,9 @@ object SettingsFragmentScreen : Screen {
             lineLimits = TextFieldLineLimits.SingleLine,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 24.dp - 12.dp * focusProgress)
-                .focusOutline(enabled = isTv, CircleShape)
+                .padding(horizontal = MaterialTheme.padding.medium)
+                .heightIn(min = 56.dp)
+                .focusOutline(enabled = isTv, PillShape())
                 .onFocusChanged { newFocus ->
                     hasFocus = newFocus.hasFocus
                     /** Loss of focus -> readonly */
@@ -363,12 +359,14 @@ object SettingsFragmentScreen : Screen {
             placeholder = {
                 Text(text = stringResource(R.string.search_hint))
             },
-            shape = CircleShape,
+            shape = PillShape(),
             colors = TextFieldDefaults.colors(
                 focusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
                 unfocusedContainerColor = MaterialTheme.colorScheme.surfaceVariant,
-                unfocusedLeadingIconColor = MaterialTheme.colorScheme.onBackground,
-                unfocusedTrailingIconColor = MaterialTheme.colorScheme.onBackground,
+                focusedTextColor = MaterialTheme.colorScheme.onBackground,
+                unfocusedTextColor = MaterialTheme.colorScheme.onBackground,
+                unfocusedLeadingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
+                unfocusedTrailingIconColor = MaterialTheme.colorScheme.onSurfaceVariant,
                 focusedTrailingIconColor = MaterialTheme.colorScheme.onBackground,
                 focusedLeadingIconColor = MaterialTheme.colorScheme.onBackground,
                 focusedIndicatorColor = Color.Transparent,
@@ -439,7 +437,10 @@ object SettingsFragmentScreen : Screen {
             // This can not be converted to joinToString due to stringResource being composable
             subtitle =
                 @Suppress("SimplifiableCallChain")
-                settingsTab.subtitle.map { stringResource(it) }.joinToString(),
+                settingsTab.subtitle
+                    // Nobar on TV has no downloads, so don't advertise them.
+                    .filter { !(it == R.string.title_downloads && isLayout(TV)) }
+                    .map { stringResource(it) }.joinToString(),
             // Clear it if we have already set it but navigated back instantly
             onPreferenceClick = {
                 SearchableSettings.highlightKey = null
@@ -477,8 +478,10 @@ object SettingsFragmentScreen : Screen {
             verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(50.dp)
-                .focusOutline()
+                .padding(horizontal = MaterialTheme.padding.medium)
+                .height(48.dp)
+                .clip(PillShape())
+                .focusOutline(shape = PillShape())
                 .clickable {
                     clipboardHelper(
                         txt(R.string.extension_version),
@@ -486,7 +489,9 @@ object SettingsFragmentScreen : Screen {
                     )
                 },
         ) {
-            ProvideTextStyle(MaterialTheme.typography.bodyMedium) {
+            ProvideTextStyle(
+                MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
+            ) {
                 Text(text = BuildConfig.VERSION_NAME)
                 if (commitHash != "") {
                     Text("•")

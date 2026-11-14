@@ -19,9 +19,11 @@
         android:minWidth="0dp"
         android:minHeight="0dp"
         android:textAllCaps="false"
-        android:textColor="?attr/textColor"
-        android:textSize="12sp"
+        android:textColor="?attr/grayTextColor"
+        android:textSize="13sp"
         app:cornerRadius="100dp"
+        app:strokeColor="?attr/account_unselected_stroke"
+        app:strokeWidth="1dp"
         tools:text="Test">
 
     </com.google.android.material.button.MaterialButton>

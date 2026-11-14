@@ -689,9 +689,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
                 true
             }
             homeChangeApi.setOnClickListener(apiChangeClickListener)
-            homeSwitchAccount.setOnClickListener {
-                activity?.showAccountSelectLinear()
-            }
+            homeSwitchAccount.isGone = true // Nobar has no profiles
 
             homeMasterAdapter = HomeParentItemAdapterPreview(
                 homeViewModel, accountViewModel
@@ -699,7 +697,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
             homeMasterRecycler.setRecycledViewPool(ParentItemAdapter.sharedPool)
             homeMasterRecycler.adapter = homeMasterAdapter
 
-            homeApiFab.isVisible = isLayout(PHONE)
+            homeApiFab.isVisible = false // phone: the source pills on the header replace the FAB
 
             homePreviewReloadProvider.setOnClickListener {
                 homeViewModel.loadAndCancel(
@@ -898,7 +896,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(
 
                         // Show the downloads button if we have any sort of network shenanigans
                         homeReloadConnectionGoToDownloads.isVisible =
-                            hasNoNetworkConnection || isNetworkError
+                            (hasNoNetworkConnection || isNetworkError) && isLayout(PHONE)
 
                         // Only hide the open in browser button if we know this is not network shenanigans related to cs3
                         homeReloadConnectionOpenInBrowser.isGone = hasNoNetworkConnection

@@ -11,7 +11,6 @@ import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.inputmethod.EditorInfo
-import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -49,7 +48,8 @@ object NobarDialog {
     /** [fromPlayer]: the room starts with the video on screen. */
     fun show(activity: Activity, fromPlayer: Boolean = false, onDismiss: (() -> Unit)? = null) {
         val prefs = NobarPrefs(activity)
-        val binding = DialogNobarBinding.inflate(LayoutInflater.from(activity))
+        val inflater = LayoutInflater.from(activity)
+        val binding = DialogNobarBinding.inflate(inflater)
         val dialog = AlertDialog.Builder(activity, R.style.AlertDialogCustom)
             .setView(binding.root)
             .create()
@@ -153,21 +153,13 @@ object NobarDialog {
             binding.nobarRequestsTitle.isVisible = requests.isNotEmpty()
             binding.nobarRequestList.removeAllViews()
             for (r in requests) {
-                val row = LinearLayout(activity).apply {
-                    orientation = LinearLayout.HORIZONTAL
-                    gravity = android.view.Gravity.CENTER_VERTICAL
-                }
-                row.addView(TextView(activity).apply {
-                    text = activity.getString(R.string.nobar_request_toast, r.name, Nobar.actionLabel(activity, r))
-                    setTextColor(binding.nobarRoomCode.currentTextColor)
-                    textSize = 14f
-                }, LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f))
-                for ((label, approve) in listOf(R.string.nobar_decline to false, R.string.nobar_approve to true)) {
-                    row.addView(MaterialButton(activity, null, android.R.attr.borderlessButtonStyle).apply {
-                        setText(label)
-                        setOnClickListener { s.resolve(r.id, approve) }
-                    })
-                }
+                val row = inflater.inflate(R.layout.nobar_request_row, binding.nobarRequestList, false)
+                row.findViewById<TextView>(R.id.nobar_request_text).text =
+                    activity.getString(R.string.nobar_request_toast, r.name, Nobar.actionLabel(activity, r))
+                row.findViewById<MaterialButton>(R.id.nobar_request_decline)
+                    .setOnClickListener { s.resolve(r.id, false) }
+                row.findViewById<MaterialButton>(R.id.nobar_request_approve)
+                    .setOnClickListener { s.resolve(r.id, true) }
                 binding.nobarRequestList.addView(row)
             }
 
@@ -181,16 +173,17 @@ object NobarDialog {
                     activity.getString(R.string.nobar_tag_you).takeIf { m.clientId == s.me },
                     activity.getString(R.string.nobar_tag_buffering).takeIf { m.buffering },
                 )
-                val row = TextView(activity).apply {
-                    text = if (tags.isEmpty()) m.name else "${m.name}  ·  ${tags.joinToString(", ")}"
-                    setTextColor(binding.nobarRoomCode.currentTextColor)
-                    textSize = 15f
-                    setPadding(0, 12, 0, 12)
+                val row = inflater.inflate(R.layout.nobar_member_row, list, false)
+                row.findViewById<TextView>(R.id.nobar_member_initial).text =
+                    m.name.trim().take(1).uppercase()
+                row.findViewById<TextView>(R.id.nobar_member_name).text = m.name
+                row.findViewById<TextView>(R.id.nobar_member_tags).apply {
+                    text = tags.joinToString(", ")
+                    isVisible = tags.isNotEmpty()
                 }
                 // Host tools: co-host on/off, hand over the host seat.
                 if (s.isHost && m.clientId != s.me) {
                     row.isFocusable = true
-                    row.setBackgroundResource(android.R.drawable.list_selector_background)
                     row.setOnClickListener {
                         val items = arrayOf(
                             activity.getString(if (isCohost) R.string.nobar_remove_cohost else R.string.nobar_make_cohost),

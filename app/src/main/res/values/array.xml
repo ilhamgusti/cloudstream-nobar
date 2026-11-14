@@ -257,6 +257,7 @@
     </array>
 
     <string-array name="themes_overlay_names">
+        <item>Blush (Chica)</item>
         <item>Normal</item>
         <item>Dandelion Yellow</item>
         <item>Carnation Pink</item>
@@ -281,6 +282,7 @@
         <item>Material You (Secondary)</item>
     </string-array>
     <string-array name="themes_overlay_names_values">
+        <item>Blush</item>
         <item>Normal</item>
         <item>DandelionYellow</item>
         <item>CarnationPink</item>
@@ -306,6 +308,8 @@
     </string-array>
 
     <string-array name="themes_names">
+        <item>Chica</item>
+        <item>Chica Light</item>
         <item>Dark</item>
         <item>Gray</item>
         <item>Amoled</item>
@@ -317,6 +321,8 @@
         <item>Silent Blue</item>
     </string-array>
     <string-array name="themes_names_values">
+        <item>Chica</item>
+        <item>ChicaLight</item>
         <item>AmoledLight</item>
         <item>Black</item>
         <item>Amoled</item>

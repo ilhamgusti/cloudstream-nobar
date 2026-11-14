@@ -827,4 +827,5 @@
     <string name="nobar_new_host">%s sekarang host</string>
     <string name="nobar_you_are_host">Kamu sekarang host</string>
     <string name="nobar_kicked">Kamu dikeluarkan dari room</string>
+    <string name="home_all_sources">Semua sumber</string>
 </resources>

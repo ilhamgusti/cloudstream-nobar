@@ -9,9 +9,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -22,6 +23,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -48,6 +50,7 @@ import com.lagradost.cloudstream3.utils.AppUtils.parseJson
 import com.lagradost.cloudstream3.utils.AppUtils.toJsonLiteral
 import com.lagradost.cloudstream3.utils.SubtitleHelper.languages
 import com.lagradost.cloudstream4.compose.ActionDialog
+import com.lagradost.cloudstream4.compose.WhiteIconButton
 import com.mihon.common.preference.AndroidPreferenceStore
 import com.mihon.common.preference.DataPreferenceStore
 import com.mihon.common.preference.StatePreferenceStore
@@ -111,7 +114,7 @@ object SubtitlesScreen : SearchableSettings {
 
         // Undo, current -> initial last saved value
         AnimatedVisibility(currentState != initialState) {
-            IconButton(onClick = {
+            WhiteIconButton(onClick = {
                 currentState = initialState
             }) {
                 Icon(
@@ -124,7 +127,7 @@ object SubtitlesScreen : SearchableSettings {
 
         // Reset, current -> default
         AnimatedVisibility(currentState != default) {
-            IconButton(onClick = {
+            WhiteIconButton(onClick = {
                 dialogShown = true
             }) {
                 Icon(
@@ -215,10 +218,13 @@ object SubtitlesScreen : SearchableSettings {
                     val fixedText =
                         SpannableString.valueOf(if (state.upperCase) text.uppercase() else text)
 
+                    // Chica: the preview sits on a rounded 16dp card inside the gutters
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(75.dp)
+                            .padding(horizontal = 16.dp, vertical = 8.dp)
+                            .clip(RoundedCornerShape(16.dp))
+                            .height(88.dp)
                     ) {
                         AsyncImage(
                             contentDescription = stringResource(R.string.preview_background_img_des),

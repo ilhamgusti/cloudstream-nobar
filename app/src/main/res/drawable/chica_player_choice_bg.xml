@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Single-choice row: the selected row sits on a rounded plum surface. -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_activated="true">
+        <inset
+            android:insetLeft="8dp"
+            android:insetTop="2dp"
+            android:insetRight="8dp"
+            android:insetBottom="2dp">
+            <shape android:shape="rectangle">
+                <solid android:color="?attr/primaryGrayBackground" />
+                <corners android:radius="14dp" />
+            </shape>
+        </inset>
+    </item>
+    <item android:drawable="@android:color/transparent" />
+</selector>

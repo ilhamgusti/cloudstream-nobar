@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:text="@string/loading"
             android:layout_gravity="center"
-            android:textColor="@color/textColor"
+            android:textColor="?attr/textColor"
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_margin="10dp" />
@@ -23,6 +23,7 @@
             android:layout_margin="20dp"
 
             android:layout_gravity="center"
-            android:layout_width="60dp"
-            android:layout_height="60dp" />
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:indeterminateTint="?attr/colorPrimary" />
 </LinearLayout>

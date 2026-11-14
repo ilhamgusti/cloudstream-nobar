@@ -17,7 +17,6 @@ import com.lagradost.cloudstream4.generated.resources.Res
 import com.lagradost.cloudstream4.generated.resources.preview
 import com.lagradost.cloudstream4.theme.CloudStreamPreviewTheme
 import org.jetbrains.compose.resources.painterResource
-import com.mihon.presentation.secondaryItemAlpha
 
 @Composable
 fun TextPreferenceWidget(
@@ -37,9 +36,10 @@ fun TextPreferenceWidget(
                 Text(
                     text = subtitle,
                     modifier = Modifier
-                        .padding(horizontal = PrefsHorizontalPadding)
-                        .secondaryItemAlpha(),
+                        .padding(horizontal = PrefsHorizontalPadding),
                     style = MaterialTheme.typography.bodyMedium,
+                    fontSize = SubtitleFontSize,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                     maxLines = 10,
                 )
             }

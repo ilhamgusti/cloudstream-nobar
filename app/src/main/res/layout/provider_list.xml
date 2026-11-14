@@ -16,11 +16,12 @@
             android:nextFocusLeft="@id/apply_btt"
             android:nextFocusRight="@id/cancel_btt"
 
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="12dp"
+            android:minHeight="56dp"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:useMaterialThemeColors="false"
 
             android:textColor="?attr/textColor"
@@ -70,28 +71,32 @@
             android:orientation="horizontal"
             android:layout_gravity="bottom"
             android:gravity="bottom|end"
-            android:layout_marginTop="-60dp"
+            android:layout_marginTop="-68dp"
+            android:paddingBottom="12dp"
             android:layout_width="match_parent"
-            android:layout_height="60dp">
-
-        <com.google.android.material.button.MaterialButton
-                android:nextFocusRight="@id/cancel_btt"
-                android:nextFocusLeft="@id/cancel_btt"
-
-                android:id="@+id/apply_btt"
-                style="@style/WhiteButton"
-                android:layout_gravity="center_vertical|end"
-                android:text="@string/sort_apply"
-                android:layout_width="wrap_content" />
+            android:layout_height="68dp">
 
         <com.google.android.material.button.MaterialButton
                 android:nextFocusLeft="@id/apply_btt"
                 android:nextFocusRight="@id/apply_btt"
 
                 android:id="@+id/cancel_btt"
-                style="@style/BlackButton"
+                style="@style/ChicaOutlineButton"
                 android:layout_gravity="center_vertical|end"
                 android:text="@string/sort_cancel"
-                android:layout_width="wrap_content" />
+                android:layout_width="wrap_content"
+                app:strokeColor="?attr/account_unselected_stroke" />
+        <com.google.android.material.button.MaterialButton
+                android:nextFocusRight="@id/cancel_btt"
+                android:nextFocusLeft="@id/cancel_btt"
+
+                android:id="@+id/apply_btt"
+                style="@style/ChicaPrimaryButton"
+                android:layout_gravity="center_vertical|end"
+                android:text="@string/sort_apply"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="16dp" />
+
     </LinearLayout>
 </LinearLayout>

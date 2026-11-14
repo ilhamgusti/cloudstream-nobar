@@ -31,7 +31,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/create_account"
-            style="@style/WhiteButton"
+            style="@style/ChicaDialogPrimaryButton"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical|end"
             android:text="@string/create_account"
@@ -42,11 +42,12 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="72dp"
         android:orientation="vertical">
 
         <EditText
+            style="@style/ChicaMiscField"
             android:id="@+id/login_username_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,6 +62,7 @@
             tools:ignore="LabelFor" />
 
         <EditText
+            style="@style/ChicaMiscField"
             android:id="@+id/login_email_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -77,6 +79,7 @@
             tools:ignore="LabelFor" />
 
         <EditText
+            style="@style/ChicaMiscField"
             android:id="@+id/login_server_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,6 +95,7 @@
             tools:ignore="LabelFor" />
 
         <EditText
+            style="@style/ChicaMiscField"
             android:id="@+id/login_password_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -112,22 +116,23 @@
     <LinearLayout
         android:id="@+id/apply_btt_holder"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="72dp"
+        android:paddingHorizontal="10dp"
         android:layout_gravity="bottom"
-        android:layout_marginTop="-60dp"
-        android:gravity="bottom|end"
+        android:layout_marginTop="-72dp"
+        android:gravity="center_vertical|end"
         android:orientation="horizontal">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/apply_btt"
-            style="@style/WhiteButton"
+            style="@style/ChicaDialogPrimaryButton"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical|end"
             android:text="@string/login" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/cancel_btt"
-            style="@style/BlackButton"
+            style="@style/ChicaDialogOutlineButton"
             android:layout_width="wrap_content"
             android:layout_gravity="center_vertical|end"
             android:text="@string/sort_cancel" />

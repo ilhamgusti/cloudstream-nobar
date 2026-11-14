@@ -22,15 +22,19 @@
                 android:id="@+id/settings_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:padding="20dp"
+                android:paddingHorizontal="16dp"
+                android:paddingTop="20dp"
+                android:paddingBottom="16dp"
                 tools:visibility="visible">
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:foreground="@drawable/outline_big_25_gray"
-                    app:cardCornerRadius="25dp">
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    app:cardBackgroundColor="?attr/primaryGrayBackground"
+                    app:cardCornerRadius="28dp"
+                    app:cardElevation="0dp">
 
                     <ImageView
                         android:id="@+id/settings_profile_pic"
@@ -48,70 +52,81 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
-                    android:paddingStart="10dp"
-                    android:paddingEnd="10dp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
                     android:textColor="?attr/textColor"
-                    android:textSize="18sp"
-                    android:textStyle="normal"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
                     tools:text="Quick Brown Fox" />
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/settings_general"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:background="@drawable/chica_lists_group"
+                android:orientation="vertical"
+                android:paddingVertical="6dp">
 
-                style="@style/SettingsItem"
-                android:nextFocusDown="@id/settings_player"
-                android:text="@string/category_general" />
+                <TextView
+                    android:id="@+id/settings_general"
 
-            <TextView
-                android:id="@+id/settings_player"
-                style="@style/SettingsItem"
+                    style="@style/ChicaListsSettingsItem"
+                    android:nextFocusDown="@id/settings_player"
+                    android:text="@string/category_general" />
 
-                android:nextFocusUp="@id/settings_general"
-                android:nextFocusDown="@id/settings_providers"
-                android:text="@string/category_player" />
+                <TextView
+                    android:id="@+id/settings_player"
+                    style="@style/ChicaListsSettingsItem"
 
-            <TextView
-                android:id="@+id/settings_providers"
-                style="@style/SettingsItem"
+                    android:nextFocusUp="@id/settings_general"
+                    android:nextFocusDown="@id/settings_providers"
+                    android:text="@string/category_player" />
 
-                android:nextFocusUp="@id/settings_player"
-                android:nextFocusDown="@id/settings_ui"
-                android:text="@string/category_providers" />
+                <TextView
+                    android:id="@+id/settings_providers"
+                    style="@style/ChicaListsSettingsItem"
 
-            <TextView
-                android:id="@+id/settings_ui"
-                style="@style/SettingsItem"
+                    android:nextFocusUp="@id/settings_player"
+                    android:nextFocusDown="@id/settings_ui"
+                    android:text="@string/category_providers" />
 
-                android:nextFocusUp="@id/settings_providers"
-                android:nextFocusDown="@id/settings_updates"
-                android:text="@string/category_ui" />
+                <TextView
+                    android:id="@+id/settings_ui"
+                    style="@style/ChicaListsSettingsItem"
 
-            <TextView
-                android:id="@+id/settings_updates"
-                style="@style/SettingsItem"
+                    android:nextFocusUp="@id/settings_providers"
+                    android:nextFocusDown="@id/settings_updates"
+                    android:text="@string/category_ui" />
 
-                android:nextFocusUp="@id/settings_ui"
-                android:nextFocusDown="@id/settings_credits"
-                android:text="@string/category_updates" />
+                <TextView
+                    android:id="@+id/settings_updates"
+                    style="@style/ChicaListsSettingsItem"
 
-            <TextView
-                android:id="@+id/settings_credits"
-                style="@style/SettingsItem"
-                android:nextFocusUp="@id/settings_updates"
-                android:text="@string/category_account" />
+                    android:nextFocusUp="@id/settings_ui"
+                    android:nextFocusDown="@id/settings_credits"
+                    android:text="@string/category_updates" />
 
-            <TextView
-                android:id="@+id/settings_extensions"
-                style="@style/SettingsItem"
-                android:nextFocusUp="@id/settings_credits"
-                android:text="@string/extensions" />
+                <TextView
+                    android:id="@+id/settings_credits"
+                    style="@style/ChicaListsSettingsItem"
+                    android:nextFocusUp="@id/settings_updates"
+                    android:text="@string/category_account" />
+
+                <TextView
+                    android:id="@+id/settings_extensions"
+                    style="@style/ChicaListsSettingsItem"
+                    android:nextFocusUp="@id/settings_credits"
+                    android:text="@string/extensions" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/app_version_info"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="16dp"
                 android:orientation="horizontal">
 
                 <TextView
@@ -119,7 +134,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:textColor="?attr/textColor"
+                    android:textColor="?attr/grayTextColor"
+                    android:textSize="12sp"
                     tools:text="0.0.0" />
 
                 <TextView
@@ -127,14 +143,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="•"
-                    android:textColor="?attr/textColor" />
+                    android:textColor="?attr/grayTextColor"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/commit_hash"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:textColor="?attr/textColor"
+                    android:textColor="?attr/grayTextColor"
+                    android:textSize="12sp"
                     tools:text="1234567" />
 
                 <TextView
@@ -142,14 +160,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="•"
-                    android:textColor="?attr/textColor" />
+                    android:textColor="?attr/grayTextColor"
+                    android:textSize="12sp" />
 
                 <TextView
                     android:id="@+id/build_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:textColor="?attr/textColor"
+                    android:textColor="?attr/grayTextColor"
+                    android:textSize="12sp"
                     tools:text="21/03/2024 09:02 pm" />
             </LinearLayout>
         </LinearLayout>

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/suggestion_item"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
+    android:layout_height="52dp"
     android:background="?attr/selectableItemBackground"
     android:gravity="center_vertical"
     android:orientation="horizontal"
@@ -16,7 +16,7 @@
         android:layout_height="24dp"
         android:contentDescription="@string/search_hint"
         android:src="@drawable/search_icon"
-        app:tint="?attr/textColor" />
+        app:tint="?attr/grayTextColor" />
 
     <TextView
         android:id="@+id/suggestion_text"
@@ -27,17 +27,18 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:textColor="?attr/textColor"
-        android:textSize="18sp"
+        android:textSize="16sp"
         tools:text="Search suggestion" />
 
     <ImageView
         android:id="@+id/suggestion_fill"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:background="?attr/selectableItemBackgroundBorderless"
+        android:foreground="@drawable/chica_lists_icon_focus"
         android:contentDescription="@string/search_hint"
-        android:padding="8dp"
+        android:padding="12dp"
         android:src="@drawable/ic_baseline_north_west_24"
-        app:tint="?attr/textColor" />
+        app:tint="?attr/grayTextColor" />
 
 </LinearLayout>

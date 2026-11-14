@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginBottom="16dp"
         android:orientation="horizontal">
 
         <TextView
@@ -33,8 +33,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginBottom="72dp"
         android:orientation="vertical">
 
         <FrameLayout
@@ -47,7 +47,7 @@
                 android:layout_width="@dimen/account_select_linear_item_size"
                 android:layout_height="@dimen/account_select_linear_item_size"
                 android:layout_gravity="center"
-                android:foreground="@drawable/outline_drawable_forced_round"
+                android:foreground="@drawable/chica_misc_avatar_focus"
                 android:defaultFocusHighlightEnabled="false"
                 android:nextFocusRight="@id/edit_profile_photo_button_holder"
                 android:nextFocusDown="@id/edit_profile_photo_button_holder"
@@ -72,13 +72,13 @@
                 android:layout_height="32dp"
                 android:layout_gravity="bottom|end"
                 android:defaultFocusHighlightEnabled="false"
-                android:foreground="@drawable/outline_drawable_forced_round"
+                android:foreground="@drawable/chica_misc_avatar_focus"
                 android:nextFocusLeft="@id/account_image_holder"
                 android:nextFocusUp="@id/account_image_holder"
                 android:nextFocusDown="@id/account_name"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="0dp"
-                app:cardBackgroundColor="@color/primaryGrayBackground">
+                app:cardBackgroundColor="?attr/primaryGrayBackground">
 
                 <ImageView
                     android:id="@+id/edit_profile_photo_button"
@@ -86,11 +86,12 @@
                     android:layout_height="18dp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_baseline_edit_24"
-                    app:tint="@color/white" />
+                    app:tint="?attr/textColor" />
             </androidx.cardview.widget.CardView>
         </FrameLayout>
 
         <EditText
+            style="@style/ChicaMiscField"
             android:id="@+id/account_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -105,40 +106,39 @@
 
         <CheckBox
             android:id="@+id/lockProfileCheckbox"
+            style="@style/ChicaMiscCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:buttonTint="?attr/textColor"
             android:nextFocusUp="@id/account_name"
             android:nextFocusDown="@id/apply_btt"
-            android:text="@string/lock_profile"
-            android:textColor="?attr/grayTextColor" />
+            android:text="@string/lock_profile" />
 
     </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/apply_btt_holder"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="72dp"
         android:layout_gravity="bottom"
-        android:layout_marginTop="-60dp"
+        android:layout_marginTop="-72dp"
         android:orientation="horizontal"
         android:padding="10dp">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/delete_btt"
-            style="@style/BlackButton"
+            style="@style/ChicaDialogOutlineButton"
             android:layout_width="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_gravity="center_vertical"
+            android:layout_centerVertical="true"
             android:nextFocusUp="@id/lockProfileCheckbox"
             android:nextFocusRight="@id/apply_btt"
             android:text="@string/delete" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/apply_btt"
-            style="@style/WhiteButton"
+            style="@style/ChicaDialogPrimaryButton"
             android:layout_width="wrap_content"
-            android:layout_gravity="center_vertical|end"
+            android:layout_centerVertical="true"
             android:layout_toStartOf="@+id/cancel_btt"
             android:nextFocusUp="@id/lockProfileCheckbox"
             android:nextFocusDown="@id/cancel_btt"
@@ -148,10 +148,10 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/cancel_btt"
-            style="@style/BlackButton"
+            style="@style/ChicaDialogOutlineButton"
             android:layout_width="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_gravity="center_vertical|end"
+            android:layout_centerVertical="true"
             android:nextFocusUp="@id/apply_btt"
             android:nextFocusDown="@id/apply_btt"
             android:nextFocusLeft="@id/apply_btt"

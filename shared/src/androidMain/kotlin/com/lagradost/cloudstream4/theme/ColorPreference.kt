@@ -8,6 +8,8 @@ import androidx.preference.PreferenceManager
 
 fun perfToMode(perf: String?) =
     when (perf) {
+        "Chica" -> CloudStreamThemeMode.Chica
+        "ChicaLight" -> CloudStreamThemeMode.ChicaLight
         "System" -> CloudStreamThemeMode.FollowSystem
         "Black" -> CloudStreamThemeMode.Dark
         "Light" -> CloudStreamThemeMode.Light
@@ -22,10 +24,11 @@ fun perfToMode(perf: String?) =
             CloudStreamThemeMode.Dark
         }
 
-        else -> CloudStreamThemeMode.Dark
+        else -> CloudStreamThemeMode.Chica
     }
 
 fun perfToColor(perf : String?) = when (perf) {
+    "Blush" -> CloudStreamPrimaryColor.BLUSH
     "Normal" -> CloudStreamPrimaryColor.NORMAL
     "Blue" -> CloudStreamPrimaryColor.BLUE
     "Purple" -> CloudStreamPrimaryColor.PURPLE
@@ -58,15 +61,15 @@ fun perfToColor(perf : String?) = when (perf) {
         CloudStreamPrimaryColor.NORMAL
     }
 
-    else -> CloudStreamPrimaryColor.NORMAL
+    else -> CloudStreamPrimaryColor.BLUSH
 }
 
 fun Context.loadThemeMode(): CloudStreamThemeMode {
     val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-    return perfToMode(prefs.getString("theme_key", "AmoledLight"))
+    return perfToMode(prefs.getString("theme_key", "Chica"))
 }
 
 fun Context.loadPrimaryColor(): CloudStreamPrimaryColor {
     val prefs = PreferenceManager.getDefaultSharedPreferences(this)
-    return perfToColor(prefs.getString("primary_color_key", "Normal"))
+    return perfToColor(prefs.getString("primary_color_key", "Blush"))
 }

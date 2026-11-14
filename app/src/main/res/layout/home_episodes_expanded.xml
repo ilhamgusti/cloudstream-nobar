@@ -12,7 +12,11 @@
 
             android:foreground="?android:attr/selectableItemBackgroundBorderless"
             android:id="@+id/home_expanded_drag_down"
-            android:padding="12dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="8dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="8dp"
+            android:minHeight="56dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -25,10 +29,10 @@
             <ImageView
                     app:tint="?attr/textColor"
                     android:id="@+id/home_expanded_delete"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginEnd="8dp"
                     android:layout_gravity="start|center_vertical"
                     android:src="@drawable/ic_baseline_delete_outline_24"
-                    android:layout_width="30dp"
+                    android:layout_width="24dp"
                     android:layout_height="match_parent"
                     android:contentDescription="@string/delete" />
 
@@ -39,10 +43,11 @@
         </LinearLayout>
 
         <ImageView
-                android:layout_marginEnd="5dp"
+                android:layout_marginEnd="8dp"
                 android:layout_gravity="end|center_vertical"
                 android:src="@drawable/ic_baseline_keyboard_arrow_down_24"
-                android:layout_width="30dp"
+                app:tint="?attr/grayTextColor"
+                android:layout_width="24dp"
                 android:layout_height="match_parent"
                 android:contentDescription="@string/home_expanded_hide" />
     </FrameLayout>
@@ -53,5 +58,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/home_expanded_recycler"
+            android:clipToPadding="false"
+            android:paddingHorizontal="8dp"
+            android:paddingBottom="16dp"
             tools:listitem="@layout/search_result_grid" />
 </LinearLayout>

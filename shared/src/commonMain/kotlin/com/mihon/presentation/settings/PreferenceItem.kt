@@ -28,6 +28,9 @@ import com.mihon.presentation.settings.widget.PrefsVerticalPadding
 import com.mihon.presentation.settings.widget.SwitchPreferenceWidget
 import com.mihon.presentation.settings.widget.TextPreferenceWidget
 import com.mihon.presentation.settings.widget.TitleFontSize
+import com.mihon.presentation.settings.widget.SubtitleFontSize
+import com.mihon.presentation.settings.widget.PreferenceCard
+import com.mihon.presentation.settings.widget.PreferenceGroupPosition
 import kotlinx.coroutines.launch
 
 val LocalPreferenceHighlighted = compositionLocalOf(structuralEqualityPolicy()) { false }
@@ -58,142 +61,163 @@ fun StatusWrapper(
 internal fun PreferenceItem(
     item: Preference.PreferenceItem<*, *>,
     highlightKey: String?,
+    position: PreferenceGroupPosition? = null,
 ) {
-    val scope = rememberCoroutineScope()
     StatusWrapper(
         item = item,
         highlightKey = highlightKey,
     ) {
-        when (item) {
-            is Preference.PreferenceItem.SwitchPreference -> {
-                val value by item.preference.collectAsState()
-                SwitchPreferenceWidget(
-                    title = item.title,
-                    subtitle = item.subtitle,
-                    icon = item.icon,
-                    checked = value,
-                    onCheckedChanged = { newValue ->
-                        scope.launch {
-                            if (item.onValueChanged(newValue)) {
-                                item.preference.set(newValue)
-                            }
+        if (position == null) {
+            PreferenceItemContent(item)
+        } else {
+            PreferenceCard(position = position) {
+                PreferenceItemContent(item)
+            }
+        }
+    }
+}
+
+@Composable
+private fun PreferenceItemContent(
+    item: Preference.PreferenceItem<*, *>,
+) {
+    val scope = rememberCoroutineScope()
+    when (item) {
+        is Preference.PreferenceItem.SwitchPreference -> {
+            val value by item.preference.collectAsState()
+            SwitchPreferenceWidget(
+                title = item.title,
+                subtitle = item.subtitle,
+                icon = item.icon,
+                checked = value,
+                onCheckedChanged = { newValue ->
+                    scope.launch {
+                        if (item.onValueChanged(newValue)) {
+                            item.preference.set(newValue)
                         }
-                    },
-                )
-            }
+                    }
+                },
+            )
+        }
 
-            is Preference.PreferenceItem.ColorPreference -> {
-                val color = item.preference.collectAsState()
-                val derivedColor = Color(color.value)
-                ColorPreferenceWidget(
-                    title = item.title,
-                    subtitle = item.subtitle,
-                    icon = item.icon,
-                    color = derivedColor,
-                    onValueChange = { newValue ->
-                        scope.launch {
-                            if(item.onValueChanged(newValue.toArgb())) {
-                                item.preference.set(newValue.toArgb())
-                            }
+        is Preference.PreferenceItem.ColorPreference -> {
+            val color = item.preference.collectAsState()
+            val derivedColor = Color(color.value)
+            ColorPreferenceWidget(
+                title = item.title,
+                subtitle = item.subtitle,
+                icon = item.icon,
+                color = derivedColor,
+                onValueChange = { newValue ->
+                    scope.launch {
+                        if(item.onValueChanged(newValue.toArgb())) {
+                            item.preference.set(newValue.toArgb())
                         }
-                    },
-                )
-            }
+                    }
+                },
+            )
+        }
 
-            is Preference.PreferenceItem.ListPreference<*> -> {
-                val value by item.preference.collectAsState()
-                ListPreferenceWidget(
-                    value = value,
-                    title = item.title,
-                    subtitle = item.internalSubtitleProvider(value, item.entries),
-                    icon = item.icon,
-                    entries = item.entries,
-                    iconProvider = item::InternalIconProvider,
-                    onValueChange = { newValue ->
-                        scope.launch {
-                            if (item.internalOnValueChanged(newValue)) {
-                                item.internalSet(newValue)
-                            }
+        is Preference.PreferenceItem.ListPreference<*> -> {
+            val value by item.preference.collectAsState()
+            ListPreferenceWidget(
+                value = value,
+                title = item.title,
+                subtitle = item.internalSubtitleProvider(value, item.entries),
+                icon = item.icon,
+                entries = item.entries,
+                iconProvider = item::InternalIconProvider,
+                onValueChange = { newValue ->
+                    scope.launch {
+                        if (item.internalOnValueChanged(newValue)) {
+                            item.internalSet(newValue)
                         }
-                    },
-                )
-            }
+                    }
+                },
+            )
+        }
 
-            is Preference.PreferenceItem.MultiSelectListPreference<*> -> {
-                val values by item.preference.collectAsState()
-                MultiSelectListPreferenceWidget(
-                    values = values,
-                    title = item.title,
-                    subtitle = item.internalSubtitleProvider(values, item.entries),
-                    icon = item.icon,
-                    entries = item.entries,
-                    onValuesChange = { newValues ->
-                        scope.launch {
-                            if (item.internalOnValueChanged(newValues)) {
-                                item.internalSet(newValues)
-                            }
+        is Preference.PreferenceItem.MultiSelectListPreference<*> -> {
+            val values by item.preference.collectAsState()
+            MultiSelectListPreferenceWidget(
+                values = values,
+                title = item.title,
+                subtitle = item.internalSubtitleProvider(values, item.entries),
+                icon = item.icon,
+                entries = item.entries,
+                onValuesChange = { newValues ->
+                    scope.launch {
+                        if (item.internalOnValueChanged(newValues)) {
+                            item.internalSet(newValues)
                         }
-                    },
-                )
-            }
+                    }
+                },
+            )
+        }
 
-            is Preference.PreferenceItem.TextPreference -> {
-                TextPreferenceWidget(
-                    title = item.title,
-                    subtitle = item.subtitle,
-                    icon = item.icon,
-                    widget = item.widget,
-                    onPreferenceClick = item.onClick,
-                )
-            }
+        is Preference.PreferenceItem.TextPreference -> {
+            TextPreferenceWidget(
+                title = item.title,
+                subtitle = item.subtitle,
+                icon = item.icon,
+                widget = item.widget,
+                onPreferenceClick = item.onClick,
+            )
+        }
 
-            is Preference.PreferenceItem.EditTextPreference -> {
-                val values by item.preference.collectAsState()
-                EditTextPreferenceWidget(
-                    title = item.title,
-                    subtitle = item.subtitle,
-                    icon = item.icon,
-                    value = values,
-                    onConfirm = {
-                        val accepted = item.onValueChanged(it)
-                        if (accepted) item.preference.set(it)
-                        accepted
-                    },
-                )
-            }
-            is Preference.PreferenceItem.InfoPreference -> {
-                InfoWidget(text = item.title)
-            }
+        is Preference.PreferenceItem.EditTextPreference -> {
+            val values by item.preference.collectAsState()
+            EditTextPreferenceWidget(
+                title = item.title,
+                subtitle = item.subtitle,
+                icon = item.icon,
+                value = values,
+                onConfirm = {
+                    val accepted = item.onValueChanged(it)
+                    if (accepted) item.preference.set(it)
+                    accepted
+                },
+            )
+        }
+        is Preference.PreferenceItem.InfoPreference -> {
+            InfoWidget(text = item.title)
+        }
 
-            is Preference.PreferenceItem.CustomPreference -> {
-                item.content()
-            }
+        is Preference.PreferenceItem.CustomPreference -> {
+            item.content()
+        }
 
-            is Preference.PreferenceItem.SliderPreference -> {
-                val state by item.preference.collectAsState()
-                BaseSliderItem(
-                    value = state,
-                    valueRange = item.valueRange,
-                    steps = item.steps,
-                    title = item.title,
-                    subtitle = item.subtitle,
-                    valueString = item.valueString.takeUnless { it.isNullOrEmpty() }
-                        ?: state.toString(),
-                    onChange = { newValue ->
-                        scope.launch {
-                            if(item.onValueChanged(newValue)) {
-                                item.preference.set(newValue)
-                            }
+        is Preference.PreferenceItem.SliderPreference -> {
+            val state by item.preference.collectAsState()
+            BaseSliderItem(
+                value = state,
+                valueRange = item.valueRange,
+                steps = item.steps,
+                title = item.title,
+                subtitle = item.subtitle,
+                valueString = item.valueString.takeUnless { it.isNullOrEmpty() }
+                    ?: state.toString(),
+                onChange = { newValue ->
+                    scope.launch {
+                        if(item.onValueChanged(newValue)) {
+                            item.preference.set(newValue)
                         }
-                    },
-                    titleStyle = MaterialTheme.typography.titleLarge.copy(fontSize = TitleFontSize),
-                    modifier = Modifier.padding(
-                        horizontal = PrefsHorizontalPadding,
-                        vertical = PrefsVerticalPadding,
-                    ),
-                    icon = item.icon
-                )
-            }
+                    }
+                },
+                titleStyle = MaterialTheme.typography.titleLarge.copy(
+                    fontSize = TitleFontSize,
+                    color = MaterialTheme.colorScheme.onBackground,
+                ),
+                subtitleStyle = MaterialTheme.typography.bodyMedium.copy(
+                    fontSize = SubtitleFontSize,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                ),
+                modifier = Modifier.padding(
+                    horizontal = PrefsHorizontalPadding,
+                    vertical = PrefsVerticalPadding,
+                ),
+                icon = item.icon
+            )
         }
     }
 }

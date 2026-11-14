@@ -32,7 +32,7 @@
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/profile_hide_negative_sources"
-            style="@style/SettingsItem"
+            style="@style/ChicaListsSettingsItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/google_sans"
@@ -45,7 +45,7 @@
 
         <com.google.android.material.switchmaterial.SwitchMaterial
             android:id="@+id/profile_hide_error_sources"
-            style="@style/SettingsItem"
+            style="@style/ChicaListsSettingsItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/google_sans"
@@ -63,15 +63,16 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
+                android:layout_height="72dp"
+                android:paddingHorizontal="10dp"
                 android:layout_gravity="bottom"
-                android:gravity="bottom|end"
+                android:gravity="center_vertical|end"
                 android:orientation="horizontal"
                 tools:ignore="UselessParent">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/apply_btt"
-                    style="@style/WhiteButton"
+                    style="@style/ChicaDialogPrimaryButton"
                     android:layout_width="wrap_content"
                     android:layout_gravity="center_vertical|end"
                     android:nextFocusRight="@id/cancel_btt"
@@ -84,7 +85,7 @@
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/cancel_btt"
-                    style="@style/BlackButton"
+                    style="@style/ChicaDialogOutlineButton"
                     android:layout_width="wrap_content"
                     android:layout_gravity="center_vertical|end"
                     android:nextFocusLeft="@id/apply_btt"

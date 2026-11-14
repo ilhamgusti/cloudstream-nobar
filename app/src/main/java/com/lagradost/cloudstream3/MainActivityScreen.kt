@@ -130,7 +130,7 @@ object MainActivityScreen : Screen {
                 body = {
                     LinearProgressIndicator(
                         modifier = Modifier.fillMaxWidth(),
-                        color = MaterialTheme.colorScheme.onBackground,
+                        color = MaterialTheme.colorScheme.primary,
                         trackColor = MaterialTheme.colorScheme.surfaceVariant,
                     )
                 }
@@ -215,7 +215,7 @@ object MainActivityScreen : Screen {
                             Spacer(modifier = Modifier.height(MaterialTheme.padding.medium))
                             LinearProgressIndicator(
                                 modifier = Modifier.fillMaxWidth(),
-                                color = MaterialTheme.colorScheme.onBackground,
+                                color = MaterialTheme.colorScheme.primary,
                                 trackColor = MaterialTheme.colorScheme.surfaceVariant,
                                 progress = { progress }
                             )
@@ -234,7 +234,7 @@ object MainActivityScreen : Screen {
                             Spacer(modifier = Modifier.height(MaterialTheme.padding.medium))
                             LinearProgressIndicator(
                                 modifier = Modifier.fillMaxWidth(),
-                                color = MaterialTheme.colorScheme.onBackground,
+                                color = MaterialTheme.colorScheme.primary,
                                 trackColor = MaterialTheme.colorScheme.surfaceVariant,
                             )
                         }

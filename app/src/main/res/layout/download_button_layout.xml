@@ -9,7 +9,7 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/download_movie_button"
-        style="@style/BlackButton"
+        style="@style/ChicaResultSecondaryButton"
         android:layout_width="match_parent"
         android:layout_marginStart="0dp"
         android:layout_marginEnd="0dp"
@@ -22,17 +22,17 @@
 
         <include
             layout="@layout/download_button_view"
-            android:layout_width="30dp"
-            android:layout_height="30dp" />
+            android:layout_width="24dp"
+            android:layout_height="24dp" />
 
         <TextView
             android:id="@+id/result_movie_download_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="8dp"
             android:gravity="center"
-            android:letterSpacing="0.09"
+            android:maxLines="1"
             android:textAllCaps="false"
             android:textColor="?attr/textColor"
             android:textSize="15sp"
@@ -45,7 +45,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:letterSpacing="0.09"
             android:paddingStart="5dp"
             android:paddingEnd="5dp"
             android:textAllCaps="false"

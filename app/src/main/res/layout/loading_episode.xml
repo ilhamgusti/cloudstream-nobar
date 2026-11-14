@@ -15,11 +15,9 @@
             android:layout_height="wrap_content">
         <!--app:cardCornerRadius="@dimen/roundedImageRadius"-->
         <androidx.cardview.widget.CardView
-                android:background="@color/grayShimmer"
-                app:cardCornerRadius="@dimen/loading_radius"
+                style="@style/ChicaMiscSkeleton"
                 android:layout_width="126dp"
-                android:layout_height="72dp"
-                android:foreground="@drawable/outline_drawable" />
+                android:layout_height="72dp" />
 
         <LinearLayout
                 android:layout_marginStart="15dp"

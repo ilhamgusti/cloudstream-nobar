@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.tooling.preview.PreviewLightDark
+import com.lagradost.cloudstream4.compose.Colors
 import com.lagradost.cloudstream4.generated.resources.Res
 import com.lagradost.cloudstream4.generated.resources.preview
 import com.lagradost.cloudstream4.theme.CloudStreamPreviewTheme
@@ -32,6 +33,7 @@ fun SwitchPreferenceWidget(
                 checked = checked,
                 onCheckedChange = null,
                 modifier = Modifier.padding(start = TrailingWidgetBuffer),
+                colors = Colors.switch,
             )
         },
         onPreferenceClick = { onCheckedChanged(!checked) },

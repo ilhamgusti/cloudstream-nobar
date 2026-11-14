@@ -33,7 +33,9 @@
                 android:layout_marginTop="5dp"
                 android:alpha="0.2"
                 android:foreground="@drawable/outline_drawable"
-                app:cardCornerRadius="35dp">
+                app:cardBackgroundColor="?attr/primaryGrayBackground"
+                app:cardCornerRadius="35dp"
+                app:cardElevation="0dp">
 
                 <ImageView
                     android:id="@+id/voice_actor_image"
@@ -51,7 +53,9 @@
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:foreground="@drawable/outline_drawable"
-                app:cardCornerRadius="35dp">
+                app:cardBackgroundColor="?attr/primaryGrayBackground"
+                app:cardCornerRadius="35dp"
+                app:cardElevation="0dp">
 
                 <ImageView
                     android:id="@+id/actor_image"
@@ -80,6 +84,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:textColor="?attr/textColor"
+                android:textSize="13sp"
                 android:textStyle="bold"
                 tools:text="Ackerman, Mikasa" />
 
@@ -89,6 +94,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:textColor="?attr/grayTextColor"
+                android:textSize="12sp"
                 tools:text="voiceactor" />
 
             <TextView
@@ -97,6 +103,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center_horizontal"
                 android:textColor="?attr/grayTextColor"
+                android:textSize="12sp"
                 tools:text="Main" />
 
         </LinearLayout>

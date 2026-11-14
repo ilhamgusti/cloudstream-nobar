@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- One member in the nobar sheet: initial disc, name, muted role tags (host, co-host, kamu). -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/chica_player_row"
+    android:foreground="@drawable/outline_drawable_less"
+    android:gravity="center_vertical"
+    android:minHeight="56dp"
+    android:orientation="horizontal"
+    android:paddingStart="12dp"
+    android:paddingTop="8dp"
+    android:paddingEnd="16dp"
+    android:paddingBottom="8dp">
+
+    <TextView
+        android:id="@+id/nobar_member_initial"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:background="@drawable/chica_player_avatar"
+        android:fontFamily="@font/google_sans"
+        android:gravity="center"
+        android:importantForAccessibility="no"
+        android:textColor="?attr/textColor"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        tools:text="I" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/nobar_member_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:fontFamily="@font/google_sans"
+            android:maxLines="1"
+            android:textColor="?attr/textColor"
+            android:textSize="15sp"
+            tools:text="Ilham" />
+
+        <TextView
+            android:id="@+id/nobar_member_tags"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="?attr/grayTextColor"
+            android:textSize="13sp"
+            android:visibility="gone"
+            tools:text="host, kamu"
+            tools:visibility="visible" />
+    </LinearLayout>
+</LinearLayout>

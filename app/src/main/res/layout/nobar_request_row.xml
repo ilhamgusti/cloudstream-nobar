@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- A member's request (pause, play, host seat) waiting for the host or a co-host. -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/chica_player_row"
+    android:gravity="center_vertical"
+    android:minHeight="56dp"
+    android:orientation="horizontal"
+    android:paddingStart="16dp"
+    android:paddingTop="4dp"
+    android:paddingEnd="8dp"
+    android:paddingBottom="4dp">
+
+    <TextView
+        android:id="@+id/nobar_request_text"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:fontFamily="@font/google_sans"
+        android:textColor="?attr/textColor"
+        android:textSize="14sp"
+        tools:text="Nida minta pause" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/nobar_request_decline"
+        style="@style/ChicaDialogChipButton"
+        android:layout_width="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="6dp"
+        android:text="@string/nobar_decline" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/nobar_request_approve"
+        style="@style/ChicaDialogPrimaryButton"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:insetTop="4dp"
+        android:insetBottom="4dp"
+        android:minWidth="0dp"
+        android:paddingStart="14dp"
+        android:paddingEnd="14dp"
+        android:text="@string/nobar_approve"
+        android:textSize="13sp" />
+</LinearLayout>

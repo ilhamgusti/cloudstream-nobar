@@ -11,15 +11,15 @@
             android:layout_height="wrap_content">
 
         <com.google.android.material.button.MaterialButton
-                style="@style/BlackButton"
+                style="@style/ChicaResultSecondaryButton"
                 android:layout_gravity="center_vertical|end"
                 android:text="GogoAnime"
                 android:id="@+id/result_recommendations_filter_button"
                 android:layout_width="match_parent"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:layout_marginStart="0dp"
-                android:layout_marginEnd="0dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 app:layout_constraintBottom_toTopOf="@id/result_recommendations_list" />
 
         <com.lagradost.cloudstream3.ui.AutofitRecyclerView

@@ -32,6 +32,9 @@ fun Modifier.ripple(
 // no dimens.xml allowed in compose :/
 fun RoundedShape() = RoundedCornerShape(10.dp)
 
+/** Chica pill shape for buttons, filters and search fields. */
+fun PillShape() = RoundedCornerShape(50)
+
 @Composable
 fun Modifier.rounded(): Modifier =
     clip(RoundedShape())
@@ -76,9 +79,10 @@ fun Modifier.focusOutline(
 @Composable
 fun Modifier.whiteOutline(hasFocus: Boolean, shape: Shape = RoundedShape()): Modifier {
     return if (hasFocus) {
+        // Chica: D-pad focus is a clear blush ring (primary), visible from the couch
         this.border(
-            width = 1.dp,
-            color = MaterialTheme.colorScheme.onBackground,
+            width = 2.dp,
+            color = MaterialTheme.colorScheme.primary,
             shape = shape
         )
     } else {

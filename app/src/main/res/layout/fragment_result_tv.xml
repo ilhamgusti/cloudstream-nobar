@@ -23,26 +23,32 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
     <FrameLayout
         android:id="@+id/background_poster_holder"
         android:layout_width="match_parent"
-        android:layout_height="275dp"
+        android:layout_height="320dp"
         android:visibility="visible">
 
 
         <com.lagradost.cloudstream3.utils.PercentageCropImageView
             android:id="@+id/background_poster"
             android:layout_width="match_parent"
-            android:layout_height="275dp"
+            android:layout_height="320dp"
             android:layout_gravity="center"
-            android:alpha="0.8"
+            android:alpha="0.85"
             android:scaleType="matrix"
             app:cropYCenterOffsetPct="0.20"
             tools:src="@drawable/profile_bg_dark_blue" />
 
-        <ImageView
+        <!-- Plum fade from the start edge and the bottom, so the backdrop melts into the ground. -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/chica_result_backdrop_side" />
+
+        <View
             android:layout_marginBottom="-1dp"
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="200dp"
             android:layout_gravity="bottom"
-            android:src="@drawable/background_shadow" />
+            android:background="@drawable/chica_result_backdrop_fade" />
 
         <ImageView
             android:id="@+id/background_poster_watermark_badge_holder"
@@ -178,7 +184,7 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="225dp"
+                android:layout_marginTop="250dp"
                 android:orientation="vertical">
 
                 <TextView
@@ -189,7 +195,7 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
                     android:gravity="center_vertical"
                     android:singleLine="true"
                     android:textColor="?attr/textColor"
-                    android:textSize="25sp"
+                    android:textSize="30sp"
                     android:textStyle="bold"
                     tools:text="The Perfect Run The Perfect Run" />
 
@@ -198,8 +204,9 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:textColor="?attr/textColor"
-                    android:textSize="17sp"
+                    android:layout_marginTop="2dp"
+                    android:textColor="?attr/grayTextColor"
+                    android:textSize="16sp"
                     android:textStyle="normal"
                     android:visibility="gone"
                     tools:text="8 Episodes"
@@ -288,6 +295,7 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
                         <com.google.android.material.progressindicator.CircularProgressIndicator
                             android:id="@+id/result_resume_series_progress"
                             style="@style/ContinueWatchingCircularProgress"
+                            app:indicatorColor="?attr/colorPrimary"
                             tools:progress="50" />
                     </FrameLayout>
 
@@ -308,8 +316,8 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
                 android:id="@+id/result_play_parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="5dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
                 android:descendantFocusability="afterDescendants"
                 android:orientation="horizontal">
 
@@ -317,14 +325,14 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
                     android:id="@+id/result_play_movie"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="12dp"
                     android:orientation="vertical"
                     android:visibility="gone"
                     tools:visibility="visible">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/result_play_movie_button"
-                        style="@style/ResultSmallButtonTV"
+                        style="@style/ChicaResultPlayButtonTV"
                         android:focusable="true"
                         android:nextFocusUp="@id/result_play_movie_button"
                         android:nextFocusDown="@id/result_description"
@@ -334,7 +342,7 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
 
                     <TextView
                         android:id="@+id/result_play_movie_text"
-                        style="@style/ResultMarqueeButtonText"
+                        style="@style/ChicaResultTvButtonLabel"
                         android:text="@string/movies_singular" />
 
                 </LinearLayout>
@@ -343,14 +351,14 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
                     android:id="@+id/result_play_series"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="12dp"
                     android:orientation="vertical"
                     android:visibility="gone"
                     tools:visibility="visible">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/result_play_series_button"
-                        style="@style/ResultSmallButtonTV"
+                        style="@style/ChicaResultPlayButtonTV"
                         android:focusable="true"
                         android:nextFocusUp="@id/result_play_series_button"
                         android:nextFocusDown="@id/result_description"
@@ -360,7 +368,7 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
 
                     <TextView
                         android:id="@+id/result_play_series_text"
-                        style="@style/ResultMarqueeButtonText"
+                        style="@style/ChicaResultTvButtonLabel"
                         android:text="@string/episode" />
 
                 </LinearLayout>
@@ -369,14 +377,14 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
                     android:id="@+id/result_resume_series"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="12dp"
                     android:orientation="vertical"
                     android:visibility="gone"
                     tools:visibility="visible">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/result_resume_series_button"
-                        style="@style/ResultSmallButtonTV"
+                        style="@style/ChicaResultPlayButtonTV"
                         android:focusable="true"
                         android:nextFocusUp="@id/result_resume_series_button"
                         android:nextFocusDown="@id/result_description"
@@ -386,7 +394,7 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
 
                     <TextView
                         android:id="@+id/result_resume_series_text"
-                        style="@style/ResultMarqueeButtonText"
+                        style="@style/ChicaResultTvButtonLabel"
                         android:text="@string/resume" />
 
                 </LinearLayout>
@@ -395,14 +403,14 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
                     android:id="@+id/result_play_trailer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="12dp"
                     android:orientation="vertical"
                     android:visibility="gone"
                     tools:visibility="visible">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/result_play_trailer_button"
-                        style="@style/ResultSmallButtonTV"
+                        style="@style/ChicaResultSmallButtonTV"
                         android:focusable="true"
                         android:nextFocusUp="@id/result_play_trailer_button"
                         android:nextFocusDown="@id/result_description"
@@ -412,7 +420,7 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
 
                     <TextView
                         android:id="@+id/result_play_trailer_text"
-                        style="@style/ResultMarqueeButtonText"
+                        style="@style/ChicaResultTvButtonLabel"
                         android:text="@string/play_trailer_button" />
 
                 </LinearLayout>
@@ -421,12 +429,12 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
                     android:id="@+id/result_bookmark"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="12dp"
                     android:orientation="vertical">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/result_bookmark_Button"
-                        style="@style/ResultSmallButtonTV"
+                        style="@style/ChicaResultSmallButtonTV"
                         android:focusable="true"
                         android:nextFocusUp="@id/result_bookmark_Button"
                         android:nextFocusDown="@id/result_description"
@@ -436,7 +444,7 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
 
                     <TextView
                         android:id="@+id/result_bookmark_text"
-                        style="@style/ResultMarqueeButtonText"
+                        style="@style/ChicaResultTvButtonLabel"
                         android:text="@string/type_none" />
 
                 </LinearLayout>
@@ -445,12 +453,12 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
                     android:id="@+id/result_favorite"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="12dp"
                     android:orientation="vertical">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/result_favorite_Button"
-                        style="@style/ResultSmallButtonTV"
+                        style="@style/ChicaResultSmallButtonTV"
                         android:focusable="true"
                         android:nextFocusUp="@id/result_favorite_Button"
                         android:nextFocusDown="@id/result_description"
@@ -460,7 +468,7 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
 
                     <TextView
                         android:id="@+id/result_favorite_Text"
-                        style="@style/ResultMarqueeButtonText"
+                        style="@style/ChicaResultTvButtonLabel"
                         android:text="@string/favorite" />
 
                 </LinearLayout>
@@ -469,12 +477,12 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
                     android:id="@+id/result_subscribe"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="12dp"
                     android:orientation="vertical">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/result_subscribe_Button"
-                        style="@style/ResultSmallButtonTV"
+                        style="@style/ChicaResultSmallButtonTV"
                         android:focusable="true"
                         android:nextFocusUp="@id/result_subscribe_Button"
                         android:nextFocusDown="@id/result_description"
@@ -484,7 +492,7 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
 
                     <TextView
                         android:id="@+id/result_subscribe_text"
-                        style="@style/ResultMarqueeButtonText"
+                        style="@style/ChicaResultTvButtonLabel"
                         android:text="@string/action_subscribe" />
 
                 </LinearLayout>
@@ -493,12 +501,12 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
                     android:id="@+id/result_search"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="12dp"
                     android:orientation="vertical">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/result_search_Button"
-                        style="@style/ResultSmallButtonTV"
+                        style="@style/ChicaResultSmallButtonTV"
                         android:focusable="true"
                         android:nextFocusUp="@id/result_search_Button"
                         android:nextFocusDown="@id/result_description"
@@ -508,7 +516,7 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
 
                     <TextView
                         android:id="@+id/result_search_text"
-                        style="@style/ResultMarqueeButtonText"
+                        style="@style/ChicaResultTvButtonLabel"
                         android:text="@string/title_search" />
 
                 </LinearLayout>
@@ -517,14 +525,14 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
                     android:id="@+id/result_episodes_show"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
+                    android:layout_marginEnd="12dp"
                     android:orientation="vertical"
                     android:visibility="gone"
                     tools:visibility="visible">
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/result_episodes_show_button"
-                        style="@style/ResultSmallButtonTV"
+                        style="@style/ChicaResultSmallButtonTV"
                         android:focusable="true"
                         android:nextFocusRight="@id/redirect_to_episodes"
                         android:nextFocusUp="@id/result_episodes_show_button"
@@ -535,7 +543,7 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
 
                     <TextView
                         android:id="@+id/result_episodes_show_text"
-                        style="@style/ResultMarqueeButtonText"
+                        style="@style/ChicaResultTvButtonLabel"
                         android:text="@string/episodes" />
 
                 </LinearLayout>
@@ -563,46 +571,51 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
                     <com.lagradost.cloudstream3.widget.FlowLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="5dp"
-                        app:itemSpacing="10dp">
+                        android:layout_marginBottom="8dp"
+                        app:itemSpacing="12dp">
+
+                        <TextView
+                            android:id="@+id/result_meta_type"
+                            style="@style/ChicaResultMetaText"
+                            android:textSize="16sp"
+                            tools:text="Series" />
+
+                        <TextView
+                            android:id="@+id/result_meta_year"
+                            style="@style/ChicaResultMetaText"
+                            android:textSize="16sp"
+                            tools:text="2026" />
+
+                        <TextView
+                            android:id="@+id/result_meta_rating"
+                            style="@style/ChicaResultMetaRating"
+                            android:textSize="16sp"
+                            tools:text="9.0/10.0" />
+
+                        <TextView
+                            android:id="@+id/result_meta_status"
+                            style="@style/ChicaResultMetaText"
+                            android:textSize="16sp"
+                            tools:text="Ongoing" />
+
+                        <TextView
+                            android:id="@+id/result_meta_duration"
+                            style="@style/ChicaResultMetaText"
+                            android:textSize="16sp"
+                            tools:text="121min" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/result_meta_site"
-                            style="@style/SmallWhiteButton"
+                            style="@style/ChicaResultMetaPill"
                             android:layout_gravity="center_vertical"
                             tools:text="Gogoanime" />
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/result_meta_content_rating"
-                            style="@style/SmallWhiteButton"
+                            style="@style/ChicaResultMetaPill"
                             android:layout_gravity="center_vertical"
                             android:focusable="false"
                             tools:text="PG-13" />
-
-                        <TextView
-                            android:id="@+id/result_meta_type"
-                            style="@style/ResultInfoText"
-                            tools:text="Movie" />
-
-                        <TextView
-                            android:id="@+id/result_meta_year"
-                            style="@style/ResultInfoText"
-                            tools:text="2022" />
-
-                        <TextView
-                            android:id="@+id/result_meta_rating"
-                            style="@style/ResultInfoText"
-                            tools:text="Rated: 8.5/10.0" />
-
-                        <TextView
-                            android:id="@+id/result_meta_status"
-                            style="@style/ResultInfoText"
-                            tools:text="Ongoing" />
-
-                        <TextView
-                            android:id="@+id/result_meta_duration"
-                            style="@style/ResultInfoText"
-                            tools:text="121min" />
                     </com.lagradost.cloudstream3.widget.FlowLayout>
 
 
@@ -618,8 +631,9 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
                         android:nextFocusUp="@id/result_play_parent"
                         android:nextFocusDown="@id/result_cast_items"
                         android:padding="5dp"
+                        android:lineSpacingExtra="3dp"
                         android:requiresFadingEdge="vertical"
-                        android:textColor="?attr/textColor"
+                        android:textColor="?attr/grayTextColor"
                         android:textSize="16sp"
                         tools:text="Ryan Quicksave Romano is an eccentric adventurer with a strange power: he can create a save-point in time and redo his life whenever he dies. Arriving in New Rome, the glitzy capital of sin of a rebuilding Europe, he finds the city torn between mega-corporations, sponsored heroes, superpowered criminals, and true monsters. It's a time of chaos, where potions can grant the power to rule the world and dangers lurk everywhere. " />
 
@@ -627,7 +641,8 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
                         android:id="@+id/result_tag"
                         style="@style/ChipParent"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -681,8 +696,8 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
                 android:layout_height="wrap_content"
                 android:descendantFocusability="afterDescendants"
                 android:orientation="horizontal"
-                android:paddingTop="10dp"
-                android:paddingBottom="10dp">
+                android:paddingTop="24dp"
+                android:paddingBottom="8dp">
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/result_recommendations_filter_selection"
@@ -703,8 +718,7 @@ https://developer.android.com/design/ui/tv/samples/jet-fit
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
                     android:text="@string/recommended"
-                    android:textColor="?attr/textColor"
-                    android:textSize="17sp" />
+                    style="@style/ChicaResultSectionTitle" />
             </LinearLayout>
 
             <com.lagradost.cloudstream3.ui.AutofitRecyclerView

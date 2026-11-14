@@ -6,38 +6,38 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/root_holder"
-    android:layout_marginVertical="2.5dp"
+    android:layout_marginVertical="4dp"
     android:orientation="vertical">
 
     <androidx.cardview.widget.CardView
         tools:visibility="visible"
         android:id="@+id/download_child_episode_holder"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="64dp"
         android:focusable="true"
-        android:foreground="@drawable/outline_drawable"
+        android:foreground="@drawable/chica_lists_poster_focus"
         android:nextFocusLeft="@id/nav_rail_view"
         android:nextFocusRight="@id/download_button"
-        app:cardBackgroundColor="@color/transparent"
+        app:cardBackgroundColor="?attr/boxItemBackground"
         app:cardCornerRadius="@dimen/rounded_image_radius"
         app:cardElevation="0dp">
 
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:foreground="?android:attr/selectableItemBackgroundBorderless">
+            android:foreground="?android:attr/selectableItemBackground">
 
             <ImageView
                 android:id="@+id/download_child_episode_play"
                 android:layout_gravity="center_vertical"
-                android:layout_marginStart="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="12dp"
+                android:layout_marginEnd="4dp"
                 android:contentDescription="@string/episode_play_img_des"
                 android:src="@drawable/ic_baseline_play_arrow_24"
                 android:visibility="gone" />
 
             <LinearLayout
-                android:gravity="center"
+                android:gravity="center_vertical|start"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -49,12 +49,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:ellipsize="end"
                     android:gravity="center_vertical"
+                    android:layout_marginStart="16dp"
                     android:singleLine="true"
                     android:textColor="?attr/textColor"
+                    android:textSize="15sp"
                     tools:text="Episode 1 Episode 1 Episode 1 Episode 1 Episode 1 Episode 1 Episode 1" />
 
                 <TextView
@@ -62,10 +63,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="16dp"
                     android:layout_marginEnd="10dp"
                     android:gravity="center_vertical"
                     android:textColor="?attr/grayTextColor"
+                    android:textSize="13sp"
                     tools:text="One piece" />
             </LinearLayout>
 
@@ -77,7 +79,7 @@
                 android:layout_marginStart="-50dp"
                 android:focusable="true"
                 app:download_animate_waiting="true"
-                android:foreground="@drawable/outline_drawable"
+                android:foreground="@drawable/chica_lists_icon_focus"
                 android:nextFocusLeft="@id/download_child_episode_holder"
                 android:padding="10dp" />
 
@@ -90,6 +92,7 @@
                 android:focusable="true"
                 android:nextFocusLeft="@id/download_child_episode_holder"
                 android:padding="10dp"
+                android:buttonTint="?attr/colorPrimary"
                 android:visibility="gone" />
         </GridLayout>
     </androidx.cardview.widget.CardView>
@@ -107,10 +110,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingHorizontal="5dp"
-            android:text="@string/parallel_downloads">
-
-        </TextView>
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="8dp"
+            android:text="@string/parallel_downloads"
+            android:textColor="?attr/grayTextColor"
+            android:textSize="13sp" />
 
         <ImageView
             android:layout_width="match_parent"

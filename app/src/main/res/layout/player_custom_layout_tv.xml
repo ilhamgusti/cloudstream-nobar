@@ -105,7 +105,7 @@
             android:id="@+id/shadow_overlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/player_gradient_tv" />
+            android:background="@drawable/chica_player_scrim_tv" />
         <!--
             <LinearLayout android:layout_width="match_parent"
                           android:layout_height="wrap_content"
@@ -324,7 +324,7 @@
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/skip_chapter_button"
-                style="@style/VideoButtonTV"
+                style="@style/ChicaPlayerPillTV"
                 android:layout_width="150dp"
                 android:layout_height="40dp"
                 android:layout_marginEnd="100dp"
@@ -469,10 +469,11 @@
 
                         <ImageView
                             android:id="@+id/player_go_back"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_gravity="center"
-                            android:background="@drawable/video_tap_button_always_white"
+                            android:background="@drawable/chica_player_round_tv"
+                            android:padding="8dp"
                             android:clickable="true"
                             android:contentDescription="@string/go_back_img_des"
                             android:focusable="true"
@@ -482,7 +483,7 @@
                             android:nextFocusDown="@id/player_pause_play"
                             android:src="@drawable/ic_baseline_arrow_back_24"
                             android:tag="@string/tv_no_focus_tag"
-                            app:tint="@android:color/white" />
+                            app:tint="@color/chica_player_on_button_tv" />
 
                         <TextView
                             android:id="@+id/player_go_back_text"
@@ -503,10 +504,11 @@
 
                         <ImageView
                             android:id="@+id/player_restart"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_gravity="center"
-                            android:background="@drawable/video_tap_button_always_white"
+                            android:background="@drawable/chica_player_round_tv"
+                            android:padding="8dp"
                             android:clickable="true"
                             android:contentDescription="@string/restart"
                             android:focusable="true"
@@ -516,7 +518,7 @@
                             android:nextFocusDown="@id/player_pause_play"
                             android:src="@drawable/ic_baseline_replay_24"
                             android:tag="@string/tv_no_focus_tag"
-                            app:tint="@android:color/white" />
+                            app:tint="@color/chica_player_on_button_tv" />
 
                         <TextView
                             android:id="@+id/player_restart_text"
@@ -537,10 +539,11 @@
 
                         <ImageView
                             android:id="@+id/player_go_forward"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_gravity="center"
-                            android:background="@drawable/video_tap_button_always_white"
+                            android:background="@drawable/chica_player_round_tv"
+                            android:padding="8dp"
                             android:clickable="true"
                             android:contentDescription="@string/next_episode"
                             android:focusable="true"
@@ -550,7 +553,7 @@
                             android:nextFocusDown="@id/player_pause_play"
                             android:src="@drawable/ic_baseline_skip_next_rounded_24"
                             android:tag="@string/tv_no_focus_tag"
-                            app:tint="@android:color/white" />
+                            app:tint="@color/chica_player_on_button_tv" />
 
                         <TextView
                             android:id="@+id/player_go_forward_text"
@@ -572,10 +575,11 @@
 
                         <ImageView
                             android:id="@+id/download_header_toggle"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_gravity="center"
-                            android:background="@drawable/video_tap_button_always_white"
+                            android:background="@drawable/chica_player_round_tv"
+                            android:padding="8dp"
                             android:clickable="true"
                             android:contentDescription="@string/torrent_singular"
                             android:focusable="true"
@@ -585,7 +589,7 @@
                             android:nextFocusDown="@id/player_pause_play"
                             android:src="@drawable/baseline_downloading_24"
                             android:tag="@string/tv_no_focus_tag"
-                            app:tint="@android:color/white" />
+                            app:tint="@color/chica_player_on_button_tv" />
 
                         <TextView
                             android:id="@+id/download_header_toggle_text"
@@ -606,10 +610,11 @@
 
                         <ImageView
                             android:id="@+id/player_episodes_button"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
                             android:layout_gravity="center"
-                            android:background="@drawable/video_tap_button_always_white"
+                            android:background="@drawable/chica_player_round_tv"
+                            android:padding="8dp"
                             android:clickable="true"
                             android:contentDescription="@string/episodes"
                             android:focusable="true"
@@ -619,7 +624,7 @@
                             android:nextFocusDown="@id/player_pause_play"
                             android:src="@drawable/ic_baseline_sort_24"
                             android:tag="@string/tv_no_focus_tag"
-                            app:tint="@android:color/white" />
+                            app:tint="@color/chica_player_on_button_tv" />
 
                         <TextView
                             android:id="@+id/player_episodes_button_text"
@@ -638,8 +643,8 @@
                         android:layout_gravity="end|center_vertical"
                         android:layout_marginTop="5dp"
                         android:elevation="10dp"
-                        app:cardBackgroundColor="@color/darkBar"
-                        app:cardCornerRadius="@dimen/rounded_image_radius">
+                        app:cardBackgroundColor="@color/chica_player_surface"
+                        app:cardCornerRadius="16dp">
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -883,11 +888,12 @@
                     <ImageView
                         android:id="@+id/player_pause_play"
 
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:layout_marginStart="20dp"
-                        android:background="@drawable/video_tap_button"
+                        android:background="@drawable/chica_player_round_tv"
+                        android:padding="8dp"
                         android:focusable="true"
                         android:focusableInTouchMode="true"
                         android:nextFocusUp="@id/skip_chapter_button"
@@ -897,7 +903,7 @@
                         android:tag="@string/tv_no_focus_tag"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:tint="@color/player_button_tv"
+                        app:tint="@color/chica_player_on_button_tv"
                         tools:ignore="ContentDescription" />
 
                     <TextView
@@ -946,16 +952,16 @@
                         android:layout_width="0dp"
                         android:layout_height="30dp"
                         android:layout_weight="1"
-                        app:bar_height="2dp"
+                        app:bar_height="4dp"
+                        app:buffered_color="@color/chica_player_buffered"
                         app:layout_constraintBottom_toBottomOf="@id/exo_position"
                         app:layout_constraintEnd_toStartOf="@id/exo_duration"
                         app:layout_constraintStart_toEndOf="@+id/exo_position"
                         app:played_color="?attr/colorPrimary"
-
                         app:scrubber_color="?attr/colorPrimary"
-                        app:scrubber_dragged_size="26dp"
-                        app:scrubber_enabled_size="24dp"
-                        app:unplayed_color="@color/videoProgress" />
+                        app:scrubber_dragged_size="22dp"
+                        app:scrubber_enabled_size="16dp"
+                        app:unplayed_color="@color/chica_player_track" />
 
                     <TextView
                         android:id="@id/exo_duration"
@@ -1033,7 +1039,7 @@
 
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/player_lock"
-                                style="@style/VideoButtonTV"
+                                style="@style/ChicaPlayerPillTV"
                                 android:nextFocusLeft="@id/player_skip_episode"
 
                                 android:nextFocusRight="@id/player_resize_btt"
@@ -1050,7 +1056,7 @@
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/player_skip_op"
-                            style="@style/VideoButtonTV"
+                            style="@style/ChicaPlayerPillTV"
                             android:nextFocusLeft="@id/player_pause_play"
                             android:nextFocusRight="@id/player_skip_episode"
                             android:nextFocusUp="@id/player_pause_play"
@@ -1060,7 +1066,7 @@
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/player_skip_episode"
-                            style="@style/VideoButtonTV"
+                            style="@style/ChicaPlayerPillTV"
                             android:nextFocusLeft="@id/player_skip_op"
                             android:nextFocusRight="@id/player_resize_btt"
                             android:nextFocusUp="@id/player_pause_play"
@@ -1072,7 +1078,7 @@
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/player_resize_btt"
-                            style="@style/VideoButtonTV"
+                            style="@style/ChicaPlayerPillTV"
                             android:nextFocusLeft="@id/player_skip_episode"
 
                             android:nextFocusRight="@id/player_speed_btt"
@@ -1083,7 +1089,7 @@
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/player_speed_btt"
-                            style="@style/VideoButtonTV"
+                            style="@style/ChicaPlayerPillTV"
                             android:nextFocusLeft="@id/player_resize_btt"
 
                             android:nextFocusRight="@id/player_subtitle_offset_btt"
@@ -1094,7 +1100,7 @@
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/player_subtitle_offset_btt"
-                            style="@style/VideoButtonTV"
+                            style="@style/ChicaPlayerPillTV"
                             android:nextFocusLeft="@id/player_speed_btt"
                             android:nextFocusRight="@id/player_sources_btt"
                             android:nextFocusUp="@id/player_pause_play"
@@ -1107,7 +1113,7 @@
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/player_sources_btt"
-                            style="@style/VideoButtonTV"
+                            style="@style/ChicaPlayerPillTV"
                             android:nextFocusLeft="@id/player_subtitle_offset_btt"
                             android:nextFocusRight="@id/player_tracks_btt"
                             android:nextFocusUp="@id/player_pause_play"
@@ -1118,7 +1124,7 @@
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/player_tracks_btt"
-                            style="@style/VideoButtonTV"
+                            style="@style/ChicaPlayerPillTV"
                             android:nextFocusLeft="@id/player_sources_btt"
                             android:nextFocusRight="@id/player_compressor_btt"
                             android:nextFocusUp="@id/player_pause_play"
@@ -1128,7 +1134,7 @@
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/player_compressor_btt"
-                            style="@style/VideoButtonTV"
+                            style="@style/ChicaPlayerPillTV"
                             android:nextFocusLeft="@id/player_tracks_btt"
                             android:nextFocusRight="@id/player_nobar_btt"
                             android:nextFocusUp="@id/player_pause_play"
@@ -1138,7 +1144,7 @@
 
                         <com.google.android.material.button.MaterialButton
                             android:id="@+id/player_nobar_btt"
-                            style="@style/VideoButtonTV"
+                            style="@style/ChicaPlayerPillTV"
                             android:nextFocusLeft="@id/player_compressor_btt"
                             android:nextFocusRight="@id/player_skip_op"
                             android:nextFocusUp="@id/player_pause_play"
@@ -1172,8 +1178,11 @@
         android:visibility="gone"
         app:icon="@drawable/speedup"
         app:iconGravity="top"
-        app:iconTint="@color/textColor"
+        app:backgroundTint="@color/chica_player_pill_bg"
+        app:cornerRadius="100dp"
+        app:iconTint="@color/white"
         app:rippleColor="?attr/colorPrimary"
+        app:strokeColor="@color/chica_player_pill_stroke"
         tools:visibility="visible" />
 
 
