@@ -1269,7 +1269,7 @@ open class ResultFragmentPhone : BaseFragment<FragmentResultSwipeBinding>(
                 setText(watchType.stringRes)
                 // Chica: a bookmarked title fills the pill blush (pink is a fill, never text).
                 val marked = watchType != WatchType.NONE
-                context?.colorFromAttribute(if (marked) R.attr.colorOnPrimary else R.attr.white)?.let {
+                context?.colorFromAttribute(if (marked) com.google.android.material.R.attr.colorOnPrimary else R.attr.white)?.let {
                     val colorState = ColorStateList.valueOf(it)
                     iconTint = colorState
                     setTextColor(colorState)
