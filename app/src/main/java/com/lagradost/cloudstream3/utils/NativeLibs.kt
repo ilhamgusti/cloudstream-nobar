@@ -11,6 +11,8 @@ import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.URL
 import java.security.MessageDigest
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 /**
  * Native libraries that are not shipped in the APK but downloaded on first use, to keep the app
@@ -35,6 +37,27 @@ object NativeLibs {
         FFMPEG to listOf("libavutil.so", "libswresample.so", "libswscale.so", "libavcodec.so", "libmedia3ext.so"),
         TORRENT to listOf("libgojni.so"),
     )
+
+    /** Per group: [IDLE], 0..100 while downloading, [READY], or [FAILED]. */
+    const val IDLE = -1
+    const val READY = 101
+    const val FAILED = -2
+    private val _state = MutableStateFlow<Map<String, Int>>(emptyMap())
+    val state: StateFlow<Map<String, Int>> = _state
+    private fun setState(group: String, v: Int) {
+        _state.value = _state.value + (group to v)
+    }
+
+    /** Download size of a group for this device, in bytes. */
+    fun sizeOf(group: String): Long = files(group).sumOf { it.size }
+
+    /** Frees the storage of a group. Loaded code stays usable until the app restarts. */
+    @Synchronized
+    fun delete(group: String) {
+        val dir = root ?: return
+        files(group).forEach { File(dir, it.name).delete() }
+        if (group !in loaded) setState(group, IDLE)
+    }
 
     data class Spec(val group: String, val abi: String, val name: String, val sha256: String, val size: Long)
 
@@ -95,7 +118,11 @@ object NativeLibs {
             for (spec in list) {
                 val target = File(dir, spec.name)
                 if (!(target.isFile && target.length() == spec.size)) {
-                    download(spec, target) { n -> onProgress(((done + n) * 100 / total).toInt()) }
+                    download(spec, target) { n ->
+                        val pct = ((done + n) * 100 / total).toInt()
+                        setState(group, pct.coerceIn(0, 99))
+                        onProgress(pct)
+                    }
                 }
                 done += spec.size
             }
@@ -103,6 +130,7 @@ object NativeLibs {
             load(group, dir, list)
         } catch (t: Throwable) {
             Log.w(TAG, "$group unavailable", t)
+            setState(group, FAILED)
             false
         }
     }
@@ -125,6 +153,7 @@ object NativeLibs {
         addNativePath(dir)
         for (spec in list) System.load(File(dir, spec.name).absolutePath)
         loaded += group
+        setState(group, READY)
         Log.i(TAG, "$group loaded from $dir")
         return true
     }

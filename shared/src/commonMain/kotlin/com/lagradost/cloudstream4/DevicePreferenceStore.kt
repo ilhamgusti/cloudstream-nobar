@@ -155,6 +155,9 @@ class ProviderPreferences(preferences: PreferenceStore) {
     )
 }
 
+const val NOBAR_FFMPEG_KEY = "nobar_ffmpeg_enabled"
+const val NOBAR_TORRENT_KEY = "nobar_torrent_enabled"
+
 class PlayerPreferences(preferences: PreferenceStore) {
     val episodeSync = preferences.getBoolean("episode_sync_enabled_key", true)
     val defaultPlayer = preferences.getString("player_default_key", "")
@@ -175,6 +178,9 @@ class PlayerPreferences(preferences: PreferenceStore) {
     val rotateButtonEnabled = preferences.getBoolean("rotate_video_key", false)
     val previewBarEnabled = preferences.getBoolean("preview_seekbar_key", true)
     val softwareDecoding = preferences.getInt("software_decoding_key2", -1)
+    /** Nobar: optional components downloaded on demand (NativeLibs), off by default. */
+    val ffmpegEnabled = preferences.getBoolean(NOBAR_FFMPEG_KEY, false)
+    val torrentEnabled = preferences.getBoolean(NOBAR_TORRENT_KEY, false)
     val extraBrightnessEnabled = preferences.getBoolean("extra_brightness_key", false)
     val swipeHorizontalEnabled = preferences.getBoolean("swipe_enabled_key", true)
     val swipeVerticalEnabled = preferences.getBoolean("swipe_vertical_enabled_key", true)

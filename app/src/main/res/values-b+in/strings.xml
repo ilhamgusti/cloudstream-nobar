@@ -830,4 +830,15 @@
     <string name="home_all_sources">Semua sumber</string>
     <string name="torrent_engine_downloading">Mengunduh mesin torrent (sekali saja)…</string>
     <string name="torrent_engine_unavailable">Mesin torrent tidak tersedia. Periksa koneksi lalu coba lagi.</string>
+    <string name="pref_category_components">Komponen tambahan</string>
+    <string name="component_ffmpeg">Dekoder FFmpeg</string>
+    <string name="component_ffmpeg_desc">Memutar audio dan video yang tidak bisa didekode perangkat (AC3, DTS, TrueHD…). Diunduh saat dinyalakan.</string>
+    <string name="component_torrent">Torrent</string>
+    <string name="component_torrent_desc">Memutar link torrent dan magnet. Diunduh saat dinyalakan.</string>
+    <string name="component_ready">Siap</string>
+    <string name="component_failed">Gagal diunduh. Matikan lalu nyalakan lagi untuk mencoba ulang.</string>
+    <string name="component_downloading" formatted="true">Mengunduh… %d%%</string>
+    <string name="component_restart">Sudah diunduh, aktif setelah aplikasi dibuka ulang</string>
+    <string name="component_size" formatted="true">Belum diunduh · %s</string>
+    <string name="torrent_engine_off">Torrent mati. Nyalakan di Pengaturan → Pemutar → Komponen tambahan.</string>
 </resources>

@@ -7,6 +7,8 @@ import com.lagradost.cloudstream3.CommonActivity
 import com.lagradost.cloudstream3.CommonActivity.showToast
 import com.lagradost.cloudstream3.R
 import com.lagradost.cloudstream3.utils.NativeLibs
+import com.lagradost.cloudstream4.NOBAR_TORRENT_KEY
+import androidx.preference.PreferenceManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import com.lagradost.cloudstream3.ErrorLoadingException
@@ -206,6 +208,13 @@ object Torrent {
     /** Spins up the torrent server. */
     private suspend fun setup(dir: String): Boolean {
         // Nobar: the torrent server's native library is downloaded the first time it is needed.
+        val act = CommonActivity.activity
+        val enabled = act != null && PreferenceManager.getDefaultSharedPreferences(act)
+            .getBoolean(NOBAR_TORRENT_KEY, false)
+        if (!enabled) {
+            withContext(Dispatchers.Main) { showToast(R.string.torrent_engine_off, Toast.LENGTH_LONG) }
+            return false
+        }
         if (!NativeLibs.isLoaded(NativeLibs.TORRENT)) {
             val ok = withContext(Dispatchers.IO) {
                 if (NativeLibs.loadIfDownloaded(NativeLibs.TORRENT)) return@withContext true

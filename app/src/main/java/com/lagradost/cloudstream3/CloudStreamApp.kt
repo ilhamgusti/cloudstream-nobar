@@ -2,7 +2,9 @@ package com.lagradost.cloudstream3
 
 import android.app.Activity
 import android.app.Application
+import androidx.preference.PreferenceManager
 import com.lagradost.cloudstream3.utils.NativeLibs
+import com.lagradost.cloudstream4.NOBAR_FFMPEG_KEY
 import android.content.Context
 import android.content.ContextWrapper
 import android.content.Intent
@@ -86,12 +88,15 @@ class CloudStreamApp : Application(), SingletonImageLoader.Factory {
 
         AppDebug.isDebug = BuildConfig.DEBUG
 
-        // Nobar: FFmpeg (software decoding) is not in the APK. Load it if it is already on the
-        // device, else fetch it in the background; until then the player runs without it.
+        // Nobar: FFmpeg (software decoding) is not in the APK. When it is switched on in Settings,
+        // load it if it is already on the device, else fetch it in the background; until then
+        // the player runs without it.
         NativeLibs.init(this)
-        Thread({
-            if (!NativeLibs.loadIfDownloaded(NativeLibs.FFMPEG)) NativeLibs.ensure(NativeLibs.FFMPEG)
-        }, "nativelibs").apply { isDaemon = true; priority = Thread.MIN_PRIORITY }.start()
+        if (PreferenceManager.getDefaultSharedPreferences(this).getBoolean(NOBAR_FFMPEG_KEY, false)) {
+            Thread({
+                if (!NativeLibs.loadIfDownloaded(NativeLibs.FFMPEG)) NativeLibs.ensure(NativeLibs.FFMPEG)
+            }, "nativelibs").apply { isDaemon = true; priority = Thread.MIN_PRIORITY }.start()
+        }
     }
 
     override fun attachBaseContext(base: Context?) {

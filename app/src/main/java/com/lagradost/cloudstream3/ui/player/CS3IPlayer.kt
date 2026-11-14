@@ -113,6 +113,7 @@ import com.lagradost.cloudstream3.utils.videoskip.VideoSkipStamp
 import com.lagradost.cloudstream4.AppSettings
 import kotlinx.coroutines.delay
 import com.lagradost.cloudstream3.utils.NativeLibs
+import com.lagradost.cloudstream4.NOBAR_FFMPEG_KEY
 import okhttp3.Interceptor
 import org.chromium.net.CronetEngine
 import java.io.File
@@ -1137,7 +1138,8 @@ class CS3IPlayer : IPlayer {
 
                     // Nobar: FFmpeg arrives after the first launch (NativeLibs); without it, use the
                     // platform decoders only.
-                    val ffmpeg = NativeLibs.isLoaded(NativeLibs.FFMPEG)
+                    val ffmpeg = NativeLibs.isLoaded(NativeLibs.FFMPEG) &&
+                        settingsManager.getBoolean(NOBAR_FFMPEG_KEY, false)
                     val factory =
                         if (isAudioOnly && ffmpeg) {
                             FixedNextRenderersFactoryWithoutVideo(context, compressor).apply {
